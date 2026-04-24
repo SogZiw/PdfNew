@@ -4,11 +4,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/layout_bottom_nav"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/layout_bottom_nav"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/white"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent">
@@ -49,7 +57,7 @@
                 android:layout_marginTop="3dp"
                 android:fontFamily="sans-serif-medium"
                 android:text="@string/home"
-                android:textColor="@color/color_text_primary"
+                android:textColor="@color/color_tab_text"
                 android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -94,7 +102,7 @@
                 android:layout_marginTop="3dp"
                 android:fontFamily="sans-serif-medium"
                 android:text="@string/recently"
-                android:textColor="@color/color_text_primary"
+                android:textColor="@color/color_tab_text"
                 android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -147,7 +155,7 @@
                 android:layout_marginTop="3dp"
                 android:fontFamily="sans-serif-medium"
                 android:text="@string/history"
-                android:textColor="@color/color_text_primary"
+                android:textColor="@color/color_tab_text"
                 android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -192,7 +200,7 @@
                 android:layout_marginTop="3dp"
                 android:fontFamily="sans-serif-medium"
                 android:text="@string/settings"
-                android:textColor="@color/color_text_primary"
+                android:textColor="@color/color_tab_text"
                 android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
