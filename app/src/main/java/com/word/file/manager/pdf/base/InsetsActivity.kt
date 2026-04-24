@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.viewbinding.ViewBinding
 import com.word.file.manager.pdf.ext.applySystemBarInsetsPadding
 
-abstract class ImmersiveActivity<VB : ViewBinding> : AppCompatActivity() {
+abstract class InsetsActivity<VB : ViewBinding> : AppCompatActivity() {
 
     protected lateinit var binding: VB
         private set

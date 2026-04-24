@@ -3,12 +3,11 @@ package com.word.file.manager.pdf.base
 import androidx.activity.addCallback
 import androidx.viewbinding.ViewBinding
 
-abstract class BaseActivity<VB : ViewBinding> : ImmersiveActivity<VB>() {
+abstract class BaseActivity<VB : ViewBinding> : InsetsActivity<VB>() {
 
     private val selfActivity: BaseActivity<*> by lazy(LazyThreadSafetyMode.NONE) { this }
 
-    protected val activity: BaseActivity<*>
-        get() = selfActivity
+    protected val activity: BaseActivity<*> get() = selfActivity
 
     protected var isPageResumed: Boolean = true
         private set
