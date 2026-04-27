@@ -35,7 +35,7 @@
         tools:replace="android:supportsRtl,android:usesCleartextTraffic">
 
         <activity
-            android:name=".base.permission.AllFilesPermissionActivity"
+            android:name=".modules.permissions.AllFilesPermissionActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:excludeFromRecents="true"
             android:launchMode="singleTask"

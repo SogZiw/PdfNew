@@ -1,4 +1,4 @@
-package com.word.file.manager.pdf.base.permission
+package com.word.file.manager.pdf.modules.permissions
 
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.viewbinding.ViewBinding

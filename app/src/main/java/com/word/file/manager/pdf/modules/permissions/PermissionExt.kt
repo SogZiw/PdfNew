@@ -1,4 +1,4 @@
-package com.word.file.manager.pdf.base.permission
+package com.word.file.manager.pdf.modules.permissions
 
 import android.Manifest
 import android.annotation.SuppressLint

@@ -1,4 +1,4 @@
-package com.word.file.manager.pdf.base.permission
+package com.word.file.manager.pdf.modules.permissions
 
 import androidx.lifecycle.lifecycleScope
 import com.word.file.manager.pdf.base.BaseActivity
