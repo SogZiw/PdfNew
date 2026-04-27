@@ -3,9 +3,14 @@ package com.word.file.manager.pdf.modules
 import android.view.LayoutInflater
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.word.file.manager.pdf.app
 import com.word.file.manager.pdf.base.data.DocumentActionType
 import com.word.file.manager.pdf.databinding.ActivityMainBinding
+import com.word.file.manager.pdf.modules.fragments.BookmarkFragment
+import com.word.file.manager.pdf.modules.fragments.HomeFragment
+import com.word.file.manager.pdf.modules.fragments.RecentFragment
 import com.word.file.manager.pdf.modules.permissions.StoragePermissionActivity
+import com.word.file.manager.pdf.modules.permissions.hasStorageAccessPermission
 
 class MainActivity : StoragePermissionActivity<ActivityMainBinding>() {
 
@@ -13,12 +18,34 @@ class MainActivity : StoragePermissionActivity<ActivityMainBinding>() {
 
     override fun initView() {
         initViewPager()
+        app.mainViewModel.requestStorageLiveData.observe(this) {
+            checkStoragePermission(com.word.file.manager.pdf.base.data.DocumentOpenType)
+        }
+        if (hasStorageAccessPermission()) {
+            app.mainViewModel.refreshFiles(activity)
+        } else {
+            app.mainViewModel.changePermissionVisible.postValue(true)
+        }
+        binding.btnAdd.setOnClickListener { }
     }
 
-    override fun onStorageAccessGranted(type: DocumentActionType?) = Unit
+    override fun onStorageAccessGranted(type: DocumentActionType?) {
+        app.mainViewModel.refreshFiles(activity)
+        app.mainViewModel.onRecentUpdateLiveData.postValue(app.mainViewModel.onRecentUpdateLiveData.value ?: emptyList())
+        app.mainViewModel.onBookmarkUpdateLiveData.postValue(app.mainViewModel.onBookmarkUpdateLiveData.value ?: emptyList())
+    }
+
+    override fun onStorageAccessDenied() {
+        app.mainViewModel.changePermissionVisible.postValue(true)
+    }
 
     private fun initViewPager() {
-        val fragments = listOf(Fragment(), Fragment(), Fragment(), Fragment())
+        val fragments = listOf(
+            HomeFragment(),
+            RecentFragment(),
+            BookmarkFragment(),
+            Fragment(),
+        )
         binding.viewPager.isUserInputEnabled = false
         binding.viewPager.offscreenPageLimit = fragments.size
         binding.viewPager.adapter = object : FragmentStateAdapter(supportFragmentManager, lifecycle) {
@@ -39,6 +66,5 @@ class MainActivity : StoragePermissionActivity<ActivityMainBinding>() {
         binding.tabSet.isSelected = index == 3
         binding.viewPager.setCurrentItem(index, false)
     }
-
 
 }

@@ -13,4 +13,8 @@
     <string name="split_pdf">Split PDF</string>
     <string name="print">Print</string>
     <string name="common_error_message">Something went wrong</string>
+    <string name="permission_desc">Allow storage access to scan and show your documents.</string>
+    <string name="allow">Allow</string>
+    <string name="empty_documents">No documents found</string>
+    <string name="bookmark">Bookmark</string>
 </resources>

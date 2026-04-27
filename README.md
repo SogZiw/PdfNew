@@ -118,3 +118,9 @@ This file captures the working conventions established during recent development
 - Added `activity_route.xml` splash-style layout and related route logo resources.
 - Added `item_file_info_with_menu.xml` item layout for file rows with icon, text, and more-action affordance.
 - Consolidated the remaining in-progress launcher asset updates into a follow-up commit when requested.
+- Implemented `HomeFragment`, `RecentFragment`, `BookmarkFragment`, and `DocumentFragment` with shared file scanning, category filters, recent/bookmark data, and system file opening.
+- Kept the new fragment flow free of ads and left the file `more` action unimplemented as requested.
+- Restored `HomeFragment` category switching to use the existing `layout_selector` buttons instead of replacing that area with `TabLayout`.
+- Unified `RecentFragment` and `BookmarkFragment` onto the same selector-button pattern after removing the shared `TabLayout` dependency from `fragment_home.xml`.
+- Updated the empty document state to show `ic_page_empty` while keeping the current empty-state text unchanged.
+- Fixed the post-permission refresh path so empty states in `RecentFragment` and `BookmarkFragment` render correctly after storage access is granted.

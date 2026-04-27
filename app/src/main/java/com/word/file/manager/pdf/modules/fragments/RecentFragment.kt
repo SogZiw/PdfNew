@@ -6,28 +6,29 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.word.file.manager.pdf.R
 import com.word.file.manager.pdf.app
 import com.word.file.manager.pdf.base.BaseFragment
 import com.word.file.manager.pdf.base.data.FileTabFilter
 import com.word.file.manager.pdf.databinding.FragmentHomeBinding
 import com.word.file.manager.pdf.modules.permissions.hasStorageAccessPermission
 
-class HomeFragment : BaseFragment<FragmentHomeBinding>() {
+class RecentFragment : BaseFragment<FragmentHomeBinding>() {
 
     override fun setViewBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentHomeBinding {
         return FragmentHomeBinding.inflate(inflater, container, false)
     }
 
     override fun initView(savedInstanceState: Bundle?) {
-        binding.btnGoSet.isVisible = true
-        binding.btnGoSet.setOnClickListener { }
+        binding.appName.text = getString(R.string.recently)
+        binding.btnGoSet.isVisible = false
         binding.viewPager.adapter = object : FragmentStateAdapter(childFragmentManager, lifecycle) {
             private val pages = listOf(
-                DocumentFragment.newInstance(FileTabFilter.All, DocumentSource.Home),
-                DocumentFragment.newInstance(FileTabFilter.Pdf, DocumentSource.Home),
-                DocumentFragment.newInstance(FileTabFilter.Word, DocumentSource.Home),
-                DocumentFragment.newInstance(FileTabFilter.Ppt, DocumentSource.Home),
-                DocumentFragment.newInstance(FileTabFilter.Excel, DocumentSource.Home),
+                DocumentFragment.newInstance(FileTabFilter.All, DocumentSource.Recent),
+                DocumentFragment.newInstance(FileTabFilter.Pdf, DocumentSource.Recent),
+                DocumentFragment.newInstance(FileTabFilter.Word, DocumentSource.Recent),
+                DocumentFragment.newInstance(FileTabFilter.Ppt, DocumentSource.Recent),
+                DocumentFragment.newInstance(FileTabFilter.Excel, DocumentSource.Recent),
             )
 
             override fun getItemCount(): Int = pages.size
@@ -47,6 +48,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             binding.viewPermission.root.isVisible = it
         }
         binding.viewPermission.root.isVisible = !hasStorageAccessPermission()
+        app.mainViewModel.collectRecentFiles()
         changeSelector(0)
     }
 
@@ -58,5 +60,4 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         binding.layoutSelector.btnExcel.isSelected = index == 4
         binding.viewPager.setCurrentItem(index, false)
     }
-
 }
