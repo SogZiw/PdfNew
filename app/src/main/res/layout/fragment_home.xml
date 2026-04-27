@@ -29,8 +29,22 @@
         app:layout_constraintTop_toTopOf="@+id/app_name"
         app:srcCompat="@drawable/ic_tab_set_black" />
 
-    
+    <include
+        android:id="@+id/layout_selector"
+        layout="@layout/view_file_tab"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@+id/app_name" />
 
-
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/shape_gery_top_r30"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layout_selector" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
