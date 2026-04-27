@@ -111,3 +111,10 @@ This file captures the working conventions established during recent development
   - `StoragePermissionActivity.kt`
   - `AllFilesPermissionActivity.kt`
 - Record each requested change in this `README.md` as part of the implementation workflow.
+
+## Recent Changes
+
+- Added `RouteActivity` as the launcher page with a 3-second delay before routing to `MainActivity`.
+- Added `activity_route.xml` splash-style layout and related route logo resources.
+- Added `item_file_info_with_menu.xml` item layout for file rows with icon, text, and more-action affordance.
+- Consolidated the remaining in-progress launcher asset updates into a follow-up commit when requested.
