@@ -85,4 +85,7 @@ dependencies {
 
     implementation("com.artifex.mupdf:viewer:1.27.0a")
     implementation("com.github.marain87:AndroidPdfViewer:3.2.8")
+
+    implementation(libs.androidx.room.runtime)
+    ksp(libs.androidx.room.compiler)
 }
