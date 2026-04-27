@@ -110,4 +110,4 @@ This file captures the working conventions established during recent development
   - `PermissionExt.kt`
   - `StoragePermissionActivity.kt`
   - `AllFilesPermissionActivity.kt`
-
+- Record each requested change in this `README.md` as part of the implementation workflow.
