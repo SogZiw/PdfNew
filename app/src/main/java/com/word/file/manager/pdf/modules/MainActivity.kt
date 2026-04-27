@@ -1,4 +1,4 @@
-package com.word.file.manager.pdf
+package com.word.file.manager.pdf.modules
 
 import android.view.LayoutInflater
 import androidx.fragment.app.Fragment
