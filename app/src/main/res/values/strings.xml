@@ -4,4 +4,9 @@
     <string name="recently">Recently</string>
     <string name="history">History</string>
     <string name="settings">Settings</string>
+    <string name="all">ALL</string>
+    <string name="pdf">PDF</string>
+    <string name="word">WORD</string>
+    <string name="ppt">PPT</string>
+    <string name="excel">EXCEL</string>
 </resources>
