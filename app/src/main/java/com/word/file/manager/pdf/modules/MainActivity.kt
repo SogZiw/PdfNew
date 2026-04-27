@@ -3,16 +3,19 @@ package com.word.file.manager.pdf.modules
 import android.view.LayoutInflater
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.word.file.manager.pdf.base.BaseActivity
+import com.word.file.manager.pdf.base.data.DocumentActionType
 import com.word.file.manager.pdf.databinding.ActivityMainBinding
+import com.word.file.manager.pdf.modules.permissions.StoragePermissionActivity
 
-class MainActivity : BaseActivity<ActivityMainBinding>() {
+class MainActivity : StoragePermissionActivity<ActivityMainBinding>() {
 
     override fun setViewBinding(): ActivityMainBinding = ActivityMainBinding.inflate(LayoutInflater.from(this))
 
     override fun initView() {
         initViewPager()
     }
+
+    override fun onStorageAccessGranted(type: DocumentActionType?) = Unit
 
     private fun initViewPager() {
         val fragments = listOf(Fragment(), Fragment(), Fragment(), Fragment())

@@ -82,4 +82,7 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    implementation("com.artifex.mupdf:viewer:1.27.0a")
+    implementation("com.github.marain87:AndroidPdfViewer:3.2.8")
 }
