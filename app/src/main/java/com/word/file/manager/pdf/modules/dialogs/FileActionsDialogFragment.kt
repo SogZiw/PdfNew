@@ -22,18 +22,16 @@ import kotlinx.coroutines.withContext
 
 class FileActionsDialogFragment : BottomSheetDialogFragment() {
 
+    private var currentFileItem: FileItem? = null
+    private var currentCollectedState: Boolean = false
+
     companion object {
         private const val ARG_FILE_ITEM = "arg_file_item"
-        private const val ARG_IS_COLLECTED = "arg_is_collected"
 
-        fun newInstance(
-            fileItem: FileItem,
-            isCollected: Boolean = false,
-        ): FileActionsDialogFragment {
+        fun newInstance(fileItem: FileItem): FileActionsDialogFragment {
             return FileActionsDialogFragment().apply {
                 arguments = bundleOf(
                     ARG_FILE_ITEM to fileItem,
-                    ARG_IS_COLLECTED to isCollected,
                 )
             }
         }
@@ -59,9 +57,12 @@ class FileActionsDialogFragment : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val fileItem = readFileItem() ?: return
-        val isCollected = arguments?.getBoolean(ARG_IS_COLLECTED, false) ?: false
-        bindHeader(fileItem, isCollected)
+        currentFileItem = fileItem
+        bindHeader(fileItem)
         bindActionRows()
+        binding.btnCollect.setOnClickListener {
+            toggleCollectedState()
+        }
     }
 
     private fun readFileItem(): FileItem? {
@@ -73,14 +74,13 @@ class FileActionsDialogFragment : BottomSheetDialogFragment() {
         }
     }
 
-    private fun bindHeader(fileItem: FileItem, isCollected: Boolean) {
+    private fun bindHeader(fileItem: FileItem) {
         binding.textFileName.text = fileItem.fileName
         binding.textFilePath.text = fileItem.filePath
         binding.imageFileCover.setImageResource(fileItem.getFileCategory()?.iconRes ?: R.drawable.ic_file_pdf)
-        renderCollectState(isCollected)
         viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
             val storedItem = app.database.fileItemDao().getFileByPath(fileItem.filePath)
-            val actualCollected = storedItem?.isFavorite ?: isCollected
+            val actualCollected = storedItem?.isFavorite ?: fileItem.isFavorite
             withContext(Dispatchers.Main) {
                 renderCollectState(actualCollected)
             }
@@ -88,9 +88,19 @@ class FileActionsDialogFragment : BottomSheetDialogFragment() {
     }
 
     private fun renderCollectState(isCollected: Boolean) {
+        currentCollectedState = isCollected
         binding.btnCollect.setImageResource(
             if (isCollected) R.drawable.ic_menu_collected else R.drawable.ic_menu_add_collect,
         )
+    }
+
+    private fun toggleCollectedState() {
+        val fileItem = currentFileItem ?: return
+        viewLifecycleOwner.lifecycleScope.launch {
+            val collected = app.documentRepository.toggleFavorite(fileItem.copy(isFavorite = currentCollectedState))
+            currentFileItem = fileItem.copy(isFavorite = collected)
+            renderCollectState(collected)
+        }
     }
 
     private fun bindActionRows() {

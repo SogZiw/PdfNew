@@ -130,10 +130,8 @@ class DocumentFragment : BaseFragment<FragmentDocumentBinding>() {
     }
 
     private fun showFileActions(item: FileItem) {
-        FileActionsDialogFragment.newInstance(
-            fileItem = item,
-            isCollected = item.isFavorite,
-        ).show(childFragmentManager, "file_actions_dialog")
+        FileActionsDialogFragment.newInstance(item)
+            .show(childFragmentManager, "file_actions_dialog")
     }
 
     private fun submitList(sourceList: List<FileItem>) {

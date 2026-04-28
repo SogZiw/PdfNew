@@ -141,3 +141,5 @@ This file captures the working conventions established during recent development
 - Wired the file item `more` button in `DocumentFragment` to open `FileActionsDialogFragment` without attaching individual action handlers yet.
 - Updated `FileActionsDialogFragment` to reconcile the collect icon state from the database so the dialog header stays accurate even when opened from the scanned home list.
 - Updated `image_file_cover` in `FileActionsDialogFragment` to reflect the actual file category icon instead of always using the PDF asset.
+- Implemented bookmark toggling through `FileActionsDialogFragment` and `DocumentRepository`, with state refresh flowing back to the home list and bookmark list.
+- Removed the redundant `isCollected` argument from `FileActionsDialogFragment.newInstance()` and now initialize the collect state directly from database-backed file data.

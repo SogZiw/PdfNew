@@ -12,7 +12,9 @@ import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class DocumentRepository(private val database: AppDatabase) {
 
@@ -58,6 +60,26 @@ class DocumentRepository(private val database: AppDatabase) {
         scope.launch {
             _allFiles.value = querySupportedFiles(context)
             _showPermissionGuide.value = false
+        }
+    }
+
+    suspend fun toggleFavorite(fileItem: FileItem): Boolean {
+        return withContext(Dispatchers.IO) {
+            val storedItem = database.fileItemDao().getFileByPath(fileItem.filePath)
+            val targetItem = (storedItem ?: fileItem).copy()
+            val nextFavoriteState = !(storedItem?.isFavorite ?: fileItem.isFavorite)
+            targetItem.isFavorite = nextFavoriteState
+            database.fileItemDao().upsert(targetItem)
+            _allFiles.update { files ->
+                files.map { item ->
+                    if (item.filePath == fileItem.filePath) {
+                        item.copy(isFavorite = nextFavoriteState)
+                    } else {
+                        item
+                    }
+                }
+            }
+            nextFavoriteState
         }
     }
 }
