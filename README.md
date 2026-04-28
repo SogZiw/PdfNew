@@ -133,3 +133,5 @@ This file captures the working conventions established during recent development
 - Differentiated `PdfViewActivity` and `OfficeViewActivity` visually and behaviorally with PDF page-state UI and Office-specific preview/loading status UI.
 - Renamed the internal viewer classes to `PdfReaderActivity` and `OfficePreviewActivity` and reorganized their method structure to reduce direct similarity with the reference `PDFView` project while preserving behavior.
 - Renamed the viewer layout files to `activity_pdf_reader.xml` and `activity_office_preview.xml` to match the updated activity names.
+- Updated the bottom navigation `History` label to `Bookmark` to match the actual collection tab meaning.
+- Renamed the bottom navigation string key from the old `history` semantics to `bookmark_nav` to match the tab’s actual purpose.

@@ -2,7 +2,7 @@
     <string name="app_name">PdfNew</string>
     <string name="home">Home</string>
     <string name="recently">Recently</string>
-    <string name="history">History</string>
+    <string name="bookmark_nav">Bookmark</string>
     <string name="settings">Settings</string>
     <string name="all">ALL</string>
     <string name="pdf">PDF</string>
