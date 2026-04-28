@@ -87,7 +87,7 @@ class MainActivity : StoragePermissionActivity<ActivityMainBinding>() {
         binding.tabHome.setOnClickListener { changeTab(0) }
         binding.tabRecently.setOnClickListener { changeTab(1) }
         binding.tabHistory.setOnClickListener { changeTab(2) }
-        binding.tabSet.setOnClickListener { changeTab(3) }
+        binding.tabTools.setOnClickListener { changeTab(3) }
         changeTab(0)
     }
 
@@ -95,7 +95,7 @@ class MainActivity : StoragePermissionActivity<ActivityMainBinding>() {
         binding.tabHome.isSelected = index == 0
         binding.tabRecently.isSelected = index == 1
         binding.tabHistory.isSelected = index == 2
-        binding.tabSet.isSelected = index == 3
+        binding.tabTools.isSelected = index == 3
         binding.viewPager.setCurrentItem(index, false)
     }
 

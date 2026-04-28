@@ -165,7 +165,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/tab_set"
+            android:id="@+id/tab_tools"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -182,30 +182,30 @@
                 app:srcCompat="@drawable/selector_tab_indicator" />
 
             <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/image_set"
+                android:id="@+id/image_tools"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                app:layout_constraintBottom_toTopOf="@+id/text_set"
+                app:layout_constraintBottom_toTopOf="@+id/text_tools"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_chainStyle="packed"
-                app:srcCompat="@drawable/tab_set" />
+                app:srcCompat="@drawable/tab_tools" />
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/text_set"
+                android:id="@+id/text_tools"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="3dp"
                 android:fontFamily="sans-serif-medium"
-                android:text="@string/settings"
+                android:text="@string/tools"
                 android:textColor="@color/color_tab_text"
                 android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/image_set" />
+                app:layout_constraintTop_toBottomOf="@+id/image_tools" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
