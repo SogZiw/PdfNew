@@ -126,3 +126,4 @@ This file captures the working conventions established during recent development
 - Fixed the post-permission refresh path so empty states in `RecentFragment` and `BookmarkFragment` render correctly after storage access is granted.
 - Replaced the app-wide `MainViewModel` approach with a `DocumentRepository` that exposes shared `StateFlow` and `SharedFlow` for file data, permission prompts, and UI state.
 - Moved `DocumentRepository` out of `modules/main` into `base/data` so its placement matches its cross-feature data responsibility.
+- Added local `assets` viewer resources for `word`, `excel`, and `ppt` document rendering support.
