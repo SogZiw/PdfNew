@@ -1,6 +1,7 @@
 package com.word.file.manager.pdf.modules.fragments
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,18 +12,20 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.word.file.manager.pdf.EXTRA_FILE_ITEM
 import com.word.file.manager.pdf.app
 import com.word.file.manager.pdf.base.BaseFragment
+import com.word.file.manager.pdf.base.data.FileCategory
 import com.word.file.manager.pdf.base.data.FileItem
 import com.word.file.manager.pdf.base.data.FileTabFilter
 import com.word.file.manager.pdf.base.utils.buildInfoText
 import com.word.file.manager.pdf.base.utils.getFileCategory
 import com.word.file.manager.pdf.base.utils.matchesFilter
-import com.word.file.manager.pdf.base.utils.openFileBySystem
 import com.word.file.manager.pdf.databinding.FragmentDocumentBinding
 import com.word.file.manager.pdf.databinding.ItemFileInfoWithMenuBinding
+import com.word.file.manager.pdf.modules.OfficeViewActivity
+import com.word.file.manager.pdf.modules.PdfViewActivity
 import com.word.file.manager.pdf.modules.permissions.hasStorageAccessPermission
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class DocumentFragment : BaseFragment<FragmentDocumentBinding>() {
@@ -109,12 +112,17 @@ class DocumentFragment : BaseFragment<FragmentDocumentBinding>() {
     }
 
     private fun openItem(item: FileItem) {
-        lifecycleScope.launch(Dispatchers.IO) {
-            val dbItem = app.database.fileItemDao().getFileByPath(item.filePath) ?: item
-            dbItem.recentViewTime = System.currentTimeMillis()
-            app.database.fileItemDao().upsert(dbItem)
+        val targetClass = when (item.getFileCategory()) {
+            FileCategory.Pdf -> PdfViewActivity::class.java
+            FileCategory.Word,
+            FileCategory.Excel,
+            FileCategory.Ppt -> OfficeViewActivity::class.java
+
+            null -> return
         }
-        activity.openFileBySystem(item)
+        activity.startActivity(Intent(activity, targetClass).apply {
+            putExtra(EXTRA_FILE_ITEM, item)
+        })
     }
 
     private fun submitList(sourceList: List<FileItem>) {

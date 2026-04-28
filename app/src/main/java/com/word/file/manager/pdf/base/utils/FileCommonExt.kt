@@ -12,6 +12,8 @@ import com.word.file.manager.pdf.app
 import com.word.file.manager.pdf.base.data.FileCategory
 import com.word.file.manager.pdf.base.data.FileItem
 import com.word.file.manager.pdf.base.data.FileTabFilter
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -116,4 +118,12 @@ private fun createFileUri(context: Context, path: String): Uri {
     return if (path.startsWith("/")) {
         FileProvider.getUriForFile(context, "${context.packageName}.fileProvider", File(path))
     } else path.toUri()
+}
+
+suspend fun markFileAsRecent(item: FileItem) {
+    withContext(Dispatchers.IO) {
+        val dbItem = app.database.fileItemDao().getFileByPath(item.filePath) ?: item
+        dbItem.recentViewTime = System.currentTimeMillis()
+        app.database.fileItemDao().upsert(dbItem)
+    }
 }

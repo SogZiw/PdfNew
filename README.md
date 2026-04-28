@@ -128,3 +128,6 @@ This file captures the working conventions established during recent development
 - Moved `DocumentRepository` out of `modules/main` into `base/data` so its placement matches its cross-feature data responsibility.
 - Added local `assets` viewer resources for `word`, `excel`, and `ppt` document rendering support.
 - Added shared toolbar resources including `view_toolbar_common.xml` and `ic_go_back.xml`.
+- Implemented `PdfViewActivity` and `OfficeViewActivity` using the shared toolbar layout, internal file-detail navigation, PDF rendering, and asset-based Office preview.
+- Moved `EXTRA_FILE_ITEM` out of the data model file into the shared global constants area.
+- Differentiated `PdfViewActivity` and `OfficeViewActivity` visually and behaviorally with PDF page-state UI and Office-specific preview/loading status UI.
