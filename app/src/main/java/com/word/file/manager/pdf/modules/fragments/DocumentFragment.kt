@@ -23,8 +23,8 @@ import com.word.file.manager.pdf.base.utils.getFileCategory
 import com.word.file.manager.pdf.base.utils.matchesFilter
 import com.word.file.manager.pdf.databinding.FragmentDocumentBinding
 import com.word.file.manager.pdf.databinding.ItemFileInfoWithMenuBinding
-import com.word.file.manager.pdf.modules.OfficeViewActivity
-import com.word.file.manager.pdf.modules.PdfViewActivity
+import com.word.file.manager.pdf.modules.OfficePreviewActivity
+import com.word.file.manager.pdf.modules.PdfReaderActivity
 import com.word.file.manager.pdf.modules.permissions.hasStorageAccessPermission
 import kotlinx.coroutines.launch
 
@@ -113,10 +113,10 @@ class DocumentFragment : BaseFragment<FragmentDocumentBinding>() {
 
     private fun openItem(item: FileItem) {
         val targetClass = when (item.getFileCategory()) {
-            FileCategory.Pdf -> PdfViewActivity::class.java
+            FileCategory.Pdf -> PdfReaderActivity::class.java
             FileCategory.Word,
             FileCategory.Excel,
-            FileCategory.Ppt -> OfficeViewActivity::class.java
+            FileCategory.Ppt -> OfficePreviewActivity::class.java
 
             null -> return
         }

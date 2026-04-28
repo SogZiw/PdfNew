@@ -60,12 +60,12 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".modules.PdfViewActivity"
+            android:name=".modules.PdfReaderActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".modules.OfficeViewActivity"
+            android:name=".modules.OfficePreviewActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:screenOrientation="portrait" />
 

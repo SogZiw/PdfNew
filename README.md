@@ -131,3 +131,5 @@ This file captures the working conventions established during recent development
 - Implemented `PdfViewActivity` and `OfficeViewActivity` using the shared toolbar layout, internal file-detail navigation, PDF rendering, and asset-based Office preview.
 - Moved `EXTRA_FILE_ITEM` out of the data model file into the shared global constants area.
 - Differentiated `PdfViewActivity` and `OfficeViewActivity` visually and behaviorally with PDF page-state UI and Office-specific preview/loading status UI.
+- Renamed the internal viewer classes to `PdfReaderActivity` and `OfficePreviewActivity` and reorganized their method structure to reduce direct similarity with the reference `PDFView` project while preserving behavior.
+- Renamed the viewer layout files to `activity_pdf_reader.xml` and `activity_office_preview.xml` to match the updated activity names.

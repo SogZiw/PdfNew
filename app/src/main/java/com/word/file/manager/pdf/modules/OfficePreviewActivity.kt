@@ -1,6 +1,7 @@
 package com.word.file.manager.pdf.modules
 
 import android.annotation.SuppressLint
+import android.os.Build
 import android.net.Uri
 import android.view.LayoutInflater
 import android.webkit.WebResourceRequest
@@ -13,40 +14,64 @@ import com.word.file.manager.pdf.R
 import com.word.file.manager.pdf.base.BaseActivity
 import com.word.file.manager.pdf.base.data.FileCategory
 import com.word.file.manager.pdf.base.data.FileItem
-import com.word.file.manager.pdf.base.utils.buildInfoText
 import com.word.file.manager.pdf.base.utils.getFileCategory
 import com.word.file.manager.pdf.base.utils.markFileAsRecent
 import com.word.file.manager.pdf.base.utils.showMessageToast
-import com.word.file.manager.pdf.databinding.ActivityOfficeViewBinding
+import com.word.file.manager.pdf.databinding.ActivityOfficePreviewBinding
 import kotlinx.coroutines.launch
 import java.io.File
 
-class OfficeViewActivity : BaseActivity<ActivityOfficeViewBinding>() {
+class OfficePreviewActivity : BaseActivity<ActivityOfficePreviewBinding>() {
 
-    override fun setViewBinding(): ActivityOfficeViewBinding = ActivityOfficeViewBinding.inflate(LayoutInflater.from(this))
+    override fun setViewBinding(): ActivityOfficePreviewBinding = ActivityOfficePreviewBinding.inflate(LayoutInflater.from(this))
 
     @SuppressLint("SetJavaScriptEnabled")
     override fun initView() {
-        val fileItem = intent?.getParcelableExtra<FileItem>(EXTRA_FILE_ITEM)
+        val fileItem = readTargetFile()
         if (fileItem == null) {
             showMessageToast(getString(R.string.common_error_message))
             finish()
             return
         }
-        binding.toolbar.actionBack.setOnClickListener { onClickBack() }
-        binding.toolbar.toolbarTitle.text = fileItem.fileName
         val fileCategory = fileItem.getFileCategory()
-        val viewerUrl = when (fileCategory) {
-            FileCategory.Word -> "file:///android_asset/word/viewer.html"
-            FileCategory.Excel -> "file:///android_asset/excel/viewer.html"
-            FileCategory.Ppt -> "file:///android_asset/ppt/viewer.html"
-            else -> null
-        }
-        if (viewerUrl == null) {
+        val previewSource = resolvePreviewSource(fileCategory)
+        if (previewSource == null) {
             showMessageToast(getString(R.string.common_error_message))
             finish()
             return
         }
+        bindPreviewHeader(fileItem, previewSource)
+        prepareWebPreview()
+        dispatchPreview(previewSource, fileItem)
+        rememberOpenAction(fileItem)
+    }
+
+    private fun readTargetFile(): FileItem? {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            intent?.getParcelableExtra(EXTRA_FILE_ITEM, FileItem::class.java)
+        } else {
+            @Suppress("DEPRECATION")
+            intent?.getParcelableExtra(EXTRA_FILE_ITEM)
+        }
+    }
+
+    private fun resolvePreviewSource(fileCategory: FileCategory?): PreviewSource? {
+        return when (fileCategory) {
+            FileCategory.Word -> PreviewSource("file:///android_asset/word/viewer.html", getString(R.string.word))
+            FileCategory.Excel -> PreviewSource("file:///android_asset/excel/viewer.html", getString(R.string.excel))
+            FileCategory.Ppt -> PreviewSource("file:///android_asset/ppt/viewer.html", getString(R.string.ppt))
+            FileCategory.Pdf -> null
+            null -> null
+        }
+    }
+
+    private fun bindPreviewHeader(fileItem: FileItem, previewSource: PreviewSource) {
+        binding.toolbar.actionBack.setOnClickListener { onClickBack() }
+        binding.toolbar.toolbarTitle.text = "${previewSource.badgeText}  ${fileItem.fileName}"
+    }
+
+    @SuppressLint("SetJavaScriptEnabled")
+    private fun prepareWebPreview() {
         binding.webView.apply {
             settings.apply {
                 allowFileAccess = true
@@ -55,7 +80,9 @@ class OfficeViewActivity : BaseActivity<ActivityOfficeViewBinding>() {
                 useWideViewPort = true
                 loadWithOverviewMode = true
                 allowContentAccess = true
+                @Suppress("DEPRECATION")
                 allowFileAccessFromFileURLs = true
+                @Suppress("DEPRECATION")
                 allowUniversalAccessFromFileURLs = true
                 builtInZoomControls = true
                 displayZoomControls = false
@@ -73,11 +100,22 @@ class OfficeViewActivity : BaseActivity<ActivityOfficeViewBinding>() {
                 }
             }
         }
+    }
+
+    private fun dispatchPreview(previewSource: PreviewSource, fileItem: FileItem) {
         binding.loadingContainer.visibility = android.view.View.VISIBLE
         val targetFile = Uri.fromFile(File(fileItem.filePath)).toString()
-        binding.webView.loadUrl("$viewerUrl?file=$targetFile")
+        binding.webView.loadUrl("${previewSource.assetUrl}?file=$targetFile")
+    }
+
+    private fun rememberOpenAction(fileItem: FileItem) {
         lifecycleScope.launch {
             markFileAsRecent(fileItem)
         }
     }
+
+    private data class PreviewSource(
+        val assetUrl: String,
+        val badgeText: String,
+    )
 }
