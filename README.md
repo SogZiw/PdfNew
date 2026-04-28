@@ -135,3 +135,8 @@ This file captures the working conventions established during recent development
 - Renamed the viewer layout files to `activity_pdf_reader.xml` and `activity_office_preview.xml` to match the updated activity names.
 - Updated the bottom navigation `History` label to `Bookmark` to match the actual collection tab meaning.
 - Renamed the bottom navigation string key from the old `history` semantics to `bookmark_nav` to match the tab’s actual purpose.
+- Added a static file-action dialog layout based on the provided screenshot, with menu rows and icons wired for later click handling.
+- Added `FileActionsDialogFragment` to populate the screenshot-style action sheet structure without implementing action click behavior yet.
+- Added missing `ic_menu_lock`, `ic_menu_unlock`, and `ic_menu_info` vector resources so the file-action dialog can render the full action list.
+- Wired the file item `more` button in `DocumentFragment` to open `FileActionsDialogFragment` without attaching individual action handlers yet.
+- Updated `FileActionsDialogFragment` to reconcile the collect icon state from the database so the dialog header stays accurate even when opened from the scanned home list.

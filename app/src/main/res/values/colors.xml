@@ -7,4 +7,6 @@
     <color name="color_text_secondary">#66707D</color>
     <color name="color_surface_soft">#F7F7F5</color>
     <color name="color_pdf_badge">#1C2B42</color>
+    <color name="color_line_light">#EEF0F3</color>
+    <color name="color_dialog_surface">#FAFAFB</color>
 </resources>

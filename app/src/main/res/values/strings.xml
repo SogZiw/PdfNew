@@ -19,4 +19,11 @@
     <string name="bookmark">Bookmark</string>
     <string name="pdf_page_state">%1$d / %2$d</string>
     <string name="preview_loading">Preparing preview…</string>
+    <string name="lock">Lock</string>
+    <string name="unlock">Unlock</string>
+    <string name="rename">Rename</string>
+    <string name="open">Open</string>
+    <string name="info">Info</string>
+    <string name="share">Share</string>
+    <string name="delete">Delete</string>
 </resources>

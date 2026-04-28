@@ -25,6 +25,7 @@ import com.word.file.manager.pdf.databinding.FragmentDocumentBinding
 import com.word.file.manager.pdf.databinding.ItemFileInfoWithMenuBinding
 import com.word.file.manager.pdf.modules.OfficePreviewActivity
 import com.word.file.manager.pdf.modules.PdfReaderActivity
+import com.word.file.manager.pdf.modules.dialogs.FileActionsDialogFragment
 import com.word.file.manager.pdf.modules.permissions.hasStorageAccessPermission
 import kotlinx.coroutines.launch
 
@@ -62,6 +63,9 @@ class DocumentFragment : BaseFragment<FragmentDocumentBinding>() {
         adapter = DocumentListAdapter(
             onItemClicked = { item ->
                 openItem(item)
+            },
+            onMoreClicked = { item ->
+                showFileActions(item)
             },
         )
         binding.recyclerView.layoutManager = LinearLayoutManager(activity)
@@ -125,6 +129,13 @@ class DocumentFragment : BaseFragment<FragmentDocumentBinding>() {
         })
     }
 
+    private fun showFileActions(item: FileItem) {
+        FileActionsDialogFragment.newInstance(
+            fileItem = item,
+            isCollected = item.isFavorite,
+        ).show(childFragmentManager, "file_actions_dialog")
+    }
+
     private fun submitList(sourceList: List<FileItem>) {
         val result = sourceList.filter { it.matchesFilter(fileFilter) }
         adapter.submitList(result)
@@ -133,6 +144,7 @@ class DocumentFragment : BaseFragment<FragmentDocumentBinding>() {
 
     private class DocumentListAdapter(
         private val onItemClicked: (FileItem) -> Unit,
+        private val onMoreClicked: (FileItem) -> Unit,
     ) : RecyclerView.Adapter<DocumentListAdapter.DocumentViewHolder>() {
 
         private val items = mutableListOf<FileItem>()
@@ -156,6 +168,9 @@ class DocumentFragment : BaseFragment<FragmentDocumentBinding>() {
             holder.binding.itemImage.setImageResource(fileCategory.iconRes)
             holder.binding.itemFileName.text = item.fileName
             holder.binding.itemFileDesc.text = item.buildInfoText(holder.itemView.context)
+            holder.binding.itemMore.setOnClickListener {
+                onMoreClicked(item)
+            }
             holder.itemView.setOnClickListener {
                 onItemClicked(item)
             }
