@@ -35,7 +35,7 @@ val supportedMimeTypes: Map<String, FileCategory>
         "application/vnd.openxmlformats-officedocument.presentationml.slideshow" to FileCategory.Ppt,
     )
 
-fun FileItem.getFileCategory(): FileCategory? = supportedMimeTypes[mimeType]
+fun FileItem.getFileCategory(): FileCategory? = supportedMimeTypes[contentMime]
 
 fun FileItem.matchesFilter(filter: FileTabFilter): Boolean {
     return when (filter) {
@@ -52,7 +52,7 @@ fun Long.formatFileDate(pattern: String = "yyyy/MM/dd HH:mm"): String {
 }
 
 fun FileItem.buildInfoText(context: Context): String {
-    return "${dateAdded.formatFileDate()} ${Formatter.formatFileSize(context, size)}"
+    return "${createdAtMillis.formatFileDate()} ${Formatter.formatFileSize(context, fileBytes)}"
 }
 
 fun querySupportedFiles(context: Context): List<FileItem> {
@@ -87,13 +87,15 @@ fun querySupportedFiles(context: Context): List<FileItem> {
             val file = File(path)
             val size = cursor.getLongOrNull(sizeColumn) ?: 0L
             if (!file.exists() || size <= 0L) continue
+            val fileCategory = supportedMimeTypes[cursor.getStringOrNull(mimeColumn).orEmpty()]
             result.add(
                 FileItem(
-                    fileName = cursor.getStringOrNull(nameColumn).orEmpty(),
-                    filePath = path,
-                    mimeType = cursor.getStringOrNull(mimeColumn).orEmpty(),
-                    size = size,
-                    dateAdded = (cursor.getLongOrNull(dateColumn) ?: 0L) * 1000L,
+                    documentTitle = cursor.getStringOrNull(nameColumn).orEmpty(),
+                    absolutePath = path,
+                    contentMime = cursor.getStringOrNull(mimeColumn).orEmpty(),
+                    fileBytes = size,
+                    createdAtMillis = (cursor.getLongOrNull(dateColumn) ?: 0L) * 1000L,
+                    encryptedFlag = fileCategory == FileCategory.Pdf && isPdfEncrypt(path),
                 ),
             )
         }
@@ -105,7 +107,7 @@ fun Context.openFileBySystem(item: FileItem) {
     runCatching {
         startActivity(
             Intent(Intent.ACTION_VIEW).apply {
-                setDataAndType(createFileUri(this@openFileBySystem, item.filePath), item.mimeType.ifBlank { "*/*" })
+                setDataAndType(createFileUri(this@openFileBySystem, item.absolutePath), item.contentMime.ifBlank { "*/*" })
                 addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
             },
@@ -123,13 +125,13 @@ private fun createFileUri(context: Context, path: String): Uri {
 
 suspend fun markFileAsRecent(item: FileItem) {
     withContext(Dispatchers.IO) {
-        val dbItem = app.database.fileItemDao().getFileByPath(item.filePath) ?: item
-        dbItem.recentViewTime = System.currentTimeMillis()
+        val dbItem = app.database.fileItemDao().getFileByPath(item.absolutePath) ?: item
+        dbItem.lastViewedAtMillis = System.currentTimeMillis()
         app.database.fileItemDao().upsert(dbItem)
     }
 }
 
-fun isPdfPasswordRequired(filePath: String): Boolean {
+fun isPdfEncrypt(filePath: String): Boolean {
     return runCatching {
         val document = Document.openDocument(filePath)
         val needsPassword = document.needsPassword()
@@ -137,6 +139,8 @@ fun isPdfPasswordRequired(filePath: String): Boolean {
         needsPassword
     }.getOrDefault(false)
 }
+
+fun isPdfPasswordRequired(filePath: String): Boolean = isPdfEncrypt(filePath)
 
 fun isPdfPasswordValid(filePath: String, password: String): Boolean {
     return runCatching {

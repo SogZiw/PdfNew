@@ -58,22 +58,35 @@ class DocumentRepository(private val database: AppDatabase) {
 
     fun refreshFiles(context: Context) {
         scope.launch {
-            _allFiles.value = querySupportedFiles(context)
+            val storedFiles = database.fileItemDao().getAllFiles().associateBy { it.absolutePath }
+            _allFiles.value = querySupportedFiles(context).map { scannedItem ->
+                val storedItem = storedFiles[scannedItem.absolutePath]
+                if (storedItem == null) {
+                    scannedItem
+                } else {
+                    scannedItem.copy(
+                        recordId = storedItem.recordId,
+                        lastViewedAtMillis = storedItem.lastViewedAtMillis,
+                        collectedFlag = storedItem.collectedFlag,
+                        encryptedFlag = scannedItem.encryptedFlag,
+                    )
+                }
+            }
             _showPermissionGuide.value = false
         }
     }
 
     suspend fun toggleFavorite(fileItem: FileItem): Boolean {
         return withContext(Dispatchers.IO) {
-            val storedItem = database.fileItemDao().getFileByPath(fileItem.filePath)
+            val storedItem = database.fileItemDao().getFileByPath(fileItem.absolutePath)
             val targetItem = (storedItem ?: fileItem).copy()
-            val nextFavoriteState = !(storedItem?.isFavorite ?: fileItem.isFavorite)
-            targetItem.isFavorite = nextFavoriteState
+            val nextFavoriteState = !(storedItem?.collectedFlag ?: fileItem.collectedFlag)
+            targetItem.collectedFlag = nextFavoriteState
             database.fileItemDao().upsert(targetItem)
             _allFiles.update { files ->
                 files.map { item ->
-                    if (item.filePath == fileItem.filePath) {
-                        item.copy(isFavorite = nextFavoriteState)
+                    if (item.absolutePath == fileItem.absolutePath) {
+                        item.copy(collectedFlag = nextFavoriteState)
                     } else {
                         item
                     }

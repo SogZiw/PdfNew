@@ -145,3 +145,6 @@ This file captures the working conventions established during recent development
 - Removed the redundant `isCollected` argument from `FileActionsDialogFragment.newInstance()` and now initialize the collect state directly from database-backed file data.
 - Added encrypted-PDF password handling to `PdfReaderActivity`, including password-required detection and a simple password entry dialog.
 - Updated the PDF password dialog flow so password input is validated before dismissing the dialog; invalid passwords now show an error toast and clear the input for retry.
+- Added `isEncrypt` to `FileItem`, Room persistence, and file scanning, and merged stored Room fields back into scanned items so favorite/recent/encryption state stays consistent after refresh.
+- Renamed the Room table and all persisted column names for `FileItem`, and switched the database to destructive migration so the new schema replaces the old one without a manual migration path.
+- Renamed the `FileItem` property names themselves away from the original `PDFView` naming, and updated all repository, viewer, dialog, and list bindings to use the new field names consistently.

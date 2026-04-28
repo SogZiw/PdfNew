@@ -67,7 +67,7 @@ class OfficePreviewActivity : BaseActivity<ActivityOfficePreviewBinding>() {
 
     private fun bindPreviewHeader(fileItem: FileItem, previewSource: PreviewSource) {
         binding.toolbar.actionBack.setOnClickListener { onClickBack() }
-        binding.toolbar.toolbarTitle.text = "${previewSource.badgeText}  ${fileItem.fileName}"
+        binding.toolbar.toolbarTitle.text = "${previewSource.badgeText}  ${fileItem.documentTitle}"
     }
 
     @SuppressLint("SetJavaScriptEnabled")
@@ -104,7 +104,7 @@ class OfficePreviewActivity : BaseActivity<ActivityOfficePreviewBinding>() {
 
     private fun dispatchPreview(previewSource: PreviewSource, fileItem: FileItem) {
         binding.loadingContainer.visibility = android.view.View.VISIBLE
-        val targetFile = Uri.fromFile(File(fileItem.filePath)).toString()
+        val targetFile = Uri.fromFile(File(fileItem.absolutePath)).toString()
         binding.webView.loadUrl("${previewSource.assetUrl}?file=$targetFile")
     }
 

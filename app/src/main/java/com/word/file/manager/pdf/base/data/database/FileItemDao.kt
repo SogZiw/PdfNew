@@ -12,12 +12,15 @@ interface FileItemDao {
     @Upsert
     suspend fun upsert(item: FileItem)
 
-    @Query("SELECT * FROM file_item_table WHERE recentViewTime > 0 ORDER BY recentViewTime DESC")
+    @Query("SELECT * FROM doc_entry_records")
+    suspend fun getAllFiles(): List<FileItem>
+
+    @Query("SELECT * FROM doc_entry_records WHERE last_opened_epoch_ms > 0 ORDER BY last_opened_epoch_ms DESC")
     fun getRecentFiles(): Flow<List<FileItem>>
 
-    @Query("SELECT * FROM file_item_table WHERE isFavorite = 1 ORDER BY dateAdded DESC")
+    @Query("SELECT * FROM doc_entry_records WHERE saved_flag = 1 ORDER BY created_epoch_ms DESC")
     fun getFavoriteFiles(): Flow<List<FileItem>>
 
-    @Query("SELECT * FROM file_item_table WHERE filePath = :path LIMIT 1")
+    @Query("SELECT * FROM doc_entry_records WHERE storage_uri = :path LIMIT 1")
     suspend fun getFileByPath(path: String): FileItem?
 }

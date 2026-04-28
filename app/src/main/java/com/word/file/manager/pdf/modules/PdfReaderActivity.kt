@@ -32,7 +32,7 @@ class PdfReaderActivity : BaseActivity<ActivityPdfReaderBinding>() {
             return
         }
         setupHeader(fileItem)
-        if (isPdfPasswordRequired(fileItem.filePath)) {
+        if (isPdfPasswordRequired(fileItem.absolutePath)) {
             promptPassword(fileItem)
         } else {
             showPdfContent(fileItem)
@@ -51,7 +51,7 @@ class PdfReaderActivity : BaseActivity<ActivityPdfReaderBinding>() {
 
     private fun setupHeader(fileItem: FileItem) {
         binding.toolbar.actionBack.setOnClickListener { onClickBack() }
-        binding.toolbar.toolbarTitle.text = fileItem.fileName
+        binding.toolbar.toolbarTitle.text = fileItem.documentTitle
     }
 
     private fun rememberOpenAction(fileItem: FileItem) {
@@ -73,7 +73,7 @@ class PdfReaderActivity : BaseActivity<ActivityPdfReaderBinding>() {
 
         dialogBinding.btnConfirm.setOnClickListener {
             val password = dialogBinding.etPassword.text?.toString().orEmpty()
-            if (password.isBlank() || !isPdfPasswordValid(fileItem.filePath, password)) {
+            if (password.isBlank() || !isPdfPasswordValid(fileItem.absolutePath, password)) {
                 showMessageToast(getString(R.string.pdf_password_incorrect))
                 dialogBinding.etPassword.setText("")
                 return@setOnClickListener
@@ -89,7 +89,7 @@ class PdfReaderActivity : BaseActivity<ActivityPdfReaderBinding>() {
     }
 
     private fun showPdfContent(fileItem: FileItem, password: String? = null) {
-        binding.pdfView.fromFile(File(fileItem.filePath))
+        binding.pdfView.fromFile(File(fileItem.absolutePath))
             .enableSwipe(true)
             .swipeHorizontal(false)
             .enableDoubletap(true)

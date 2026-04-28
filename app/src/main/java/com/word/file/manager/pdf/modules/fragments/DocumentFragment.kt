@@ -164,7 +164,7 @@ class DocumentFragment : BaseFragment<FragmentDocumentBinding>() {
             val item = items[position]
             val fileCategory = item.getFileCategory() ?: return
             holder.binding.itemImage.setImageResource(fileCategory.iconRes)
-            holder.binding.itemFileName.text = item.fileName
+            holder.binding.itemFileName.text = item.documentTitle
             holder.binding.itemFileDesc.text = item.buildInfoText(holder.itemView.context)
             holder.binding.itemMore.setOnClickListener {
                 onMoreClicked(item)

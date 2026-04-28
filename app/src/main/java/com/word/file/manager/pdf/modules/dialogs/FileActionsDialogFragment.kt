@@ -75,12 +75,12 @@ class FileActionsDialogFragment : BottomSheetDialogFragment() {
     }
 
     private fun bindHeader(fileItem: FileItem) {
-        binding.textFileName.text = fileItem.fileName
-        binding.textFilePath.text = fileItem.filePath
+        binding.textFileName.text = fileItem.documentTitle
+        binding.textFilePath.text = fileItem.absolutePath
         binding.imageFileCover.setImageResource(fileItem.getFileCategory()?.iconRes ?: R.drawable.ic_file_pdf)
         viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
-            val storedItem = app.database.fileItemDao().getFileByPath(fileItem.filePath)
-            val actualCollected = storedItem?.isFavorite ?: fileItem.isFavorite
+            val storedItem = app.database.fileItemDao().getFileByPath(fileItem.absolutePath)
+            val actualCollected = storedItem?.collectedFlag ?: fileItem.collectedFlag
             withContext(Dispatchers.Main) {
                 renderCollectState(actualCollected)
             }
@@ -97,8 +97,8 @@ class FileActionsDialogFragment : BottomSheetDialogFragment() {
     private fun toggleCollectedState() {
         val fileItem = currentFileItem ?: return
         viewLifecycleOwner.lifecycleScope.launch {
-            val collected = app.documentRepository.toggleFavorite(fileItem.copy(isFavorite = currentCollectedState))
-            currentFileItem = fileItem.copy(isFavorite = collected)
+            val collected = app.documentRepository.toggleFavorite(fileItem.copy(collectedFlag = currentCollectedState))
+            currentFileItem = fileItem.copy(collectedFlag = collected)
             renderCollectState(collected)
         }
     }
