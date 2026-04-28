@@ -88,4 +88,7 @@ dependencies {
 
     implementation(libs.androidx.room.runtime)
     ksp(libs.androidx.room.compiler)
+
+    // https://developers.google.com/ml-kit/vision/doc-scanner/android?hl=zh-cn
+    implementation("com.google.android.gms:play-services-mlkit-document-scanner:16.0.0")
 }

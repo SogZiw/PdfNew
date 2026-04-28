@@ -3,6 +3,7 @@ package com.word.file.manager.pdf.base.data
 import android.content.Context
 import com.word.file.manager.pdf.base.data.database.AppDatabase
 import com.word.file.manager.pdf.base.utils.deleteFileItem
+import com.word.file.manager.pdf.base.utils.registerCreatedFile
 import com.word.file.manager.pdf.base.utils.querySupportedFiles
 import com.word.file.manager.pdf.base.utils.renameFileItem
 import kotlinx.coroutines.CoroutineScope
@@ -17,6 +18,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.io.File
 
 class DocumentRepository(private val database: AppDatabase) {
 
@@ -130,6 +132,17 @@ class DocumentRepository(private val database: AppDatabase) {
                 }
             }
             deleted
+        }
+    }
+
+    suspend fun registerCreatedPdf(file: File): FileItem {
+        return withContext(Dispatchers.IO) {
+            val createdItem = registerCreatedFile(file)
+            database.fileItemDao().upsert(createdItem)
+            _allFiles.update { files ->
+                listOf(createdItem) + files.filterNot { it.absolutePath == createdItem.absolutePath }
+            }
+            createdItem
         }
     }
 }

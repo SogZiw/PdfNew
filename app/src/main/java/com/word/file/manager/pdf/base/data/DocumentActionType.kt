@@ -32,3 +32,7 @@ data object PdfPrintType : DocumentActionType() {
     override fun getActionName(context: Context): String = context.getString(R.string.print)
     override fun getMenuIconRes(): Int = R.drawable.ic_menu_print_pdf
 }
+
+data object PdfCreateType : DocumentActionType() {
+    override fun getActionName(context: Context): String = context.getString(R.string.create_pdf)
+}

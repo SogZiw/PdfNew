@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">PdfNew</string>
+    <string name="app_name">AgilePDF</string>
     <string name="home">Home</string>
     <string name="recently">Recently</string>
     <string name="bookmark_nav">Bookmark</string>
@@ -26,6 +26,8 @@
     <string name="info">Info</string>
     <string name="share">Share</string>
     <string name="delete">Delete</string>
+    <string name="create_pdf">Create PDF</string>
+    <string name="pdf_created">PDF created</string>
     <string name="pdf_password_title">Enter Password</string>
     <string name="pdf_password_hint">Password</string>
     <string name="pdf_password_incorrect">Incorrect password</string>
@@ -33,4 +35,5 @@
     <string name="confirm">Confirm</string>
     <string name="file_name_required">Please enter file name</string>
     <string name="cannot_print_encrypted_pdf">Encrypted PDF cannot be printed</string>
+    <string name="back_home">Back Home</string>
 </resources>

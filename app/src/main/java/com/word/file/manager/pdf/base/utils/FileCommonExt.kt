@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.Context.PRINT_SERVICE
 import android.media.MediaScannerConnection
 import android.net.Uri
+import android.os.Environment
 import android.print.PrintManager
 import android.provider.MediaStore
 import android.text.format.Formatter
@@ -20,6 +21,7 @@ import com.artifex.mupdf.fitz.Document
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.File
+import java.io.FileOutputStream
 import java.text.SimpleDateFormat
 import java.util.Locale
 import kotlin.random.Random
@@ -214,4 +216,41 @@ suspend fun deleteFileItem(fileItem: FileItem): Boolean {
         }
         deleted
     }
+}
+
+suspend fun copyScannerPdfToLibrary(context: Context, sourceUri: Uri): File? {
+    return withContext(Dispatchers.IO) {
+        val outputDir = File(
+            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS),
+            "AgilePDF/Created",
+        )
+        if (!outputDir.exists()) {
+            outputDir.mkdirs()
+        }
+        val baseName = "PDF_Create_${System.currentTimeMillis().formatFileDate("yyyyMMddHHmmss")}"
+        var outputFile = File(outputDir, "$baseName.pdf")
+        if (outputFile.exists()) {
+            outputFile = File(outputDir, "${baseName}_${Random.nextInt(1000, 9999)}.pdf")
+        }
+        return@withContext runCatching {
+            context.contentResolver.openInputStream(sourceUri)?.use { input ->
+                FileOutputStream(outputFile).use { output ->
+                    input.copyTo(output)
+                }
+            } ?: return@runCatching null
+            MediaScannerConnection.scanFile(context, arrayOf(outputFile.absolutePath), arrayOf("application/pdf"), null)
+            outputFile
+        }.getOrNull()
+    }
+}
+
+fun registerCreatedFile(file: File): FileItem {
+    return FileItem(
+        documentTitle = file.name,
+        absolutePath = file.absolutePath,
+        contentMime = "application/pdf",
+        fileBytes = file.length(),
+        createdAtMillis = file.lastModified(),
+        encryptedFlag = isPdfEncrypt(file.absolutePath),
+    )
 }
