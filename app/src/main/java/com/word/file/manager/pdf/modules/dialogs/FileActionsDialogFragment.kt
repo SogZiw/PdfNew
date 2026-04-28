@@ -13,6 +13,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.word.file.manager.pdf.R
 import com.word.file.manager.pdf.app
 import com.word.file.manager.pdf.base.data.FileItem
+import com.word.file.manager.pdf.base.utils.getFileCategory
 import com.word.file.manager.pdf.databinding.DialogFileActionsBinding
 import com.word.file.manager.pdf.databinding.ViewDialogActionItemBinding
 import kotlinx.coroutines.Dispatchers
@@ -75,6 +76,7 @@ class FileActionsDialogFragment : BottomSheetDialogFragment() {
     private fun bindHeader(fileItem: FileItem, isCollected: Boolean) {
         binding.textFileName.text = fileItem.fileName
         binding.textFilePath.text = fileItem.filePath
+        binding.imageFileCover.setImageResource(fileItem.getFileCategory()?.iconRes ?: R.drawable.ic_file_pdf)
         renderCollectState(isCollected)
         viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
             val storedItem = app.database.fileItemDao().getFileByPath(fileItem.filePath)

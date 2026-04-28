@@ -140,3 +140,4 @@ This file captures the working conventions established during recent development
 - Added missing `ic_menu_lock`, `ic_menu_unlock`, and `ic_menu_info` vector resources so the file-action dialog can render the full action list.
 - Wired the file item `more` button in `DocumentFragment` to open `FileActionsDialogFragment` without attaching individual action handlers yet.
 - Updated `FileActionsDialogFragment` to reconcile the collect icon state from the database so the dialog header stays accurate even when opened from the scanned home list.
+- Updated `image_file_cover` in `FileActionsDialogFragment` to reflect the actual file category icon instead of always using the PDF asset.
