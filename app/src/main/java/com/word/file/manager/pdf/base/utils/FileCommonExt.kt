@@ -2,7 +2,10 @@ package com.word.file.manager.pdf.base.utils
 
 import android.content.Context
 import android.content.Intent
+import android.content.Context.PRINT_SERVICE
+import android.media.MediaScannerConnection
 import android.net.Uri
+import android.print.PrintManager
 import android.provider.MediaStore
 import android.text.format.Formatter
 import androidx.core.content.FileProvider
@@ -12,12 +15,14 @@ import com.word.file.manager.pdf.app
 import com.word.file.manager.pdf.base.data.FileCategory
 import com.word.file.manager.pdf.base.data.FileItem
 import com.word.file.manager.pdf.base.data.FileTabFilter
+import com.word.file.manager.pdf.base.helper.PdfPrintAdapter
 import com.artifex.mupdf.fitz.Document
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Locale
+import kotlin.random.Random
 import androidx.core.net.toUri
 
 val supportedMimeTypes: Map<String, FileCategory>
@@ -117,6 +122,29 @@ fun Context.openFileBySystem(item: FileItem) {
     }
 }
 
+fun Context.shareFile(item: FileItem) {
+    runCatching {
+        startActivity(
+            Intent.createChooser(
+                Intent(Intent.ACTION_SEND).apply {
+                    type = item.contentMime.ifBlank { "*/*" }
+                    putExtra(Intent.EXTRA_STREAM, createFileUri(this@shareFile, item.absolutePath))
+                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                },
+                getString(com.word.file.manager.pdf.R.string.share),
+            ),
+        )
+    }.onFailure {
+        showMessageToast(getString(com.word.file.manager.pdf.R.string.common_error_message))
+    }
+}
+
+fun Context.printPdf(item: FileItem) {
+    val printManager = getSystemService(PRINT_SERVICE) as? PrintManager ?: return
+    printManager.print("Print_PDF_Job", PdfPrintAdapter(item), null)
+}
+
 private fun createFileUri(context: Context, path: String): Uri {
     return if (path.startsWith("/")) {
         FileProvider.getUriForFile(context, "${context.packageName}.fileProvider", File(path))
@@ -149,4 +177,41 @@ fun isPdfPasswordValid(filePath: String, password: String): Boolean {
         document.destroy()
         valid
     }.getOrDefault(false)
+}
+
+suspend fun renameFileItem(fileItem: FileItem, rawName: String): FileItem? {
+    return withContext(Dispatchers.IO) {
+        val originalFile = File(fileItem.absolutePath)
+        val safeName = rawName.replace(Regex("[\\\\/:*?\"<>|\\x00]"), "_").trim()
+        if (safeName.isBlank()) return@withContext null
+        val extension = originalFile.extension
+        val targetName = if (extension.isBlank()) safeName else "$safeName.$extension"
+        var targetFile = File(originalFile.parentFile, targetName)
+        if (targetFile.exists()) {
+            val suffixName = if (extension.isBlank()) {
+                "${safeName}${Random.nextInt(1, 10000)}"
+            } else {
+                "${safeName}${Random.nextInt(1, 10000)}.$extension"
+            }
+            targetFile = File(originalFile.parentFile, suffixName)
+        }
+        if (!originalFile.renameTo(targetFile)) return@withContext null
+        MediaScannerConnection.scanFile(app, arrayOf(targetFile.absolutePath), null, null)
+        val displayName = targetFile.name
+        fileItem.copy(
+            documentTitle = displayName,
+            absolutePath = targetFile.absolutePath,
+        )
+    }
+}
+
+suspend fun deleteFileItem(fileItem: FileItem): Boolean {
+    return withContext(Dispatchers.IO) {
+        val targetFile = File(fileItem.absolutePath)
+        val deleted = targetFile.delete()
+        if (deleted) {
+            MediaScannerConnection.scanFile(app, arrayOf(targetFile.absolutePath), null, null)
+        }
+        deleted
+    }
 }

@@ -31,4 +31,6 @@
     <string name="pdf_password_incorrect">Incorrect password</string>
     <string name="cancel">Cancel</string>
     <string name="confirm">Confirm</string>
+    <string name="file_name_required">Please enter file name</string>
+    <string name="cannot_print_encrypted_pdf">Encrypted PDF cannot be printed</string>
 </resources>

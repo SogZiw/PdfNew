@@ -1,21 +1,30 @@
 package com.word.file.manager.pdf.modules.dialogs
 
 import android.app.Dialog
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.word.file.manager.pdf.EXTRA_FILE_ITEM
 import com.word.file.manager.pdf.R
 import com.word.file.manager.pdf.app
+import com.word.file.manager.pdf.base.data.FileCategory
 import com.word.file.manager.pdf.base.data.FileItem
 import com.word.file.manager.pdf.base.utils.getFileCategory
+import com.word.file.manager.pdf.base.utils.printPdf
+import com.word.file.manager.pdf.base.utils.shareFile
+import com.word.file.manager.pdf.base.utils.showMessageToast
 import com.word.file.manager.pdf.databinding.DialogFileActionsBinding
+import com.word.file.manager.pdf.databinding.DialogFileRenameBinding
 import com.word.file.manager.pdf.databinding.ViewDialogActionItemBinding
+import com.word.file.manager.pdf.modules.OfficePreviewActivity
+import com.word.file.manager.pdf.modules.PdfReaderActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -24,15 +33,16 @@ class FileActionsDialogFragment : BottomSheetDialogFragment() {
 
     private var currentFileItem: FileItem? = null
     private var currentCollectedState: Boolean = false
+    private var headerCollectStateResolved: Boolean = false
 
     companion object {
         private const val ARG_FILE_ITEM = "arg_file_item"
 
         fun newInstance(fileItem: FileItem): FileActionsDialogFragment {
             return FileActionsDialogFragment().apply {
-                arguments = bundleOf(
-                    ARG_FILE_ITEM to fileItem,
-                )
+                arguments = Bundle().apply {
+                    putParcelable(ARG_FILE_ITEM, fileItem)
+                }
             }
         }
     }
@@ -78,11 +88,14 @@ class FileActionsDialogFragment : BottomSheetDialogFragment() {
         binding.textFileName.text = fileItem.documentTitle
         binding.textFilePath.text = fileItem.absolutePath
         binding.imageFileCover.setImageResource(fileItem.getFileCategory()?.iconRes ?: R.drawable.ic_file_pdf)
+        headerCollectStateResolved = false
         viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
             val storedItem = app.database.fileItemDao().getFileByPath(fileItem.absolutePath)
             val actualCollected = storedItem?.collectedFlag ?: fileItem.collectedFlag
             withContext(Dispatchers.Main) {
+                if (headerCollectStateResolved) return@withContext
                 renderCollectState(actualCollected)
+                headerCollectStateResolved = true
             }
         }
     }
@@ -96,6 +109,7 @@ class FileActionsDialogFragment : BottomSheetDialogFragment() {
 
     private fun toggleCollectedState() {
         val fileItem = currentFileItem ?: return
+        headerCollectStateResolved = true
         viewLifecycleOwner.lifecycleScope.launch {
             val collected = app.documentRepository.toggleFavorite(fileItem.copy(collectedFlag = currentCollectedState))
             currentFileItem = fileItem.copy(collectedFlag = collected)
@@ -111,6 +125,14 @@ class FileActionsDialogFragment : BottomSheetDialogFragment() {
         bindAction(binding.actionMerge, R.drawable.ic_menu_merge_pdf, R.string.merge_pdf)
         bindAction(binding.actionPrint, R.drawable.ic_menu_print_pdf, R.string.print)
         bindAction(binding.actionDelete, R.drawable.ic_menu_delete, R.string.delete, showDivider = false)
+        binding.actionRename.root.setOnClickListener { showRenameDialog() }
+        binding.actionOpen.root.setOnClickListener { openFile() }
+        binding.actionShare.root.setOnClickListener { shareCurrentFile() }
+        binding.actionPrint.root.setOnClickListener { printCurrentFile() }
+        binding.actionDelete.root.setOnClickListener { deleteCurrentFile() }
+        binding.actionPrint.root.isEnabled = currentFileItem?.getFileCategory() == com.word.file.manager.pdf.base.data.FileCategory.Pdf
+        binding.actionPrint.actionText.alpha = if (binding.actionPrint.root.isEnabled) 1f else 0.4f
+        binding.actionPrint.actionIcon.alpha = if (binding.actionPrint.root.isEnabled) 1f else 0.4f
     }
 
     private fun bindAction(
@@ -127,5 +149,78 @@ class FileActionsDialogFragment : BottomSheetDialogFragment() {
     override fun onDestroyView() {
         _binding = null
         super.onDestroyView()
+    }
+
+    private fun showRenameDialog() {
+        val fileItem = currentFileItem ?: return
+        val renameBinding = DialogFileRenameBinding.inflate(LayoutInflater.from(requireContext()), null, false)
+        renameBinding.etName.setText(fileItem.documentTitle.substringBeforeLast(".", fileItem.documentTitle))
+        val dialog = MaterialAlertDialogBuilder(requireContext())
+            .setView(renameBinding.root)
+            .setCancelable(true)
+            .create()
+        renameBinding.btnCancel.setOnClickListener { dialog.dismiss() }
+        renameBinding.btnConfirm.setOnClickListener {
+            val rawName = renameBinding.etName.text?.toString().orEmpty()
+            if (rawName.isBlank()) {
+                requireContext().showMessageToast(getString(R.string.file_name_required))
+                return@setOnClickListener
+            }
+            viewLifecycleOwner.lifecycleScope.launch {
+                val renamed = app.documentRepository.renameDocument(fileItem, rawName)
+                if (renamed == null) {
+                    requireContext().showMessageToast(getString(R.string.common_error_message))
+                    return@launch
+                }
+                currentFileItem = renamed
+                bindHeader(renamed)
+                dialog.dismiss()
+            }
+        }
+        dialog.show()
+    }
+
+    private fun openFile() {
+        val fileItem = currentFileItem ?: return
+        dismiss()
+        val targetClass = when (fileItem.getFileCategory()) {
+            FileCategory.Pdf -> PdfReaderActivity::class.java
+            FileCategory.Word,
+            FileCategory.Excel,
+            FileCategory.Ppt -> OfficePreviewActivity::class.java
+
+            null -> return
+        }
+        startActivity(Intent(requireContext(), targetClass).apply {
+            putExtra(EXTRA_FILE_ITEM, fileItem)
+        })
+    }
+
+    private fun shareCurrentFile() {
+        val fileItem = currentFileItem ?: return
+        requireContext().shareFile(fileItem)
+    }
+
+    private fun printCurrentFile() {
+        val fileItem = currentFileItem ?: return
+        if (fileItem.getFileCategory() != FileCategory.Pdf) return
+        if (fileItem.encryptedFlag) {
+            requireContext().showMessageToast(getString(R.string.cannot_print_encrypted_pdf))
+            return
+        }
+        dismiss()
+        requireContext().printPdf(fileItem)
+    }
+
+    private fun deleteCurrentFile() {
+        val fileItem = currentFileItem ?: return
+        viewLifecycleOwner.lifecycleScope.launch {
+            val deleted = app.documentRepository.deleteDocument(fileItem)
+            if (!deleted) {
+                requireContext().showMessageToast(getString(R.string.common_error_message))
+                return@launch
+            }
+            dismiss()
+        }
     }
 }

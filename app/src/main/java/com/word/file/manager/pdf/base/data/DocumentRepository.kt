@@ -2,7 +2,9 @@ package com.word.file.manager.pdf.base.data
 
 import android.content.Context
 import com.word.file.manager.pdf.base.data.database.AppDatabase
+import com.word.file.manager.pdf.base.utils.deleteFileItem
 import com.word.file.manager.pdf.base.utils.querySupportedFiles
+import com.word.file.manager.pdf.base.utils.renameFileItem
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -93,6 +95,41 @@ class DocumentRepository(private val database: AppDatabase) {
                 }
             }
             nextFavoriteState
+        }
+    }
+
+    suspend fun renameDocument(fileItem: FileItem, rawName: String): FileItem? {
+        return withContext(Dispatchers.IO) {
+            val renamedItem = renameFileItem(fileItem, rawName) ?: return@withContext null
+            val storedItem = database.fileItemDao().getFileByPath(fileItem.absolutePath)
+            val targetItem = (storedItem ?: fileItem).copy(
+                recordId = storedItem?.recordId ?: fileItem.recordId,
+                documentTitle = renamedItem.documentTitle,
+                absolutePath = renamedItem.absolutePath,
+            )
+            database.fileItemDao().upsert(targetItem)
+            _allFiles.update { files ->
+                files.map { item ->
+                    if (item.absolutePath == fileItem.absolutePath) targetItem else item
+                }
+            }
+            targetItem
+        }
+    }
+
+    suspend fun deleteDocument(fileItem: FileItem): Boolean {
+        return withContext(Dispatchers.IO) {
+            val storedItem = database.fileItemDao().getFileByPath(fileItem.absolutePath) ?: fileItem
+            val deleted = deleteFileItem(fileItem)
+            if (deleted) {
+                if (storedItem.recordId != 0L) {
+                    database.fileItemDao().delete(storedItem)
+                }
+                _allFiles.update { files ->
+                    files.filterNot { it.absolutePath == fileItem.absolutePath }
+                }
+            }
+            deleted
         }
     }
 }

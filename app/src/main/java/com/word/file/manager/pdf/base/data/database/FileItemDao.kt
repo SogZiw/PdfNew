@@ -1,6 +1,7 @@
 package com.word.file.manager.pdf.base.data.database
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Query
 import androidx.room.Upsert
 import com.word.file.manager.pdf.base.data.FileItem
@@ -11,6 +12,9 @@ interface FileItemDao {
 
     @Upsert
     suspend fun upsert(item: FileItem)
+
+    @Delete
+    suspend fun delete(item: FileItem)
 
     @Query("SELECT * FROM doc_entry_records")
     suspend fun getAllFiles(): List<FileItem>
