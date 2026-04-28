@@ -1,6 +1,7 @@
 package com.word.file.manager.pdf.modules
 
 import android.view.LayoutInflater
+import androidx.lifecycle.lifecycleScope
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.word.file.manager.pdf.app
@@ -11,6 +12,7 @@ import com.word.file.manager.pdf.modules.fragments.HomeFragment
 import com.word.file.manager.pdf.modules.fragments.RecentFragment
 import com.word.file.manager.pdf.modules.permissions.StoragePermissionActivity
 import com.word.file.manager.pdf.modules.permissions.hasStorageAccessPermission
+import kotlinx.coroutines.launch
 
 class MainActivity : StoragePermissionActivity<ActivityMainBinding>() {
 
@@ -18,25 +20,25 @@ class MainActivity : StoragePermissionActivity<ActivityMainBinding>() {
 
     override fun initView() {
         initViewPager()
-        app.mainViewModel.requestStorageLiveData.observe(this) {
-            checkStoragePermission(com.word.file.manager.pdf.base.data.DocumentOpenType)
+        lifecycleScope.launch {
+            app.documentRepository.requestStorageAccess.collect {
+                checkStoragePermission(com.word.file.manager.pdf.base.data.DocumentOpenType)
+            }
         }
         if (hasStorageAccessPermission()) {
-            app.mainViewModel.refreshFiles(activity)
+            app.documentRepository.refreshFiles(activity)
         } else {
-            app.mainViewModel.changePermissionVisible.postValue(true)
+            app.documentRepository.updatePermissionGuide(true)
         }
         binding.btnAdd.setOnClickListener { }
     }
 
     override fun onStorageAccessGranted(type: DocumentActionType?) {
-        app.mainViewModel.refreshFiles(activity)
-        app.mainViewModel.onRecentUpdateLiveData.postValue(app.mainViewModel.onRecentUpdateLiveData.value ?: emptyList())
-        app.mainViewModel.onBookmarkUpdateLiveData.postValue(app.mainViewModel.onBookmarkUpdateLiveData.value ?: emptyList())
+        app.documentRepository.refreshFiles(activity)
     }
 
     override fun onStorageAccessDenied() {
-        app.mainViewModel.changePermissionVisible.postValue(true)
+        app.documentRepository.updatePermissionGuide(true)
     }
 
     private fun initViewPager() {
@@ -65,6 +67,10 @@ class MainActivity : StoragePermissionActivity<ActivityMainBinding>() {
         binding.tabHistory.isSelected = index == 2
         binding.tabSet.isSelected = index == 3
         binding.viewPager.setCurrentItem(index, false)
+    }
+
+    override fun onClickBack() {
+        moveTaskToBack(true)
     }
 
 }

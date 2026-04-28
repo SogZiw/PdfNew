@@ -5,6 +5,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.word.file.manager.pdf.R
 import com.word.file.manager.pdf.app
@@ -12,6 +15,7 @@ import com.word.file.manager.pdf.base.BaseFragment
 import com.word.file.manager.pdf.base.data.FileTabFilter
 import com.word.file.manager.pdf.databinding.FragmentHomeBinding
 import com.word.file.manager.pdf.modules.permissions.hasStorageAccessPermission
+import kotlinx.coroutines.launch
 
 class RecentFragment : BaseFragment<FragmentHomeBinding>() {
 
@@ -42,13 +46,16 @@ class RecentFragment : BaseFragment<FragmentHomeBinding>() {
         binding.layoutSelector.btnPpt.setOnClickListener { changeSelector(3) }
         binding.layoutSelector.btnExcel.setOnClickListener { changeSelector(4) }
         binding.viewPermission.btnAllow.setOnClickListener {
-            app.mainViewModel.requestStorageLiveData.postValue(true)
+            app.documentRepository.requestStoragePermission()
         }
-        app.mainViewModel.changePermissionVisible.observe(viewLifecycleOwner) {
-            binding.viewPermission.root.isVisible = it
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                app.documentRepository.showPermissionGuide.collect {
+                    binding.viewPermission.root.isVisible = it
+                }
+            }
         }
         binding.viewPermission.root.isVisible = !hasStorageAccessPermission()
-        app.mainViewModel.collectRecentFiles()
         changeSelector(0)
     }
 

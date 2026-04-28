@@ -124,3 +124,5 @@ This file captures the working conventions established during recent development
 - Unified `RecentFragment` and `BookmarkFragment` onto the same selector-button pattern after removing the shared `TabLayout` dependency from `fragment_home.xml`.
 - Updated the empty document state to show `ic_page_empty` while keeping the current empty-state text unchanged.
 - Fixed the post-permission refresh path so empty states in `RecentFragment` and `BookmarkFragment` render correctly after storage access is granted.
+- Replaced the app-wide `MainViewModel` approach with a `DocumentRepository` that exposes shared `StateFlow` and `SharedFlow` for file data, permission prompts, and UI state.
+- Moved `DocumentRepository` out of `modules/main` into `base/data` so its placement matches its cross-feature data responsibility.

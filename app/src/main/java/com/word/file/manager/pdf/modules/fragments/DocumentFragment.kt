@@ -6,7 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.word.file.manager.pdf.app
@@ -63,21 +65,44 @@ class DocumentFragment : BaseFragment<FragmentDocumentBinding>() {
         binding.recyclerView.adapter = adapter
         when (source) {
             DocumentSource.Home -> {
-                app.mainViewModel.onScanResultLiveData.observe(viewLifecycleOwner) {
-                    submitList(it)
+                viewLifecycleOwner.lifecycleScope.launch {
+                    viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                        app.documentRepository.allFiles.collect {
+                            submitList(it)
+                        }
+                    }
                 }
-                submitList(app.mainViewModel.allFiles)
             }
 
             DocumentSource.Recent -> {
-                app.mainViewModel.onRecentUpdateLiveData.observe(viewLifecycleOwner) {
-                    submitList(it)
+                viewLifecycleOwner.lifecycleScope.launch {
+                    viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                        app.documentRepository.recentFiles.collect {
+                            submitList(it)
+                        }
+                    }
                 }
             }
 
             DocumentSource.Bookmark -> {
-                app.mainViewModel.onBookmarkUpdateLiveData.observe(viewLifecycleOwner) {
-                    submitList(it)
+                viewLifecycleOwner.lifecycleScope.launch {
+                    viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                        app.documentRepository.bookmarkFiles.collect {
+                            submitList(it)
+                        }
+                    }
+                }
+            }
+        }
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                app.documentRepository.showPermissionGuide.collect {
+                    val currentItems = when (source) {
+                        DocumentSource.Home -> app.documentRepository.allFiles.value
+                        DocumentSource.Recent -> app.documentRepository.recentFiles.value
+                        DocumentSource.Bookmark -> app.documentRepository.bookmarkFiles.value
+                    }
+                    submitList(currentItems)
                 }
             }
         }
