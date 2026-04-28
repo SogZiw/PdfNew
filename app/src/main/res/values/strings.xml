@@ -26,4 +26,9 @@
     <string name="info">Info</string>
     <string name="share">Share</string>
     <string name="delete">Delete</string>
+    <string name="pdf_password_title">Enter Password</string>
+    <string name="pdf_password_hint">Password</string>
+    <string name="pdf_password_incorrect">Incorrect password</string>
+    <string name="cancel">Cancel</string>
+    <string name="confirm">Confirm</string>
 </resources>

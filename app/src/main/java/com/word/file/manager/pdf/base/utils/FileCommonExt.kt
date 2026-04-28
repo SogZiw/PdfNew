@@ -12,6 +12,7 @@ import com.word.file.manager.pdf.app
 import com.word.file.manager.pdf.base.data.FileCategory
 import com.word.file.manager.pdf.base.data.FileItem
 import com.word.file.manager.pdf.base.data.FileTabFilter
+import com.artifex.mupdf.fitz.Document
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.File
@@ -126,4 +127,22 @@ suspend fun markFileAsRecent(item: FileItem) {
         dbItem.recentViewTime = System.currentTimeMillis()
         app.database.fileItemDao().upsert(dbItem)
     }
+}
+
+fun isPdfPasswordRequired(filePath: String): Boolean {
+    return runCatching {
+        val document = Document.openDocument(filePath)
+        val needsPassword = document.needsPassword()
+        document.destroy()
+        needsPassword
+    }.getOrDefault(false)
+}
+
+fun isPdfPasswordValid(filePath: String, password: String): Boolean {
+    return runCatching {
+        val document = Document.openDocument(filePath)
+        val valid = document.authenticatePassword(password)
+        document.destroy()
+        valid
+    }.getOrDefault(false)
 }

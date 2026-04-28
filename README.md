@@ -143,3 +143,5 @@ This file captures the working conventions established during recent development
 - Updated `image_file_cover` in `FileActionsDialogFragment` to reflect the actual file category icon instead of always using the PDF asset.
 - Implemented bookmark toggling through `FileActionsDialogFragment` and `DocumentRepository`, with state refresh flowing back to the home list and bookmark list.
 - Removed the redundant `isCollected` argument from `FileActionsDialogFragment.newInstance()` and now initialize the collect state directly from database-backed file data.
+- Added encrypted-PDF password handling to `PdfReaderActivity`, including password-required detection and a simple password entry dialog.
+- Updated the PDF password dialog flow so password input is validated before dismissing the dialog; invalid passwords now show an error toast and clear the input for retry.
