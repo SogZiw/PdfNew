@@ -16,7 +16,9 @@ import com.word.file.manager.pdf.R
 import com.word.file.manager.pdf.app
 import com.word.file.manager.pdf.base.data.FileCategory
 import com.word.file.manager.pdf.base.data.FileItem
+import com.word.file.manager.pdf.base.utils.getPdfPageCount
 import com.word.file.manager.pdf.base.utils.getFileCategory
+import com.word.file.manager.pdf.base.utils.isUsablePdfForTool
 import com.word.file.manager.pdf.base.utils.printPdf
 import com.word.file.manager.pdf.base.utils.shareFile
 import com.word.file.manager.pdf.base.utils.showMessageToast
@@ -25,6 +27,7 @@ import com.word.file.manager.pdf.databinding.DialogFileRenameBinding
 import com.word.file.manager.pdf.databinding.ViewDialogActionItemBinding
 import com.word.file.manager.pdf.modules.OfficePreviewActivity
 import com.word.file.manager.pdf.modules.PdfReaderActivity
+import com.word.file.manager.pdf.modules.tools.PdfSplitPagesActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -127,11 +130,11 @@ class FileActionsDialogFragment : BottomSheetDialogFragment() {
         binding.actionRename.root.setOnClickListener { showRenameDialog() }
         binding.actionOpen.root.setOnClickListener { openFile() }
         binding.actionShare.root.setOnClickListener { shareCurrentFile() }
+        binding.actionSplit.root.setOnClickListener { openSplitPagePicker() }
         binding.actionPrint.root.setOnClickListener { printCurrentFile() }
         binding.actionDelete.root.setOnClickListener { deleteCurrentFile() }
-        binding.actionPrint.root.isEnabled = currentFileItem?.getFileCategory() == com.word.file.manager.pdf.base.data.FileCategory.Pdf
-        binding.actionPrint.actionText.alpha = if (binding.actionPrint.root.isEnabled) 1f else 0.4f
-        binding.actionPrint.actionIcon.alpha = if (binding.actionPrint.root.isEnabled) 1f else 0.4f
+        setActionEnabled(binding.actionSplit, currentFileItem?.isUsablePdfForTool() == true)
+        setActionEnabled(binding.actionPrint, currentFileItem?.getFileCategory() == FileCategory.Pdf)
     }
 
     private fun bindAction(
@@ -143,6 +146,12 @@ class FileActionsDialogFragment : BottomSheetDialogFragment() {
         itemBinding.actionIcon.setImageResource(iconRes)
         itemBinding.actionText.setText(textRes)
         itemBinding.actionDivider.visibility = if (showDivider) View.VISIBLE else View.GONE
+    }
+
+    private fun setActionEnabled(itemBinding: ViewDialogActionItemBinding, enabled: Boolean) {
+        itemBinding.root.isEnabled = enabled
+        itemBinding.actionText.alpha = if (enabled) 1f else 0.4f
+        itemBinding.actionIcon.alpha = if (enabled) 1f else 0.4f
     }
 
     override fun onDestroyView() {
@@ -198,6 +207,22 @@ class FileActionsDialogFragment : BottomSheetDialogFragment() {
     private fun shareCurrentFile() {
         val fileItem = currentFileItem ?: return
         requireContext().shareFile(fileItem)
+    }
+
+    private fun openSplitPagePicker() {
+        val fileItem = currentFileItem ?: return
+        if (!fileItem.isUsablePdfForTool()) return
+        viewLifecycleOwner.lifecycleScope.launch {
+            val pageCount = withContext(Dispatchers.IO) { getPdfPageCount(fileItem) }
+            if (pageCount <= 1) {
+                requireContext().showMessageToast(getString(R.string.can_not_split))
+                return@launch
+            }
+            dismiss()
+            startActivity(Intent(requireContext(), PdfSplitPagesActivity::class.java).apply {
+                putExtra(EXTRA_FILE_ITEM, fileItem)
+            })
+        }
     }
 
     private fun printCurrentFile() {

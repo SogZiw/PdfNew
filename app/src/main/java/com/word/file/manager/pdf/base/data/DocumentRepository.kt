@@ -145,4 +145,15 @@ class DocumentRepository(private val database: AppDatabase) {
             createdItem
         }
     }
+
+    suspend fun registerToolOutputPdf(file: File): FileItem {
+        return withContext(Dispatchers.IO) {
+            val outputItem = registerCreatedFile(file).copy(lastViewedAtMillis = System.currentTimeMillis())
+            database.fileItemDao().upsert(outputItem)
+            _allFiles.update { files ->
+                listOf(outputItem) + files.filterNot { it.absolutePath == outputItem.absolutePath }
+            }
+            outputItem
+        }
+    }
 }

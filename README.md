@@ -156,3 +156,14 @@ This file captures the working conventions established during recent development
 - Guarded the file-action dialog’s async collect-state hydration so it no longer races with a user’s immediate bookmark toggle and overwrite the freshly updated icon state.
 - Removed the `Merge PDF` row from the file-action dialog menu while keeping the shared merge action definition available for future tool flows.
 - Added `ToolsFragment` with a `Format` tools grid for merge, split, lock, and unlock PDF actions, wired with placeholder click handlers.
+- Implemented the Tools tab `Merge PDF` and `Split PDF` flows with PDF selection, page selection for splitting, and generated result registration.
+- Hardened the PDF merge/split flows by preventing duplicate action clicks during processing and canceling split-page thumbnail render jobs before closing the renderer.
+- Added visible selection-order badges to the Merge PDF file picker and Split PDF page picker so selected items show their click order.
+- Switched the Merge PDF and Split PDF selection item states from check icons to theme-color stroke backgrounds.
+- Aligned `PdfSplitPagesActivity` thumbnail rendering more closely with the reference flow by initializing `PdfRenderer` off the main thread, checking coroutine active state before rendering, and delaying renderer cleanup behind the render mutex.
+- Updated `PdfSplitPagesActivity` page thumbnail rendering to keep only one active render job, matching the reference behavior so fast scrolling does not build up a slow render queue.
+- Moved the split-page thumbnail render mutex back into `onViewAttachedToWindow()` so the attach/render structure matches the reference implementation more closely.
+- Updated the Split PDF flow so finishing a successful split also closes the upstream `PdfSplitActivity` after the result page is launched.
+- Added a minimum 3-second processing wait for Merge PDF and Split PDF so fast operations keep the working dialog visible long enough before opening the result page.
+- Rechecked the full Merge PDF and Split PDF chains, including tools entry routing, storage permission handoff, selection state, PDF processing, repository insertion, and result navigation.
+- Wired the file more-dialog Split action to open the current PDF directly in the split page picker, with non-PDF/encrypted files disabled and single-page PDFs blocked with the existing warning.

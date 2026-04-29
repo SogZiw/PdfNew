@@ -9,8 +9,16 @@
     <string name="word">WORD</string>
     <string name="ppt">PPT</string>
     <string name="excel">EXCEL</string>
+    <string name="merge">Merge</string>
     <string name="merge_pdf">Merge PDF</string>
+    <string name="split">Split</string>
     <string name="split_pdf">Split PDF</string>
+    <string name="merging">Merging</string>
+    <string name="splitting">Splitting</string>
+    <string name="merge_successful">Merge successful</string>
+    <string name="split_successful">Split successful</string>
+    <string name="can_not_split">This PDF contains only one page and cannot be split.</string>
+    <string name="choose_limit_no_more">You can select up to 9 files</string>
     <string name="print">Print</string>
     <string name="common_error_message">Something went wrong</string>
     <string name="permission_desc">Allow storage access to scan and show your documents.</string>

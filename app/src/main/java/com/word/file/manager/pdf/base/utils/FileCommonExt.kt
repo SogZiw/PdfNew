@@ -3,9 +3,11 @@ package com.word.file.manager.pdf.base.utils
 import android.content.Context
 import android.content.Intent
 import android.content.Context.PRINT_SERVICE
+import android.graphics.pdf.PdfRenderer
 import android.media.MediaScannerConnection
 import android.net.Uri
 import android.os.Environment
+import android.os.ParcelFileDescriptor
 import android.print.PrintManager
 import android.provider.MediaStore
 import android.text.format.Formatter
@@ -18,6 +20,9 @@ import com.word.file.manager.pdf.base.data.FileItem
 import com.word.file.manager.pdf.base.data.FileTabFilter
 import com.word.file.manager.pdf.base.helper.PdfPrintAdapter
 import com.artifex.mupdf.fitz.Document
+import com.tom_roush.pdfbox.io.MemoryUsageSetting
+import com.tom_roush.pdfbox.multipdf.PDFMergerUtility
+import com.tom_roush.pdfbox.pdmodel.PDDocument
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.File
@@ -253,4 +258,74 @@ fun registerCreatedFile(file: File): FileItem {
         createdAtMillis = file.lastModified(),
         encryptedFlag = isPdfEncrypt(file.absolutePath),
     )
+}
+
+fun FileItem.isUsablePdfForTool(): Boolean {
+    return getFileCategory() == FileCategory.Pdf && encryptedFlag.not()
+}
+
+fun getPdfPageCount(fileItem: FileItem): Int {
+    return runCatching {
+        ParcelFileDescriptor.open(File(fileItem.absolutePath), ParcelFileDescriptor.MODE_READ_ONLY).use { descriptor ->
+            PdfRenderer(descriptor).use { renderer ->
+                renderer.pageCount
+            }
+        }
+    }.getOrDefault(0)
+}
+
+suspend fun mergePdfDocuments(items: List<FileItem>): File? {
+    return withContext(Dispatchers.IO) {
+        runCatching {
+            if (items.size < 2) return@withContext null
+            val outputFile = createToolOutputFile("Merge", "PDF_Merge")
+            PDFMergerUtility().apply {
+                destinationFileName = outputFile.absolutePath
+                items.map { File(it.absolutePath) }.forEach { addSource(it) }
+                mergeDocuments(MemoryUsageSetting.setupMainMemoryOnly())
+            }
+            MediaScannerConnection.scanFile(app, arrayOf(outputFile.absolutePath), arrayOf("application/pdf"), null)
+            outputFile
+        }.getOrNull()
+    }
+}
+
+suspend fun splitPdfDocument(fileItem: FileItem, pageIndexes: List<Int>): File? {
+    return withContext(Dispatchers.IO) {
+        runCatching {
+            val sourceFile = File(fileItem.absolutePath)
+            if (!sourceFile.exists() || pageIndexes.isEmpty()) return@withContext null
+            val outputFile = createToolOutputFile("Split", "PDF_Split")
+            PDDocument.load(sourceFile).use { sourceDocument ->
+                PDDocument().use { targetDocument ->
+                    val pageCount = sourceDocument.numberOfPages
+                    pageIndexes
+                        .filter { it in 0 until pageCount }
+                        .forEach { pageIndex ->
+                            targetDocument.importPage(sourceDocument.getPage(pageIndex))
+                        }
+                    if (targetDocument.numberOfPages == 0) return@withContext null
+                    targetDocument.save(outputFile)
+                }
+            }
+            MediaScannerConnection.scanFile(app, arrayOf(outputFile.absolutePath), arrayOf("application/pdf"), null)
+            outputFile
+        }.getOrNull()
+    }
+}
+
+private fun createToolOutputFile(folderName: String, prefix: String): File {
+    val outputDir = File(
+        Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS),
+        "AgilePDF/$folderName",
+    )
+    if (!outputDir.exists()) {
+        outputDir.mkdirs()
+    }
+    val baseName = "${prefix}_${System.currentTimeMillis().formatFileDate("yyyy_MM_dd_HHmmss")}"
+    var outputFile = File(outputDir, "$baseName.pdf")
+    if (outputFile.exists()) {
+        outputFile = File(outputDir, "${baseName}_${Random.nextInt(1000, 9999)}.pdf")
+    }
+    return outputFile
 }

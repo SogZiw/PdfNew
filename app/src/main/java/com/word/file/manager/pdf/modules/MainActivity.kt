@@ -11,6 +11,8 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.word.file.manager.pdf.app
 import com.word.file.manager.pdf.base.data.DocumentActionType
 import com.word.file.manager.pdf.base.data.PdfCreateType
+import com.word.file.manager.pdf.base.data.PdfMergeType
+import com.word.file.manager.pdf.base.data.PdfSplitType
 import com.word.file.manager.pdf.databinding.ActivityMainBinding
 import com.word.file.manager.pdf.base.utils.copyScannerPdfToLibrary
 import com.word.file.manager.pdf.base.utils.showMessageToast
@@ -20,6 +22,8 @@ import com.word.file.manager.pdf.modules.fragments.RecentFragment
 import com.word.file.manager.pdf.modules.fragments.ToolsFragment
 import com.word.file.manager.pdf.modules.permissions.StoragePermissionActivity
 import com.word.file.manager.pdf.modules.permissions.hasStorageAccessPermission
+import com.word.file.manager.pdf.modules.tools.PdfMergeActivity
+import com.word.file.manager.pdf.modules.tools.PdfSplitActivity
 import com.google.mlkit.vision.documentscanner.GmsDocumentScannerOptions
 import com.google.mlkit.vision.documentscanner.GmsDocumentScanning
 import com.google.mlkit.vision.documentscanner.GmsDocumentScanningResult
@@ -60,12 +64,17 @@ class MainActivity : StoragePermissionActivity<ActivityMainBinding>() {
     }
 
     override fun onStorageAccessGranted(type: DocumentActionType?) {
-        if (type == PdfCreateType) {
-            app.documentRepository.refreshFiles(activity)
-            launchCreatePdfScanner()
-        } else {
-            app.documentRepository.refreshFiles(activity)
+        app.documentRepository.refreshFiles(activity)
+        when (type) {
+            PdfCreateType -> launchCreatePdfScanner()
+            PdfMergeType -> startActivity(Intent(activity, PdfMergeActivity::class.java))
+            PdfSplitType -> startActivity(Intent(activity, PdfSplitActivity::class.java))
+            else -> Unit
         }
+    }
+
+    fun openDocumentTool(type: DocumentActionType) {
+        checkStoragePermission(type)
     }
 
     override fun onStorageAccessDenied() {
