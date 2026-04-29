@@ -1,5 +1,6 @@
 package com.word.file.manager.pdf.modules.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -13,6 +14,7 @@ import com.word.file.manager.pdf.app
 import com.word.file.manager.pdf.base.BaseFragment
 import com.word.file.manager.pdf.base.data.FileTabFilter
 import com.word.file.manager.pdf.databinding.FragmentHomeBinding
+import com.word.file.manager.pdf.modules.SettingsActivity
 import com.word.file.manager.pdf.modules.permissions.hasStorageAccessPermission
 import kotlinx.coroutines.launch
 
@@ -24,7 +26,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
     override fun initView(savedInstanceState: Bundle?) {
         binding.btnGoSet.isVisible = true
-        binding.btnGoSet.setOnClickListener { }
+        binding.btnGoSet.setOnClickListener {
+            startActivity(Intent(requireContext(), SettingsActivity::class.java))
+        }
         binding.viewPager.adapter = object : FragmentStateAdapter(childFragmentManager, lifecycle) {
             private val pages = listOf(
                 DocumentFragment.newInstance(FileTabFilter.All, DocumentSource.Home),

@@ -33,11 +33,8 @@
     <string name="bookmark">Bookmark</string>
     <string name="pdf_page_state">%1$d / %2$d</string>
     <string name="preview_loading">Preparing preview…</string>
-    <string name="lock">Lock</string>
-    <string name="unlock">Unlock</string>
     <string name="rename">Rename</string>
     <string name="open">Open</string>
-    <string name="info">Info</string>
     <string name="share">Share</string>
     <string name="delete">Delete</string>
     <string name="create_pdf">Create PDF</string>
@@ -53,6 +50,7 @@
     <string name="cannot_print_encrypted_pdf">Encrypted PDF cannot be printed</string>
     <string name="back_home">Back Home</string>
     <string name="tools">Tools</string>
-    <string name="tools_subtitle">Organized Your Task Effortlessly.</string>
-    <string name="tools_format">Format</string>
+    <string name="language">Language</string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="next">Next</string>
 </resources>

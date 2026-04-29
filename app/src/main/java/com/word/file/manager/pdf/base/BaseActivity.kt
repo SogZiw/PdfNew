@@ -1,7 +1,9 @@
 package com.word.file.manager.pdf.base
 
+import android.content.Context
 import androidx.activity.addCallback
 import androidx.viewbinding.ViewBinding
+import com.word.file.manager.pdf.base.utils.withSavedAppLocale
 
 abstract class BaseActivity<VB : ViewBinding> : InsetsActivity<VB>() {
 
@@ -11,6 +13,14 @@ abstract class BaseActivity<VB : ViewBinding> : InsetsActivity<VB>() {
 
     protected var isPageResumed: Boolean = true
         private set
+
+    var printContext: Context? = null
+        private set
+
+    override fun attachBaseContext(newBase: Context?) {
+        printContext = newBase
+        super.attachBaseContext(newBase?.withSavedAppLocale())
+    }
 
     override fun onBindingReady() {
         super.onBindingReady()

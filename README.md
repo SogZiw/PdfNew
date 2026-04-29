@@ -169,3 +169,11 @@ This file captures the working conventions established during recent development
 - Wired the file more-dialog Split action to open the current PDF directly in the split page picker, with non-PDF/encrypted files disabled and single-page PDFs blocked with the existing warning.
 - Implemented Tools tab Lock PDF and Unlock PDF flows with password entry, encrypted/non-encrypted PDF filtering, PDFBox security updates, repository state refresh, and result-page navigation.
 - Updated the Merge PDF and Split PDF minimum working-dialog duration to 2 seconds.
+- Implemented `SettingsActivity` for the new settings layout, including toolbar back behavior, language settings routing, privacy policy opening, and the Home settings button entry point.
+- Added an in-app language selection page using the same 14 language options as the reference `PDFView` project, with persisted locale selection and Settings-page navigation.
+- Added localized string resources for all in-app language options, covering German, Korean, Arabic, Hindi, Portuguese, Traditional Chinese, Thai, Indonesian, Turkish, Spanish, Italian, French, and Japanese.
+- Fixed PDF printing after locale wrapping by preserving the original base context in `BaseActivity` and using it for print actions from the file more dialog.
+- Centralized language preference reads through `LocalPrefs` while keeping `attachBaseContext()` safe from global app initialization timing.
+- Removed unused string, drawable, and color resources reported by lint, including stale selection icons, the old settings tab selector, and obsolete dialog/viewer shapes.
+- Cleaned resource lint warnings in layout/string files by removing stray XML text, normalizing localized preview ellipses, and correcting Portuguese text accents.
+- Disabled App Bundle language splitting so the in-app language selector can access bundled translations consistently after installation.

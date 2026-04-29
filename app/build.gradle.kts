@@ -67,6 +67,11 @@ android {
         buildConfig = true
         viewBinding = true
     }
+    bundle {
+        language {
+            enableSplit = false
+        }
+    }
 }
 
 dependencies {

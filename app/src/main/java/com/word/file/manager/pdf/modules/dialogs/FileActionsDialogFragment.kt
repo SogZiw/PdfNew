@@ -14,6 +14,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.word.file.manager.pdf.EXTRA_FILE_ITEM
 import com.word.file.manager.pdf.R
 import com.word.file.manager.pdf.app
+import com.word.file.manager.pdf.base.BaseActivity
 import com.word.file.manager.pdf.base.data.FileCategory
 import com.word.file.manager.pdf.base.data.FileItem
 import com.word.file.manager.pdf.base.utils.getPdfPageCount
@@ -233,7 +234,8 @@ class FileActionsDialogFragment : BottomSheetDialogFragment() {
             return
         }
         dismiss()
-        requireContext().printPdf(fileItem)
+        val printContext = (requireActivity() as? BaseActivity<*>)?.printContext ?: requireContext()
+        printContext.printPdf(fileItem)
     }
 
     private fun deleteCurrentFile() {
