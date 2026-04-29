@@ -177,3 +177,4 @@ This file captures the working conventions established during recent development
 - Removed unused string, drawable, and color resources reported by lint, including stale selection icons, the old settings tab selector, and obsolete dialog/viewer shapes.
 - Cleaned resource lint warnings in layout/string files by removing stray XML text, normalizing localized preview ellipses, and correcting Portuguese text accents.
 - Disabled App Bundle language splitting so the in-app language selector can access bundled translations consistently after installation.
+- Changed the file category selector container from `NestedScrollView` to `HorizontalScrollView` so it can scroll horizontally on narrow screens.
