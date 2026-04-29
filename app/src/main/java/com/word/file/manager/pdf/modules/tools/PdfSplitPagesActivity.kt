@@ -250,6 +250,6 @@ class PdfSplitPagesActivity : BaseActivity<ActivityPdfSplitPagesBinding>() {
 
     private companion object {
         const val RENDERER_CLOSE_DELAY_MS = 1_000L
-        const val MIN_WORKING_DURATION_MS = 3_000L
+        const val MIN_WORKING_DURATION_MS = 2_000L
     }
 }

@@ -1,5 +1,6 @@
 package com.word.file.manager.pdf.modules.tools
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.view.LayoutInflater
 import androidx.core.view.isVisible
@@ -92,6 +93,7 @@ class PdfMergeActivity : BaseActivity<ActivityPdfMergeBinding>() {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     private fun showWorkingDialog(message: String) = MaterialAlertDialogBuilder(this)
         .setView(
             DialogPdfWorkingBinding.inflate(layoutInflater).apply {
@@ -103,6 +105,6 @@ class PdfMergeActivity : BaseActivity<ActivityPdfMergeBinding>() {
         .also { it.show() }
 
     private companion object {
-        const val MIN_WORKING_DURATION_MS = 3_000L
+        const val MIN_WORKING_DURATION_MS = 2_000L
     }
 }
