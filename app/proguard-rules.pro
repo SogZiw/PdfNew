@@ -22,6 +22,9 @@
 
 -dontshrink
 
+-keep class com.artifex.mupdf.fitz.** { *; }
+-keep interface com.artifex.mupdf.fitz.** { *; }
 -keep class com.tom_roush.pdfbox.** { *; }
 -keep interface com.tom_roush.pdfbox.** { *; }
 -keep enum com.tom_roush.pdfbox.** { *; }
+-keep class com.shockwave.**
