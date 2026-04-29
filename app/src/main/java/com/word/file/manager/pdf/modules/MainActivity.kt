@@ -17,6 +17,7 @@ import com.word.file.manager.pdf.base.utils.showMessageToast
 import com.word.file.manager.pdf.modules.fragments.BookmarkFragment
 import com.word.file.manager.pdf.modules.fragments.HomeFragment
 import com.word.file.manager.pdf.modules.fragments.RecentFragment
+import com.word.file.manager.pdf.modules.fragments.ToolsFragment
 import com.word.file.manager.pdf.modules.permissions.StoragePermissionActivity
 import com.word.file.manager.pdf.modules.permissions.hasStorageAccessPermission
 import com.google.mlkit.vision.documentscanner.GmsDocumentScannerOptions
@@ -76,7 +77,7 @@ class MainActivity : StoragePermissionActivity<ActivityMainBinding>() {
             HomeFragment(),
             RecentFragment(),
             BookmarkFragment(),
-            Fragment(),
+            ToolsFragment(),
         )
         binding.viewPager.isUserInputEnabled = false
         binding.viewPager.offscreenPageLimit = fragments.size

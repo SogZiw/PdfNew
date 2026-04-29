@@ -37,4 +37,6 @@
     <string name="cannot_print_encrypted_pdf">Encrypted PDF cannot be printed</string>
     <string name="back_home">Back Home</string>
     <string name="tools">Tools</string>
+    <string name="tools_subtitle">Organized Your Task Effortlessly.</string>
+    <string name="tools_format">Format</string>
 </resources>

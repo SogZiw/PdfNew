@@ -155,3 +155,4 @@ This file captures the working conventions established during recent development
 - Added `Tools` bottom-navigation resources and updated the main bottom-nav wiring/text to support the tools tab.
 - Guarded the file-action dialog’s async collect-state hydration so it no longer races with a user’s immediate bookmark toggle and overwrite the freshly updated icon state.
 - Removed the `Merge PDF` row from the file-action dialog menu while keeping the shared merge action definition available for future tool flows.
+- Added `ToolsFragment` with a `Format` tools grid for merge, split, lock, and unlock PDF actions, wired with placeholder click handlers.
