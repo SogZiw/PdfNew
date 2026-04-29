@@ -8,11 +8,14 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.lifecycleScope
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.word.file.manager.pdf.EXTRA_DOCUMENT_ACTION_TYPE
 import com.word.file.manager.pdf.app
 import com.word.file.manager.pdf.base.data.DocumentActionType
 import com.word.file.manager.pdf.base.data.PdfCreateType
+import com.word.file.manager.pdf.base.data.PdfLockType
 import com.word.file.manager.pdf.base.data.PdfMergeType
 import com.word.file.manager.pdf.base.data.PdfSplitType
+import com.word.file.manager.pdf.base.data.PdfUnlockType
 import com.word.file.manager.pdf.databinding.ActivityMainBinding
 import com.word.file.manager.pdf.base.utils.copyScannerPdfToLibrary
 import com.word.file.manager.pdf.base.utils.showMessageToast
@@ -23,6 +26,7 @@ import com.word.file.manager.pdf.modules.fragments.ToolsFragment
 import com.word.file.manager.pdf.modules.permissions.StoragePermissionActivity
 import com.word.file.manager.pdf.modules.permissions.hasStorageAccessPermission
 import com.word.file.manager.pdf.modules.tools.PdfMergeActivity
+import com.word.file.manager.pdf.modules.tools.PdfSecurityActivity
 import com.word.file.manager.pdf.modules.tools.PdfSplitActivity
 import com.google.mlkit.vision.documentscanner.GmsDocumentScannerOptions
 import com.google.mlkit.vision.documentscanner.GmsDocumentScanning
@@ -69,6 +73,11 @@ class MainActivity : StoragePermissionActivity<ActivityMainBinding>() {
             PdfCreateType -> launchCreatePdfScanner()
             PdfMergeType -> startActivity(Intent(activity, PdfMergeActivity::class.java))
             PdfSplitType -> startActivity(Intent(activity, PdfSplitActivity::class.java))
+            PdfLockType,
+            PdfUnlockType -> startActivity(Intent(activity, PdfSecurityActivity::class.java).apply {
+                putExtra(EXTRA_DOCUMENT_ACTION_TYPE, type)
+            })
+
             else -> Unit
         }
     }

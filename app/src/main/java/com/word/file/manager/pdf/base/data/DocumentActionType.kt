@@ -28,6 +28,16 @@ data object PdfSplitType : DocumentActionType() {
     override fun getMenuIconRes(): Int = R.drawable.ic_menu_pdf_split
 }
 
+data object PdfLockType : DocumentActionType() {
+    override fun getActionName(context: Context): String = context.getString(R.string.lock_pdf)
+    override fun getMenuIconRes(): Int = R.drawable.ic_menu_lock
+}
+
+data object PdfUnlockType : DocumentActionType() {
+    override fun getActionName(context: Context): String = context.getString(R.string.unlock_pdf)
+    override fun getMenuIconRes(): Int = R.drawable.ic_menu_unlock
+}
+
 data object PdfPrintType : DocumentActionType() {
     override fun getActionName(context: Context): String = context.getString(R.string.print)
     override fun getMenuIconRes(): Int = R.drawable.ic_menu_print_pdf

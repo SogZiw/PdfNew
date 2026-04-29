@@ -167,3 +167,5 @@ This file captures the working conventions established during recent development
 - Added a minimum 3-second processing wait for Merge PDF and Split PDF so fast operations keep the working dialog visible long enough before opening the result page.
 - Rechecked the full Merge PDF and Split PDF chains, including tools entry routing, storage permission handoff, selection state, PDF processing, repository insertion, and result navigation.
 - Wired the file more-dialog Split action to open the current PDF directly in the split page picker, with non-PDF/encrypted files disabled and single-page PDFs blocked with the existing warning.
+- Implemented Tools tab Lock PDF and Unlock PDF flows with password entry, encrypted/non-encrypted PDF filtering, PDFBox security updates, repository state refresh, and result-page navigation.
+- Updated the Merge PDF and Split PDF minimum working-dialog duration to 2 seconds.

@@ -23,6 +23,8 @@ import com.artifex.mupdf.fitz.Document
 import com.tom_roush.pdfbox.io.MemoryUsageSetting
 import com.tom_roush.pdfbox.multipdf.PDFMergerUtility
 import com.tom_roush.pdfbox.pdmodel.PDDocument
+import com.tom_roush.pdfbox.pdmodel.encryption.AccessPermission
+import com.tom_roush.pdfbox.pdmodel.encryption.StandardProtectionPolicy
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.File
@@ -264,6 +266,10 @@ fun FileItem.isUsablePdfForTool(): Boolean {
     return getFileCategory() == FileCategory.Pdf && encryptedFlag.not()
 }
 
+fun FileItem.isLockedPdfForTool(): Boolean {
+    return getFileCategory() == FileCategory.Pdf && encryptedFlag
+}
+
 fun getPdfPageCount(fileItem: FileItem): Int {
     return runCatching {
         ParcelFileDescriptor.open(File(fileItem.absolutePath), ParcelFileDescriptor.MODE_READ_ONLY).use { descriptor ->
@@ -311,6 +317,41 @@ suspend fun splitPdfDocument(fileItem: FileItem, pageIndexes: List<Int>): File? 
             MediaScannerConnection.scanFile(app, arrayOf(outputFile.absolutePath), arrayOf("application/pdf"), null)
             outputFile
         }.getOrNull()
+    }
+}
+
+suspend fun lockPdfDocument(fileItem: FileItem, password: String): Boolean {
+    return withContext(Dispatchers.IO) {
+        runCatching {
+            val sourceFile = File(fileItem.absolutePath)
+            if (!sourceFile.exists() || password.isBlank()) return@runCatching false
+            PDDocument.load(sourceFile).use { document ->
+                val permission = AccessPermission()
+                val policy = StandardProtectionPolicy(password, password, permission).apply {
+                    encryptionKeyLength = 128
+                    permissions = permission
+                }
+                document.protect(policy)
+                document.save(sourceFile)
+            }
+            MediaScannerConnection.scanFile(app, arrayOf(sourceFile.absolutePath), arrayOf("application/pdf"), null)
+            true
+        }.getOrDefault(false)
+    }
+}
+
+suspend fun unlockPdfDocument(fileItem: FileItem, password: String): Boolean {
+    return withContext(Dispatchers.IO) {
+        runCatching {
+            val sourceFile = File(fileItem.absolutePath)
+            if (!sourceFile.exists() || password.isBlank()) return@runCatching false
+            PDDocument.load(sourceFile, password).use { document ->
+                document.isAllSecurityToBeRemoved = true
+                document.save(sourceFile)
+            }
+            MediaScannerConnection.scanFile(app, arrayOf(sourceFile.absolutePath), arrayOf("application/pdf"), null)
+            true
+        }.getOrDefault(false)
     }
 }
 

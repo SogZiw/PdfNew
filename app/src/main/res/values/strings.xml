@@ -13,10 +13,16 @@
     <string name="merge_pdf">Merge PDF</string>
     <string name="split">Split</string>
     <string name="split_pdf">Split PDF</string>
+    <string name="lock_pdf">Lock PDF</string>
+    <string name="unlock_pdf">Unlock PDF</string>
     <string name="merging">Merging</string>
     <string name="splitting">Splitting</string>
+    <string name="locking">Locking</string>
+    <string name="unlocking">Unlocking</string>
     <string name="merge_successful">Merge successful</string>
     <string name="split_successful">Split successful</string>
+    <string name="pdf_locked_successful">The file was successfully locked</string>
+    <string name="pdf_unlocked_successful">The file was successfully unlocked</string>
     <string name="can_not_split">This PDF contains only one page and cannot be split.</string>
     <string name="choose_limit_no_more">You can select up to 9 files</string>
     <string name="print">Print</string>
@@ -39,6 +45,8 @@
     <string name="pdf_password_title">Enter Password</string>
     <string name="pdf_password_hint">Password</string>
     <string name="pdf_password_incorrect">Incorrect password</string>
+    <string name="pdf_password_required">Please enter password</string>
+    <string name="pdf_password_too_long">Password must be 40 characters or less</string>
     <string name="cancel">Cancel</string>
     <string name="confirm">Confirm</string>
     <string name="file_name_required">Please enter file name</string>

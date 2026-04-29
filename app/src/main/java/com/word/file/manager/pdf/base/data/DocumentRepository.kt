@@ -156,4 +156,24 @@ class DocumentRepository(private val database: AppDatabase) {
             outputItem
         }
     }
+
+    suspend fun updatePdfSecurityState(fileItem: FileItem, encrypted: Boolean): FileItem {
+        return withContext(Dispatchers.IO) {
+            val sourceFile = File(fileItem.absolutePath)
+            val storedItem = database.fileItemDao().getFileByPath(fileItem.absolutePath)
+            val baseItem = storedItem ?: fileItem
+            val updatedItem = baseItem.copy(
+                fileBytes = sourceFile.length().takeIf { it > 0L } ?: baseItem.fileBytes,
+                encryptedFlag = encrypted,
+                lastViewedAtMillis = System.currentTimeMillis(),
+            )
+            database.fileItemDao().upsert(updatedItem)
+            _allFiles.update { files ->
+                files.map { item ->
+                    if (item.absolutePath == updatedItem.absolutePath) updatedItem else item
+                }
+            }
+            updatedItem
+        }
+    }
 }
