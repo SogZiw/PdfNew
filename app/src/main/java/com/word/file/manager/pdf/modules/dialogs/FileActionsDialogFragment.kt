@@ -122,7 +122,6 @@ class FileActionsDialogFragment : BottomSheetDialogFragment() {
         bindAction(binding.actionOpen, R.drawable.ic_menu_open, R.string.open)
         bindAction(binding.actionShare, R.drawable.ic_menu_share, R.string.share)
         bindAction(binding.actionSplit, R.drawable.ic_menu_pdf_split, R.string.split_pdf)
-        bindAction(binding.actionMerge, R.drawable.ic_menu_merge_pdf, R.string.merge_pdf)
         bindAction(binding.actionPrint, R.drawable.ic_menu_print_pdf, R.string.print)
         bindAction(binding.actionDelete, R.drawable.ic_menu_delete, R.string.delete, showDivider = false)
         binding.actionRename.root.setOnClickListener { showRenameDialog() }

@@ -117,10 +117,6 @@
                     layout="@layout/view_dialog_action_item" />
 
                 <include
-                    android:id="@+id/action_merge"
-                    layout="@layout/view_dialog_action_item" />
-
-                <include
                     android:id="@+id/action_print"
                     layout="@layout/view_dialog_action_item" />
 
