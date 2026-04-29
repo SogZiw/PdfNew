@@ -16,7 +16,7 @@ configure<StringFogExtension> {
     enable = true
     fogPackages = arrayOf("com.word.file.manager.pdf")
     kg = com.github.megatronking.stringfog.plugin.kg.RandomKeyGenerator()
-    mode = com.github.megatronking.stringfog.plugin.StringFogMode.bytes
+    mode = com.github.megatronking.stringfog.plugin.StringFogMode.base64
 }
 
 
