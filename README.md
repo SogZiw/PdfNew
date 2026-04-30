@@ -10,10 +10,31 @@ This file captures the working conventions established during recent development
     - `DocumentOpenType`
     - `PdfMergeType`
     - `PdfSplitType`
+    - `PdfLockType`
+    - `PdfUnlockType`
     - `PdfPrintType`
+    - `PdfCreateType`
   - Use:
     - `getActionName(context)`
     - `getMenuIconRes()`
+
+- `app/src/main/java/com/word/file/manager/pdf/base/data/DocumentRepository.kt`
+  - Cross-feature document data coordinator.
+  - Exposes shared state for:
+    - all scanned files
+    - recent files
+    - bookmarked files
+    - storage-permission prompts
+    - permission-guide visibility
+  - Handles document refresh, favorite toggling, rename/delete, created/tool-output PDF registration, and PDF security state updates.
+
+- `app/src/main/java/com/word/file/manager/pdf/base/data/database/`
+  - `AppDatabase.kt`
+    - Room database for `FileItem`.
+    - Current version is `1` with `exportSchema = false`.
+    - No explicit migration or destructive-migration fallback is configured in the current code.
+  - `FileItemDao.kt`
+    - Provides upsert/delete and queries for all, recent, bookmarked, and path-matched files.
 
 - `app/src/main/java/com/word/file/manager/pdf/base/helper/LocalPrefs.kt`
   - Central local preference entry object.
@@ -32,7 +53,7 @@ This file captures the working conventions established during recent development
     - `double`
   - `double` is stored as `String`.
 
-- `app/src/main/java/com/word/file/manager/pdf/base/permission/`
+- `app/src/main/java/com/word/file/manager/pdf/modules/permissions/`
   - `StoragePermissionActivity.kt`
     - Base page for storage permission flow.
     - Public hooks:
@@ -50,6 +71,18 @@ This file captures the working conventions established during recent development
     - Current helpers:
       - `showMessageToast(...)`
       - `buildPeriodicSignalFlow(...)`
+  - `FileCommonExt.kt`
+    - Central file/document utilities.
+    - Current responsibilities include:
+      - supported MIME/category mapping
+      - MediaStore file scanning
+      - open/share/print helpers
+      - PDF encryption/password checks
+      - rename/delete helpers
+      - scanner output persistence
+      - PDF merge, split, lock, and unlock helpers
+  - `LocaleExt.kt`
+    - Applies the saved in-app language from `LocalPrefs`.
   - `SystemVersionExt.kt`
     - Central Android version checks.
     - Prefer:
@@ -91,9 +124,11 @@ This file captures the working conventions established during recent development
 
 ## Utility Placement Rules
 
-- Permission-specific code should live under `base/permission/`.
-- Android version checks should live in a dedicated version utility file.
-- Only truly common helpers should stay in `base/utils/`.
+- Permission-specific code currently lives under `modules/permissions/`.
+- Android version checks should live in `base/utils/SystemVersionExt.kt`.
+- File/document utilities should stay in `base/utils/FileCommonExt.kt`.
+- Shared document orchestration should stay in `base/data/DocumentRepository.kt`.
+- Only truly common helpers should stay in `base/utils/AppCommonExt.kt`.
 - Do not mix permission routing logic into generic utility files.
 
 ## Resource Conventions
@@ -107,9 +142,9 @@ This file captures the working conventions established during recent development
 - When introducing new preference fields, add them to `LocalPrefs` and back them with `PreferenceStore`.
 - When adding new version checks, prefer `isAtLeastApiXX()` naming instead of Android dessert names.
 - When adding new permission behaviors, first check whether the logic belongs in:
-  - `PermissionExt.kt`
-  - `StoragePermissionActivity.kt`
-  - `AllFilesPermissionActivity.kt`
+  - `modules/permissions/PermissionExt.kt`
+  - `modules/permissions/StoragePermissionActivity.kt`
+  - `modules/permissions/AllFilesPermissionActivity.kt`
 - Record each requested change in this `README.md` as part of the implementation workflow.
 
 ## Recent Changes
@@ -137,7 +172,7 @@ This file captures the working conventions established during recent development
 - Renamed the bottom navigation string key from the old `history` semantics to `bookmark_nav` to match the tab’s actual purpose.
 - Added a static file-action dialog layout based on the provided screenshot, with menu rows and icons wired for later click handling.
 - Added `FileActionsDialogFragment` to populate the screenshot-style action sheet structure without implementing action click behavior yet.
-- Added missing `ic_menu_lock`, `ic_menu_unlock`, and `ic_menu_info` vector resources so the file-action dialog can render the full action list.
+- Added missing `ic_menu_lock` and `ic_menu_unlock` vector resources so the file-action dialog and PDF security actions can render the current action list.
 - Wired the file item `more` button in `DocumentFragment` to open `FileActionsDialogFragment` without attaching individual action handlers yet.
 - Updated `FileActionsDialogFragment` to reconcile the collect icon state from the database so the dialog header stays accurate even when opened from the scanned home list.
 - Updated `image_file_cover` in `FileActionsDialogFragment` to reflect the actual file category icon instead of always using the PDF asset.
@@ -145,8 +180,8 @@ This file captures the working conventions established during recent development
 - Removed the redundant `isCollected` argument from `FileActionsDialogFragment.newInstance()` and now initialize the collect state directly from database-backed file data.
 - Added encrypted-PDF password handling to `PdfReaderActivity`, including password-required detection and a simple password entry dialog.
 - Updated the PDF password dialog flow so password input is validated before dismissing the dialog; invalid passwords now show an error toast and clear the input for retry.
-- Added `isEncrypt` to `FileItem`, Room persistence, and file scanning, and merged stored Room fields back into scanned items so favorite/recent/encryption state stays consistent after refresh.
-- Renamed the Room table and all persisted column names for `FileItem`, and switched the database to destructive migration so the new schema replaces the old one without a manual migration path.
+- Added `encryptedFlag` to `FileItem`, Room persistence, and file scanning, and merged stored Room fields back into scanned items so favorite/recent/encryption state stays consistent after refresh.
+- Renamed the Room table and all persisted column names for `FileItem`; the current Room setup is version `1` and does not configure an explicit migration or destructive-migration fallback.
 - Renamed the `FileItem` property names themselves away from the original `PDFView` naming, and updated all repository, viewer, dialog, and list bindings to use the new field names consistently.
 - Implemented `rename`, `open`, `share`, `print`, and `delete` actions in `FileActionsDialogFragment`, with repository-backed state updates so list and bookmark state stay synchronized after file operations.
 - Replaced deprecated `bundleOf(...)` usage in `FileActionsDialogFragment` with an explicit `Bundle` initializer.
@@ -155,7 +190,7 @@ This file captures the working conventions established during recent development
 - Added `Tools` bottom-navigation resources and updated the main bottom-nav wiring/text to support the tools tab.
 - Guarded the file-action dialog’s async collect-state hydration so it no longer races with a user’s immediate bookmark toggle and overwrite the freshly updated icon state.
 - Removed the `Merge PDF` row from the file-action dialog menu while keeping the shared merge action definition available for future tool flows.
-- Added `ToolsFragment` with a `Format` tools grid for merge, split, lock, and unlock PDF actions, wired with placeholder click handlers.
+- Added `ToolsFragment` with a tools grid for merge, split, lock, and unlock PDF actions, now routed through `MainActivity.openDocumentTool(...)`.
 - Implemented the Tools tab `Merge PDF` and `Split PDF` flows with PDF selection, page selection for splitting, and generated result registration.
 - Hardened the PDF merge/split flows by preventing duplicate action clicks during processing and canceling split-page thumbnail render jobs before closing the renderer.
 - Added visible selection-order badges to the Merge PDF file picker and Split PDF page picker so selected items show their click order.
