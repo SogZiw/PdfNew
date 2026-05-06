@@ -109,11 +109,11 @@ dependencies {
     implementation("com.unity3d.ads:unity-ads:4.16.5")
     implementation("com.google.ads.mediation:unity:4.17.0.0")
 
-    implementation(platform("com.google.firebase:firebase-bom:34.12.0"))
-    implementation("com.google.firebase:firebase-analytics")
-    implementation("com.google.firebase:firebase-config")
-    implementation("com.google.firebase:firebase-messaging")
-    implementation("com.google.firebase:firebase-crashlytics")
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.analytics)
+    implementation(libs.firebase.config)
+    implementation(libs.firebase.messaging)
+    implementation(libs.firebase.crashlytics)
 
     implementation(libs.installreferrer)
     implementation(libs.user.messaging.platform)
