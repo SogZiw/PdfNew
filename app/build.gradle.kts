@@ -123,4 +123,7 @@ dependencies {
     // https://github.com/facebook/facebook-android-sdk/blob/main/CHANGELOG.md
     implementation(libs.facebook.android.sdk)
 
+    implementation(platform(libs.okhttp.bom))
+    implementation(libs.okhttp)
+    implementation(libs.logging.interceptor)
 }

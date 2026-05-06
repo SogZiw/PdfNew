@@ -12,6 +12,8 @@ object LocalPrefs {
 
     var isFirstReqStorage by store.boolean(defaultValue = true)
     var defaultLanguageCode by store.string(key = KEY_DEFAULT_LANGUAGE_CODE, defaultValue = "")
+    var userFirstCountryCode by store.string()
+    var userDeviceId by store.string()
 
     fun readDefaultLanguageCode(context: Context): String {
         return context.getSharedPreferences(STORE_NAME, MODE_PRIVATE)
