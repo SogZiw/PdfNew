@@ -97,4 +97,14 @@ dependencies {
 
     // https://developers.google.com/ml-kit/vision/doc-scanner/android?hl=zh-cn
     implementation("com.google.android.gms:play-services-mlkit-document-scanner:16.0.0")
+
+    implementation("com.google.android.gms:play-services-ads:25.2.0")
+    implementation("com.google.ads.mediation:applovin:13.6.2.0")
+    implementation("com.google.ads.mediation:pangle:8.0.0.4.0")
+    implementation("com.google.ads.mediation:facebook:6.21.0.2")
+    implementation("com.google.ads.mediation:mintegral:17.1.41.0")
+    implementation("com.google.ads.mediation:vungle:7.7.2.0")
+    implementation("com.unity3d.ads:unity-ads:4.16.5")
+    implementation("com.google.ads.mediation:unity:4.17.0.0")
+
 }
