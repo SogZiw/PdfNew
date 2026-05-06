@@ -213,3 +213,4 @@ This file captures the working conventions established during recent development
 - Cleaned resource lint warnings in layout/string files by removing stray XML text, normalizing localized preview ellipses, and correcting Portuguese text accents.
 - Disabled App Bundle language splitting so the in-app language selector can access bundled translations consistently after installation.
 - Changed the file category selector container from `NestedScrollView` to `HorizontalScrollView` so it can scroll horizontally on narrow screens.
+- Added `NetworkCenter` JSON request support with a `JsonString.enqueueRequest(...)` extension that uses OkHttp `enqueue` retries capped at 5 attempts.
