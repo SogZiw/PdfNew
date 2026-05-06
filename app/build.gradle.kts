@@ -7,6 +7,8 @@ plugins {
     id("kotlin-parcelize")
     id("stringfog")
     id("com.google.devtools.ksp") version "2.3.5"
+    //id("com.google.gms.google-services")
+    //id("com.google.firebase.crashlytics")
 }
 
 apply(plugin = "stringfog")
@@ -106,5 +108,19 @@ dependencies {
     implementation("com.google.ads.mediation:vungle:7.7.2.0")
     implementation("com.unity3d.ads:unity-ads:4.16.5")
     implementation("com.google.ads.mediation:unity:4.17.0.0")
+
+    implementation(platform("com.google.firebase:firebase-bom:34.12.0"))
+    implementation("com.google.firebase:firebase-analytics")
+    implementation("com.google.firebase:firebase-config")
+    implementation("com.google.firebase:firebase-messaging")
+    implementation("com.google.firebase:firebase-crashlytics")
+
+    implementation(libs.installreferrer)
+    implementation(libs.user.messaging.platform)
+    // review
+    implementation(libs.review)
+    implementation(libs.review.ktx)
+    // https://github.com/facebook/facebook-android-sdk/blob/main/CHANGELOG.md
+    implementation(libs.facebook.android.sdk)
 
 }

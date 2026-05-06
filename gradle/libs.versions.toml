@@ -14,6 +14,10 @@ xor = "5.0.0"
 gson = "2.13.2"
 fragmentKtx = "1.8.9"
 browser = "1.10.0"
+facebookAndroidSdk = "18.1.3"
+installreferrer = "2.2"
+userMessagingPlatform = "4.0.0"
+review = "2.0.2"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -30,6 +34,11 @@ gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
 androidx-fragment-ktx = { module = "androidx.fragment:fragment-ktx", version.ref = "fragmentKtx" }
 androidx-browser = { group = "androidx.browser", name = "browser", version.ref = "browser" }
 xor = { module = "com.github.megatronking.stringfog:xor", version.ref = "xor" }
+facebook-android-sdk = { module = "com.facebook.android:facebook-android-sdk", version.ref = "facebookAndroidSdk" }
+review = { module = "com.google.android.play:review", version.ref = "review" }
+review-ktx = { module = "com.google.android.play:review-ktx", version.ref = "review" }
+user-messaging-platform = { module = "com.google.android.ump:user-messaging-platform", version.ref = "userMessagingPlatform" }
+installreferrer = { module = "com.android.installreferrer:installreferrer", version.ref = "installreferrer" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

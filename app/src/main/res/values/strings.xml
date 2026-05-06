@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">AgilePDF</string>
+    <string name="facebook_app_id" translatable="false">1234</string>
+    <string name="facebook_client_token" translatable="false">56789</string>
     <string name="home">Home</string>
     <string name="recently">Recently</string>
     <string name="bookmark_nav">Bookmark</string>
