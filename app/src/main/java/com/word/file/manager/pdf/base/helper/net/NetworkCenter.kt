@@ -9,6 +9,7 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.Response
 import org.json.JSONObject
 import java.io.IOException
+import com.word.file.manager.pdf.base.utils.showLog
 
 typealias JsonString = String
 
@@ -83,7 +84,9 @@ object NetworkCenter {
             override fun onResponse(call: Call, response: Response) {
                 response.use {
                     if (it.isSuccessful) {
-                        onSuccess(it.body.string())
+                        val responseText = it.body.string()
+                        "Network request success: $responseText".showLog()
+                        onSuccess(responseText)
                     } else {
                         retryOrFail(
                             request = request,
