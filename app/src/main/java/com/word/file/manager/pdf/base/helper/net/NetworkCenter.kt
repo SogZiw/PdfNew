@@ -4,6 +4,12 @@ import android.os.Build
 import com.word.file.manager.pdf.BuildConfig
 import com.word.file.manager.pdf.base.helper.LocalPrefs
 import com.word.file.manager.pdf.base.helper.net.BaseInfo.deviceId
+import com.word.file.manager.pdf.base.utils.showLog
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.MediaType.Companion.toMediaType
@@ -13,15 +19,16 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.Response
 import org.json.JSONObject
 import java.io.IOException
-import com.word.file.manager.pdf.base.utils.showLog
 
 typealias JsonString = String
 
 object NetworkCenter {
 
     private const val MAX_ENQUEUE_COUNT = 5
+    private const val RETRY_DELAY_MS = 100_000L
     private val jsonMediaType = "application/json; charset=utf-8".toMediaType()
     private val client = OkHttpClient()
+    private val retryScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
 
     fun session() {
         val obj = BaseInfo.buildObj().apply {
@@ -65,7 +72,7 @@ object NetworkCenter {
             put("shako", Build.VERSION.RELEASE ?: "")
             put("stub", Build.BRAND ?: "")
         }
-        obj.toString().enqueueRequest(BaseInfo.cloakUrl, 10, onSuccess = {
+        obj.toString().enqueueRequest(url = BaseInfo.cloakUrl, maxCount = 10, retryDelayMs = 10_000L, onSuccess = {
             LocalPrefs.hasReqCloak = true
             LocalPrefs.userIsBlack = "inca" == it
         })
@@ -74,6 +81,7 @@ object NetworkCenter {
     private fun JsonString.enqueueRequest(
         url: String = BaseInfo.baseUrl,
         maxCount: Int = MAX_ENQUEUE_COUNT,
+        retryDelayMs: Long = RETRY_DELAY_MS,
         onSuccess: (String) -> Unit = {},
         onFailure: (IOException) -> Unit = {},
     ) {
@@ -82,6 +90,7 @@ object NetworkCenter {
             request = buildJsonPostRequest(url),
             currentCount = 1,
             maxCount = retryLimit,
+            retryDelayMs = retryDelayMs.coerceAtLeast(0L),
             onSuccess = onSuccess,
             onFailure = onFailure,
         )
@@ -95,12 +104,13 @@ object NetworkCenter {
         request: Request,
         currentCount: Int,
         maxCount: Int,
+        retryDelayMs: Long,
         onSuccess: (String) -> Unit,
         onFailure: (IOException) -> Unit,
     ) {
         client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
-                retryOrFail(request, currentCount, maxCount, e, onSuccess, onFailure)
+                retryOrFail(request, currentCount, maxCount, retryDelayMs, e, onSuccess, onFailure)
             }
 
             override fun onResponse(call: Call, response: Response) {
@@ -114,6 +124,7 @@ object NetworkCenter {
                             request = request,
                             currentCount = currentCount,
                             maxCount = maxCount,
+                            retryDelayMs = retryDelayMs,
                             exception = IOException("Http ${it.code}"),
                             onSuccess = onSuccess,
                             onFailure = onFailure,
@@ -128,21 +139,27 @@ object NetworkCenter {
         request: Request,
         currentCount: Int,
         maxCount: Int,
+        retryDelayMs: Long,
         exception: IOException,
         onSuccess: (String) -> Unit,
         onFailure: (IOException) -> Unit,
     ) {
+        "Network request failed($currentCount/$maxCount): ${exception.message.orEmpty()}".showLog()
         if (currentCount >= maxCount) {
             onFailure(exception)
             return
         }
-        enqueueInternal(
-            request = request,
-            currentCount = currentCount + 1,
-            maxCount = maxCount,
-            onSuccess = onSuccess,
-            onFailure = onFailure,
-        )
+        retryScope.launch {
+            delay(retryDelayMs)
+            enqueueInternal(
+                request = request,
+                currentCount = currentCount + 1,
+                maxCount = maxCount,
+                retryDelayMs = retryDelayMs,
+                onSuccess = onSuccess,
+                onFailure = onFailure,
+            )
+        }
     }
 
 }
