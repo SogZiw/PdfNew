@@ -1,13 +1,13 @@
 package com.word.file.manager.pdf.base.helper
 
 import android.os.Bundle
+import com.facebook.appevents.AppEventsConstants
 import com.facebook.appevents.AppEventsLogger
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.word.file.manager.pdf.app
 import com.word.file.manager.pdf.base.helper.net.NetworkCenter
 import com.word.file.manager.pdf.base.utils.showLog
 import com.word.file.manager.pdf.isDebug
-import java.util.Currency
 
 object EventCenter {
 
@@ -26,10 +26,12 @@ object EventCenter {
         NetworkCenter.customEvent(eventName, params)
     }
 
-    fun facebookPurchase(revenue: Double, currencyCode: String) {
+    fun facebookPurchase(revenue: Double) {
         if (isDebug) return
         runCatching {
-            facebookLogger.logPurchase(revenue.toBigDecimal(), Currency.getInstance(currencyCode))
+            facebookLogger.logEvent(AppEventsConstants.EVENT_NAME_AD_IMPRESSION, revenue, Bundle().apply {
+                putString(AppEventsConstants.EVENT_PARAM_CURRENCY, "USD")
+            })
         }
     }
 

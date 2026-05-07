@@ -17,6 +17,8 @@ object LocalPrefs {
     var installReferrerUrl by store.string()
     var hasReqCloak by store.boolean(defaultValue = false)
     var userIsBlack by store.boolean(defaultValue = false)
+    var totalRevenueFor001 by store.double()
+    var hasSubscribeFMS by store.boolean(defaultValue = false)
 
     fun readDefaultLanguageCode(context: Context): String {
         return context.getSharedPreferences(STORE_NAME, MODE_PRIVATE)
