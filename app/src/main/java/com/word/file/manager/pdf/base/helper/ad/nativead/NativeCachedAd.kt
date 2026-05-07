@@ -13,10 +13,12 @@ import com.google.android.gms.ads.nativead.NativeAdOptions
 import com.google.android.gms.ads.nativead.NativeAdView
 import com.word.file.manager.pdf.app
 import com.word.file.manager.pdf.base.BaseActivity
+import com.word.file.manager.pdf.base.helper.LocalPrefs
 import com.word.file.manager.pdf.base.helper.ad.cache.CachedAd
 import com.word.file.manager.pdf.base.helper.ad.model.AdSlot
 import com.word.file.manager.pdf.base.helper.ad.model.AdUnitConfig
 import com.word.file.manager.pdf.base.helper.ad.model.NativeAdStyle
+import com.word.file.manager.pdf.base.helper.ad.util.NativeAdPreviewChecker
 import com.word.file.manager.pdf.databinding.LayoutNativeAdCompactBinding
 import com.word.file.manager.pdf.databinding.LayoutNativeAdFullBinding
 
@@ -39,6 +41,9 @@ class AdmobNativeCachedAd(
         AdLoader.Builder(app, config.placementId)
             .forNativeAd { ad ->
                 loadedAd = ad
+                if (LocalPrefs.isPreviewUser) {
+                    LocalPrefs.isPreviewUser = NativeAdPreviewChecker.isPreviewUser(ad.headline)
+                }
                 ad.setOnPaidEventListener { logPaidValue(it, ad.responseInfo?.loadedAdapterResponseInfo) }
                 logState("load success")
                 done(true)
