@@ -1,22 +1,76 @@
 package com.word.file.manager.pdf.modules
 
+import android.Manifest
 import android.content.Intent
-import androidx.lifecycle.lifecycleScope
+import android.content.pm.PackageManager
+import android.os.Build
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.word.file.manager.pdf.base.BaseActivity
+import com.word.file.manager.pdf.base.helper.LocalPrefs
 import com.word.file.manager.pdf.databinding.ActivityRouteBinding
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 class RouteActivity : BaseActivity<ActivityRouteBinding>() {
+
+    private val viewModel by viewModels<RouteViewModel>()
+
+    private val notificationPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) {
+        viewModel.startLoadingLaunch(activity)
+    }
 
     override fun setViewBinding() = ActivityRouteBinding.inflate(layoutInflater)
 
     override fun initView() {
-        lifecycleScope.launch {
-            delay(3_000L)
-            startActivity(Intent(activity, MainActivity::class.java))
-            finish()
+        observeLaunchState()
+        viewModel.beginLaunch(activity)
+    }
+
+    private fun observeLaunchState() {
+        viewModel.afterUMPLiveData.observe(this) {
+            requestNoticeIfNeeded()
+        }
+        viewModel.nextJobLiveData.observe(this) {
+            goMainPage()
         }
     }
 
+    private fun requestNoticeIfNeeded() {
+        if (!shouldRequestNoticePermission()) {
+            viewModel.startLoadingLaunch(activity)
+            return
+        }
+        if (!LocalPrefs.hasAskedNotificationPermission) {
+            LocalPrefs.hasAskedNotificationPermission = true
+            viewModel.startLoadAd(logEvent = false)
+            requestPostNotification(tag = "start")
+            return
+        }
+        if (ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.POST_NOTIFICATIONS)) {
+            viewModel.startLoadAd(logEvent = false)
+            requestPostNotification(tag = "second")
+            return
+        }
+        viewModel.startLoadingLaunch(activity)
+    }
+
+    private fun requestPostNotification(tag: String) {
+        viewModel.logNoticeRequest(tag)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            notificationPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+        } else viewModel.startLoadingLaunch(activity)
+    }
+
+    private fun shouldRequestNoticePermission(): Boolean {
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
+                ContextCompat.checkSelfPermission(activity, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED
+    }
+
+    private fun goMainPage() {
+        startActivity(Intent(activity, MainActivity::class.java))
+        finish()
+    }
+
+    override fun onClickBack() = Unit
 }
