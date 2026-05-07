@@ -1,5 +1,9 @@
 package com.word.file.manager.pdf.base.helper.net
 
+import android.os.Build
+import com.word.file.manager.pdf.BuildConfig
+import com.word.file.manager.pdf.base.helper.LocalPrefs
+import com.word.file.manager.pdf.base.helper.net.BaseInfo.deviceId
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.MediaType.Companion.toMediaType
@@ -47,6 +51,24 @@ object NetworkCenter {
             params.onEach { e -> put("${e.key}|clue", e.value) }
         }
         obj.toString().enqueueRequest()
+    }
+
+    fun cloak() {
+        if (LocalPrefs.hasReqCloak) return
+        val obj = JSONObject().apply {
+            put("mist", "com.agile.pdf.view")
+            put("penguin", "vacate")
+            put("nitride", BuildConfig.VERSION_NAME)
+            put("cold", deviceId)
+            put("nebular", System.currentTimeMillis())
+            put("whipple", Build.MODEL ?: "")
+            put("shako", Build.VERSION.RELEASE ?: "")
+            put("stub", Build.BRAND ?: "")
+        }
+        obj.toString().enqueueRequest(BaseInfo.cloakUrl, 10, onSuccess = {
+            LocalPrefs.hasReqCloak = true
+            LocalPrefs.userIsBlack = "inca" == it
+        })
     }
 
     private fun JsonString.enqueueRequest(

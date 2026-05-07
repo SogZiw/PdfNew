@@ -15,6 +15,8 @@ object LocalPrefs {
     var userFirstCountryCode by store.string()
     var userDeviceId by store.string()
     var installReferrerUrl by store.string()
+    var hasReqCloak by store.boolean(defaultValue = false)
+    var userIsBlack by store.boolean(defaultValue = false)
 
     fun readDefaultLanguageCode(context: Context): String {
         return context.getSharedPreferences(STORE_NAME, MODE_PRIVATE)
