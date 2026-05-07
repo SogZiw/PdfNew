@@ -7,6 +7,7 @@ import com.word.file.manager.pdf.base.data.DocumentRepository
 import com.word.file.manager.pdf.base.data.database.AppDatabase
 import com.word.file.manager.pdf.base.helper.InstallReferrerHelper
 import com.word.file.manager.pdf.base.helper.net.NetworkCenter
+import com.word.file.manager.pdf.base.helper.remote.RemoteConfProvider
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -21,6 +22,7 @@ class BaseApp : Application() {
         app = this
         CoroutineScope(Dispatchers.IO).launch { MobileAds.initialize(this@BaseApp) }
         PDFBoxResourceLoader.init(this)
+        RemoteConfProvider.init()
         InstallReferrerHelper.fetch()
         NetworkCenter.cloak()
     }

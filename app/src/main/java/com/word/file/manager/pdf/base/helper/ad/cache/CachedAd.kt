@@ -26,6 +26,7 @@ abstract class CachedAd(
 
     protected fun logPaidValue(adValue: AdValue, adapter: AdapterResponseInfo?) {
         logState("paid value ${adValue.valueMicros} ${adValue.currencyCode} from ${adapter?.adSourceName.orEmpty()}")
+
     }
 
     protected fun logClick() {
