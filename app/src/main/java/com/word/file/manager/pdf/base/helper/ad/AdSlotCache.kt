@@ -3,8 +3,12 @@ package com.word.file.manager.pdf.base.helper.ad
 import android.view.ViewGroup
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.word.file.manager.pdf.R
 import com.word.file.manager.pdf.base.BaseActivity
+import com.word.file.manager.pdf.base.helper.EventCenter
 import com.word.file.manager.pdf.base.utils.showLog
+import com.word.file.manager.pdf.databinding.DialogPdfWorkingBinding
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -44,6 +48,7 @@ class AdSlotCache(private val slot: AdSlot) {
 
     fun showFullScreen(
         activity: BaseActivity<*>,
+        eventName: String = slot.jsonKey,
         allowed: () -> Boolean = { true },
         closed: () -> Unit = {},
         shown: () -> Unit = {},
@@ -59,7 +64,13 @@ class AdSlotCache(private val slot: AdSlot) {
                 preloadIfNeeded()
                 return@launch
             }
-            cachedAd.show(activity, closed, shown)
+            if (cachedAd.shouldPrepareBeforeShow()) {
+                val dialog = activity.showAdPreparingDialog()
+                delay(850L)
+                dialog.dismiss()
+            }
+            cachedAd.show(activity = activity, closed = closed, shown = shown)
+            EventCenter.logEvent(APP_AD_IMPRESSION, mapOf(AD_POS_ID to eventName))
             preloadIfNeeded()
         }
     }
@@ -68,9 +79,11 @@ class AdSlotCache(private val slot: AdSlot) {
         activity: BaseActivity<*>,
         host: ViewGroup,
         style: NativeAdStyle,
+        eventName: String = slot.jsonKey,
         allowed: () -> Boolean = { true },
     ) {
         if (!allowed()) return
+        EventCenter.logEvent(APP_AD_CHANCE, mapOf(AD_POS_ID to eventName))
         waitForNativeAd {
             adPipelineScope.launch {
                 while (!activity.fetchResumeState()) delay(250L)
@@ -79,6 +92,7 @@ class AdSlotCache(private val slot: AdSlot) {
                     override fun onDestroy(owner: LifecycleOwner) = cachedAd.release()
                 })
                 cachedAd.render(activity, host, style)
+                EventCenter.logEvent(APP_AD_IMPRESSION, mapOf(AD_POS_ID to eventName))
                 preloadIfNeeded()
             }
         }
@@ -143,6 +157,7 @@ class AdSlotCache(private val slot: AdSlot) {
         return when (type) {
             AdType.AppOpen,
             AdType.Interstitial -> AdmobFullScreenCachedAd(this, slot)
+
             AdType.Native -> AdmobNativeCachedAd(this, slot)
             else -> null
         }
@@ -153,7 +168,20 @@ class AdSlotCache(private val slot: AdSlot) {
         Loading,
     }
 
+    private fun BaseActivity<*>.showAdPreparingDialog() = MaterialAlertDialogBuilder(this)
+        .setView(
+            DialogPdfWorkingBinding.inflate(layoutInflater).apply {
+                textProgress.text = getString(R.string.preparing_ad)
+            }.root,
+        )
+        .setCancelable(false)
+        .create()
+        .also { it.show() }
+
     private companion object {
         const val ADMOB = "admob"
+        const val APP_AD_CHANCE = "app_ad_chance"
+        const val APP_AD_IMPRESSION = "app_ad_impression"
+        const val AD_POS_ID = "ad_pos_id"
     }
 }

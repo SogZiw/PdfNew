@@ -21,6 +21,10 @@ abstract class CachedFullScreenAd(
 
     abstract fun show(activity: BaseActivity<*>, closed: () -> Unit, shown: () -> Unit = {})
 
+    fun shouldPrepareBeforeShow(): Boolean {
+        return config.type == AdType.Interstitial
+    }
+
     protected fun resumeThen(activity: BaseActivity<*>, block: () -> Unit) {
         activity.lifecycleScope.launch(Dispatchers.Main) {
             while (!activity.fetchResumeState()) delay(250L)
