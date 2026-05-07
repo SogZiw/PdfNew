@@ -40,6 +40,8 @@ abstract class BaseActivity<VB : ViewBinding> : InsetsActivity<VB>() {
         }
     }
 
+    fun fetchResumeState() = isPageResumed
+
     private fun updatePageResumeState(resumed: Boolean) {
         isPageResumed = resumed
     }

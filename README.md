@@ -215,3 +215,4 @@ This file captures the working conventions established during recent development
 - Changed the file category selector container from `NestedScrollView` to `HorizontalScrollView` so it can scroll horizontally on narrow screens.
 - Added `NetworkCenter` JSON request support with a `JsonString.enqueueRequest(...)` extension that uses OkHttp `enqueue` retries capped at 5 attempts.
 - Added a shared `String.showLog(...)` helper in `AppCommonExt.kt` and log successful `NetworkCenter` responses.
+- Added a differentiated AdMob ad wrapper under `base/helper/ad` for placement config, full-screen preload/show, native preload/render, and paid-value logging without wiring business-page show calls or remote config.
