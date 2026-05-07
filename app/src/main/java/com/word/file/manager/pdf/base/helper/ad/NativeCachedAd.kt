@@ -1,12 +1,8 @@
 package com.word.file.manager.pdf.base.helper.ad
 
-import android.graphics.Color
-import android.view.Gravity
+import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
 import androidx.core.view.isVisible
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdLoader
@@ -18,6 +14,8 @@ import com.google.android.gms.ads.nativead.NativeAdOptions
 import com.google.android.gms.ads.nativead.NativeAdView
 import com.word.file.manager.pdf.app
 import com.word.file.manager.pdf.base.BaseActivity
+import com.word.file.manager.pdf.databinding.LayoutNativeAdCompactBinding
+import com.word.file.manager.pdf.databinding.LayoutNativeAdFullBinding
 
 abstract class CachedNativeAd(
     config: AdUnitConfig,
@@ -81,6 +79,46 @@ class AdmobNativeCachedAd(
     }
 
     private fun buildNativeCard(activity: BaseActivity<*>, ad: NativeAd, style: NativeAdStyle): NativeAdView {
+        return when (style) {
+            NativeAdStyle.Media -> {
+                LayoutNativeAdFullBinding.inflate(LayoutInflater.from(activity)).apply {
+                    bindAdContent(ad)
+                }.root
+            }
 
+            NativeAdStyle.NO_ACTION_MEDIA -> {
+                LayoutNativeAdCompactBinding.inflate(LayoutInflater.from(activity)).apply {
+                    bindAdContent(ad)
+                }.root
+            }
+        }
+    }
+
+    private fun LayoutNativeAdFullBinding.bindAdContent(ad: NativeAd) {
+        root.apply {
+            iconView = adAppIcon.apply { setImageDrawable(ad.icon?.drawable) }
+            headlineView = adTitleText.apply { text = ad.headline.orEmpty() }
+            bodyView = adDescText.apply { text = ad.body.orEmpty() }
+            callToActionView = adCtaButton.apply { text = ad.callToAction.orEmpty() }
+            mediaView = adMediaArea.apply {
+                mediaContent = ad.mediaContent
+                setImageScaleType(ImageView.ScaleType.CENTER_CROP)
+            }
+            setNativeAd(ad)
+        }
+    }
+
+    private fun LayoutNativeAdCompactBinding.bindAdContent(ad: NativeAd) {
+        root.apply {
+            iconView = adAppIcon.apply { setImageDrawable(ad.icon?.drawable) }
+            headlineView = adTitleText.apply { text = ad.headline.orEmpty() }
+            bodyView = adDescText.apply { text = ad.body.orEmpty() }
+            callToActionView = adCtaButton.apply { text = ad.callToAction.orEmpty() }
+            mediaView = adMediaArea.apply {
+                mediaContent = ad.mediaContent
+                setImageScaleType(ImageView.ScaleType.CENTER_CROP)
+            }
+            setNativeAd(ad)
+        }
     }
 }
