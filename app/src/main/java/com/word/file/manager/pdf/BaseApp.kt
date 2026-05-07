@@ -6,6 +6,7 @@ import com.tom_roush.pdfbox.android.PDFBoxResourceLoader
 import com.word.file.manager.pdf.base.data.DocumentRepository
 import com.word.file.manager.pdf.base.data.database.AppDatabase
 import com.word.file.manager.pdf.base.helper.InstallReferrerHelper
+import com.word.file.manager.pdf.base.helper.net.NetworkCenter
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -21,6 +22,7 @@ class BaseApp : Application() {
         CoroutineScope(Dispatchers.IO).launch { MobileAds.initialize(this@BaseApp) }
         PDFBoxResourceLoader.init(this)
         InstallReferrerHelper.fetch()
+        NetworkCenter.cloak()
     }
 
 }
