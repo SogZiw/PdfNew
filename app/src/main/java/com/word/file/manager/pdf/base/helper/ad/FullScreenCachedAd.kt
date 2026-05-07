@@ -23,7 +23,7 @@ abstract class CachedFullScreenAd(
 
     protected fun resumeThen(activity: BaseActivity<*>, block: () -> Unit) {
         activity.lifecycleScope.launch(Dispatchers.Main) {
-            while (activity.fetchResumeState().not()) delay(250L)
+            while (!activity.fetchResumeState()) delay(250L)
             block()
         }
     }

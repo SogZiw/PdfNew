@@ -1,12 +1,15 @@
 package com.word.file.manager.pdf.base.helper.ad
 
 import android.view.ViewGroup
+import androidx.lifecycle.DefaultLifecycleObserver
+import androidx.lifecycle.LifecycleOwner
 import com.word.file.manager.pdf.base.BaseActivity
 import com.word.file.manager.pdf.base.utils.showLog
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 private val adPipelineScope by lazy {
@@ -70,7 +73,11 @@ class AdSlotCache(private val slot: AdSlot) {
         if (!allowed()) return
         waitForNativeAd {
             adPipelineScope.launch {
+                while (!activity.fetchResumeState()) delay(250L)
                 val cachedAd = takeCachedAd<CachedNativeAd>() ?: return@launch
+                activity.lifecycle.addObserver(object : DefaultLifecycleObserver {
+                    override fun onDestroy(owner: LifecycleOwner) = cachedAd.release()
+                })
                 cachedAd.render(activity, host, style)
                 preloadIfNeeded()
             }

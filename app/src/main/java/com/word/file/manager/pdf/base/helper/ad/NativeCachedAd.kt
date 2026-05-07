@@ -81,63 +81,6 @@ class AdmobNativeCachedAd(
     }
 
     private fun buildNativeCard(activity: BaseActivity<*>, ad: NativeAd, style: NativeAdStyle): NativeAdView {
-        val view = NativeAdView(activity).apply {
-            layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-        }
-        val root = LinearLayout(activity).apply {
-            orientation = LinearLayout.VERTICAL
-            setPadding(20, 16, 20, 16)
-            layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-        }
-        val media = MediaView(activity).apply {
-            layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 320)
-            isVisible = style == NativeAdStyle.Media
-            mediaContent = ad.mediaContent
-        }
-        val row = LinearLayout(activity).apply {
-            orientation = LinearLayout.HORIZONTAL
-            gravity = Gravity.CENTER_VERTICAL
-            setPadding(0, 12, 0, 0)
-        }
-        val icon = ImageView(activity).apply {
-            layoutParams = LinearLayout.LayoutParams(72, 72)
-            setImageDrawable(ad.icon?.drawable)
-        }
-        val textColumn = LinearLayout(activity).apply {
-            orientation = LinearLayout.VERTICAL
-            setPadding(16, 0, 16, 0)
-            layoutParams = LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f)
-        }
-        val headline = TextView(activity).apply {
-            text = ad.headline.orEmpty()
-            setTextColor(Color.BLACK)
-            textSize = 14f
-            maxLines = 1
-        }
-        val body = TextView(activity).apply {
-            text = ad.body.orEmpty()
-            setTextColor(Color.DKGRAY)
-            textSize = 12f
-            maxLines = 1
-        }
-        val action = Button(activity).apply {
-            text = ad.callToAction ?: "View"
-            isAllCaps = false
-        }
-        textColumn.addView(headline)
-        textColumn.addView(body)
-        row.addView(icon)
-        row.addView(textColumn)
-        root.addView(media)
-        root.addView(row)
-        root.addView(action, LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT))
-        view.addView(root)
-        view.mediaView = media
-        view.iconView = icon
-        view.headlineView = headline
-        view.bodyView = body
-        view.callToActionView = action
-        view.setNativeAd(ad)
-        return view
+
     }
 }

@@ -11,6 +11,7 @@ object AdCenter {
     val backInterstitial: AdSlotCache get() = cacheFor(AdSlot.BackBreak)
     val mainNative: AdSlotCache get() = cacheFor(AdSlot.MainNative)
     val scanNative: AdSlotCache get() = cacheFor(AdSlot.ScanNative)
+    val mainBanner: AdSlotCache get() = cacheFor(AdSlot.MainBanner)
 
     fun loadConfig(rawConfig: String = DEFAULT_AD_CONFIG) {
         val source = rawConfig.ifBlank { DEFAULT_AD_CONFIG }
