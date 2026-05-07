@@ -1,5 +1,9 @@
-package com.word.file.manager.pdf.base.helper.ad
+package com.word.file.manager.pdf.base.helper.ad.center
 
+import com.word.file.manager.pdf.base.helper.ad.cache.AdSlotCache
+import com.word.file.manager.pdf.base.helper.ad.model.AdSlot
+import com.word.file.manager.pdf.base.helper.ad.model.AdType
+import com.word.file.manager.pdf.base.helper.ad.model.AdUnitConfig
 import org.json.JSONObject
 
 object AdCenter {

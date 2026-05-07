@@ -1,4 +1,4 @@
-package com.word.file.manager.pdf.base.helper.ad
+package com.word.file.manager.pdf.base.helper.ad.model
 
 enum class AdType(val reportName: String) {
     AppOpen("open"),

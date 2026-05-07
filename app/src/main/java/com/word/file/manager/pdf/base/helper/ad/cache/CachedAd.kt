@@ -1,7 +1,9 @@
-package com.word.file.manager.pdf.base.helper.ad
+package com.word.file.manager.pdf.base.helper.ad.cache
 
 import com.google.android.gms.ads.AdValue
 import com.google.android.gms.ads.AdapterResponseInfo
+import com.word.file.manager.pdf.base.helper.ad.model.AdSlot
+import com.word.file.manager.pdf.base.helper.ad.model.AdUnitConfig
 import com.word.file.manager.pdf.base.utils.showLog
 
 abstract class CachedAd(

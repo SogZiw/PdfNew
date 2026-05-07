@@ -1,4 +1,4 @@
-package com.word.file.manager.pdf.base.helper.ad
+package com.word.file.manager.pdf.base.helper.ad.nativead
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -8,12 +8,15 @@ import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdLoader
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.LoadAdError
-import com.google.android.gms.ads.nativead.MediaView
 import com.google.android.gms.ads.nativead.NativeAd
 import com.google.android.gms.ads.nativead.NativeAdOptions
 import com.google.android.gms.ads.nativead.NativeAdView
 import com.word.file.manager.pdf.app
 import com.word.file.manager.pdf.base.BaseActivity
+import com.word.file.manager.pdf.base.helper.ad.cache.CachedAd
+import com.word.file.manager.pdf.base.helper.ad.model.AdSlot
+import com.word.file.manager.pdf.base.helper.ad.model.AdUnitConfig
+import com.word.file.manager.pdf.base.helper.ad.model.NativeAdStyle
 import com.word.file.manager.pdf.databinding.LayoutNativeAdCompactBinding
 import com.word.file.manager.pdf.databinding.LayoutNativeAdFullBinding
 
