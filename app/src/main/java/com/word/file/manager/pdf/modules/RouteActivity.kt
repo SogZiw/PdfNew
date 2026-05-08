@@ -9,6 +9,7 @@ import androidx.activity.viewModels
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.word.file.manager.pdf.EXTRA_DOCUMENT_ACTION_TYPE
+import com.word.file.manager.pdf.EXTRA_FROM_SET
 import com.word.file.manager.pdf.EXTRA_SHORTCUT_PAGE
 import com.word.file.manager.pdf.SHORTCUT_PAGE_SCAN
 import com.word.file.manager.pdf.SHORTCUT_PAGE_UNINSTALL
@@ -85,7 +86,8 @@ class RouteActivity : BaseActivity<ActivityRouteBinding>() {
         }
         val actionType = shortcutPage.toDocumentActionType()
         if (!LocalPrefs.hasSeenIntroduce) {
-            startActivity(Intent(activity, IntroduceActivity::class.java).apply {
+            startActivity(Intent(activity, LanguageActivity::class.java).apply {
+                putExtra(EXTRA_FROM_SET, false)
                 putExtra(EXTRA_DOCUMENT_ACTION_TYPE, actionType)
             })
             finish()

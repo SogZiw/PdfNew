@@ -49,14 +49,14 @@ class IntroduceActivity : BaseActivity<ActivityIntroduceBinding>() {
         refreshIndicators(position = 0)
         AdCenter.backInterstitial.preload()
         AdCenter.scanNative.renderNative(
-            activity, binding.exContainer, NativeAdStyle.Media, eventName = "new_intro_nat",
+            activity, binding.exContainer, NativeAdStyle.Media, eventName = "ad_new_intro_nat",
             allowed = { UserBlockHelper.canShowExtra() })
     }
 
     private fun goMainPage() {
         LocalPrefs.hasSeenIntroduce = true
-        EventCenter.logEvent(APP_AD_IMPRESSION, mapOf(AD_POS_ID to "new_intro_int"))
-        AdCenter.backInterstitial.showFullScreen(activity, eventName = "new_intro_int", allowed = {
+        EventCenter.logEvent(APP_AD_IMPRESSION, mapOf(AD_POS_ID to "ad_new_intro_int"))
+        AdCenter.backInterstitial.showFullScreen(activity, eventName = "ad_new_intro_int", allowed = {
             UserBlockHelper.canShowExtra()
         }, closed = {
             startActivity(Intent(activity, MainActivity::class.java).apply {
