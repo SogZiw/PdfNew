@@ -61,6 +61,10 @@ class DocumentRepository(private val database: AppDatabase) {
     }
 
     fun refreshFiles(context: Context) {
+        if (_allFiles.value.isNotEmpty()) {
+            _showPermissionGuide.value = false
+            return
+        }
         scope.launch {
             val storedFiles = database.fileItemDao().getAllFiles().associateBy { it.absolutePath }
             _allFiles.value = querySupportedFiles(context).map { scannedItem ->
