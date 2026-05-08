@@ -56,4 +56,12 @@
     <string name="language">Language</string>
     <string name="privacy_policy">Privacy Policy</string>
     <string name="next">Next</string>
+    <string name="guide_first_title">Wait! Is something missing?</string>
+    <string name="guide_first_desc">We\'re constantly improving. Give us one more chance to help with your PDF tasks.</string>
+    <string name="guide_first_pdf_issue_title">PDF issues?</string>
+    <string name="guide_first_pdf_retry_action">Give it another shot</string>
+    <string name="guide_first_feature_issue_title">Can\'t find a feature?</string>
+    <string name="guide_first_feature_explore_action">Explore more</string>
+    <string name="guide_first_keep_action">Stay &amp; Explore</string>
+    <string name="guide_first_continue_uninstall_action">Continue to uninstall</string>
 </resources>
