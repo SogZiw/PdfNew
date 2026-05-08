@@ -36,6 +36,7 @@ import com.google.mlkit.vision.documentscanner.GmsDocumentScanningResult
 import com.word.file.manager.pdf.EXTRA_FILE_ITEM
 import com.word.file.manager.pdf.EXTRA_RESULT_TEXT
 import com.word.file.manager.pdf.R
+import com.word.file.manager.pdf.base.data.DocumentOpenType
 import com.word.file.manager.pdf.hasGoSettings
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -56,7 +57,7 @@ class MainActivity : StoragePermissionActivity<ActivityMainBinding>() {
         initViewPager()
         lifecycleScope.launch {
             app.documentRepository.requestStorageAccess.collect {
-                checkStoragePermission(com.word.file.manager.pdf.base.data.DocumentOpenType)
+                checkStoragePermission(DocumentOpenType)
             }
         }
         if (hasStorageAccessPermission()) {

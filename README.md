@@ -216,3 +216,4 @@ This file captures the working conventions established during recent development
 - Added `NetworkCenter` JSON request support with a `JsonString.enqueueRequest(...)` extension that uses OkHttp `enqueue` retries capped at 5 attempts.
 - Added a shared `String.showLog(...)` helper in `AppCommonExt.kt` and log successful `NetworkCenter` responses.
 - Added a differentiated AdMob ad wrapper under `base/helper/ad` for placement config, full-screen preload/show, native preload/render, and paid-value logging without wiring business-page show calls or remote config.
+- Added a first-run introduce page using the imported `ic_intro_*` assets, `ViewPager2` paging, local seen-state routing, and no bottom ad area.

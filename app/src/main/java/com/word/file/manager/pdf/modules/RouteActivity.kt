@@ -9,14 +9,15 @@ import androidx.activity.viewModels
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.word.file.manager.pdf.EXTRA_SHORTCUT_PAGE
+import com.word.file.manager.pdf.SHORTCUT_PAGE_UNINSTALL
 import com.word.file.manager.pdf.base.BaseActivity
 import com.word.file.manager.pdf.base.helper.LocalPrefs
 import com.word.file.manager.pdf.databinding.ActivityRouteBinding
 import com.word.file.manager.pdf.modules.guide.GuideFirstActivity
-import com.word.file.manager.pdf.SHORTCUT_PAGE_UNINSTALL
 
 class RouteActivity : BaseActivity<ActivityRouteBinding>() {
 
+    private val shortcutPage by lazy { intent?.getStringExtra(EXTRA_SHORTCUT_PAGE) }
     private val viewModel by viewModels<RouteViewModel>()
 
     private val notificationPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) {
@@ -71,9 +72,15 @@ class RouteActivity : BaseActivity<ActivityRouteBinding>() {
     }
 
     private fun goNextPage() {
-        val shortcutPage = intent?.getStringExtra(EXTRA_SHORTCUT_PAGE)
         if (shortcutPage == SHORTCUT_PAGE_UNINSTALL) {
             startActivity(Intent(activity, GuideFirstActivity::class.java))
+            finish()
+            return
+        }
+        if (!LocalPrefs.hasSeenIntroduce) {
+            startActivity(Intent(activity, IntroduceActivity::class.java).apply {
+                putExtra(EXTRA_SHORTCUT_PAGE, shortcutPage)
+            })
             finish()
             return
         }

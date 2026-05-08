@@ -59,6 +59,14 @@
     <string name="language">Language</string>
     <string name="privacy_policy">Privacy Policy</string>
     <string name="next">Next</string>
+    <string name="start">Start</string>
+    <string name="introduce_skip">Skip</string>
+    <string name="introduce_title_1">Fast PDF Viewer</string>
+    <string name="introduce_desc_1">Open and read documents instantly.</string>
+    <string name="introduce_title_2">Scan &amp; Create</string>
+    <string name="introduce_desc_2">Turn images into PDFs in seconds.</string>
+    <string name="introduce_title_3">Merge &amp; Split</string>
+    <string name="introduce_desc_3">Manage and edit PDFs like a pro.</string>
     <string name="guide_first_title">Wait! Is something missing?</string>
     <string name="guide_first_desc">We\'re constantly improving. Give us one more chance to help with your PDF tasks.</string>
     <string name="guide_first_pdf_issue_title">PDF issues?</string>

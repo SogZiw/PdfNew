@@ -94,6 +94,11 @@
             android:screenOrientation="portrait" />
 
         <activity
+            android:name=".modules.IntroduceActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name=".modules.guide.GuideFirstActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:screenOrientation="portrait" />

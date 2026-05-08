@@ -19,6 +19,7 @@ object LocalPrefs {
     var userIsBlack by store.boolean(defaultValue = false)
     var hasCheckedLaunchConsent by store.boolean(defaultValue = false)
     var hasAskedNotificationPermission by store.boolean(defaultValue = false)
+    var hasSeenIntroduce by store.boolean(defaultValue = false)
     var isPreviewUser by store.boolean(defaultValue = true)
     var totalRevenueFor001 by store.double()
     var hasSubscribeFMS by store.boolean(defaultValue = false)
