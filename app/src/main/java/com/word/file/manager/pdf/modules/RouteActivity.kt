@@ -8,9 +8,15 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.word.file.manager.pdf.EXTRA_DOCUMENT_ACTION_TYPE
 import com.word.file.manager.pdf.EXTRA_SHORTCUT_PAGE
+import com.word.file.manager.pdf.SHORTCUT_PAGE_SCAN
 import com.word.file.manager.pdf.SHORTCUT_PAGE_UNINSTALL
+import com.word.file.manager.pdf.SHORTCUT_PAGE_VIEW
 import com.word.file.manager.pdf.base.BaseActivity
+import com.word.file.manager.pdf.base.data.DocumentActionType
+import com.word.file.manager.pdf.base.data.DocumentOpenType
+import com.word.file.manager.pdf.base.data.PdfCreateType
 import com.word.file.manager.pdf.base.helper.LocalPrefs
 import com.word.file.manager.pdf.databinding.ActivityRouteBinding
 import com.word.file.manager.pdf.modules.guide.GuideFirstActivity
@@ -77,17 +83,26 @@ class RouteActivity : BaseActivity<ActivityRouteBinding>() {
             finish()
             return
         }
+        val actionType = shortcutPage.toDocumentActionType()
         if (!LocalPrefs.hasSeenIntroduce) {
             startActivity(Intent(activity, IntroduceActivity::class.java).apply {
-                putExtra(EXTRA_SHORTCUT_PAGE, shortcutPage)
+                putExtra(EXTRA_DOCUMENT_ACTION_TYPE, actionType)
             })
             finish()
             return
         }
         startActivity(Intent(activity, MainActivity::class.java).apply {
-            putExtra(EXTRA_SHORTCUT_PAGE, shortcutPage)
+            putExtra(EXTRA_DOCUMENT_ACTION_TYPE, actionType)
         })
         finish()
+    }
+
+    private fun String?.toDocumentActionType(): DocumentActionType {
+        return when (this) {
+            SHORTCUT_PAGE_SCAN -> PdfCreateType
+            SHORTCUT_PAGE_VIEW -> DocumentOpenType
+            else -> DocumentOpenType
+        }
     }
 
     override fun onClickBack() = Unit

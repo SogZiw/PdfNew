@@ -2,6 +2,7 @@ package com.word.file.manager.pdf.modules
 
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.view.LayoutInflater
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -9,8 +10,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.word.file.manager.pdf.EXTRA_DOCUMENT_ACTION_TYPE
-import com.word.file.manager.pdf.EXTRA_SHORTCUT_PAGE
-import com.word.file.manager.pdf.SHORTCUT_PAGE_SCAN
 import com.word.file.manager.pdf.app
 import com.word.file.manager.pdf.base.data.DocumentActionType
 import com.word.file.manager.pdf.base.data.PdfCreateType
@@ -68,13 +67,31 @@ class MainActivity : StoragePermissionActivity<ActivityMainBinding>() {
         binding.btnAdd.setOnClickListener {
             checkStoragePermission(PdfCreateType)
         }
-        handleShortcutAction()
+        handleLaunchAction(intent)
     }
 
-    private fun handleShortcutAction() {
-        if (intent?.getStringExtra(EXTRA_SHORTCUT_PAGE) != SHORTCUT_PAGE_SCAN) return
-        intent?.removeExtra(EXTRA_SHORTCUT_PAGE)
-        checkStoragePermission(PdfCreateType)
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        setIntent(intent)
+        handleLaunchAction(intent)
+    }
+
+    private fun handleLaunchAction(sourceIntent: Intent?) {
+        val actionType = sourceIntent.readDocumentActionType() ?: return
+        sourceIntent?.removeExtra(EXTRA_DOCUMENT_ACTION_TYPE)
+        when (actionType) {
+            DocumentOpenType -> changeTab(0)
+            else -> checkStoragePermission(actionType)
+        }
+    }
+
+    private fun Intent?.readDocumentActionType(): DocumentActionType? {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            this?.getParcelableExtra(EXTRA_DOCUMENT_ACTION_TYPE, DocumentActionType::class.java)
+        } else {
+            @Suppress("DEPRECATION")
+            this?.getParcelableExtra(EXTRA_DOCUMENT_ACTION_TYPE)
+        }
     }
 
     override fun onStorageAccessGranted(type: DocumentActionType?) {

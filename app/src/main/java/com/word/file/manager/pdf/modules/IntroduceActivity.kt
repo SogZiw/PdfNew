@@ -1,6 +1,7 @@
 package com.word.file.manager.pdf.modules
 
 import android.content.Intent
+import android.os.Build
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -9,9 +10,11 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.word.file.manager.pdf.AD_POS_ID
 import com.word.file.manager.pdf.APP_AD_IMPRESSION
-import com.word.file.manager.pdf.EXTRA_SHORTCUT_PAGE
+import com.word.file.manager.pdf.EXTRA_DOCUMENT_ACTION_TYPE
 import com.word.file.manager.pdf.R
 import com.word.file.manager.pdf.base.BaseActivity
+import com.word.file.manager.pdf.base.data.DocumentActionType
+import com.word.file.manager.pdf.base.data.DocumentOpenType
 import com.word.file.manager.pdf.base.helper.EventCenter
 import com.word.file.manager.pdf.base.helper.LocalPrefs
 import com.word.file.manager.pdf.base.helper.UserBlockHelper
@@ -57,10 +60,19 @@ class IntroduceActivity : BaseActivity<ActivityIntroduceBinding>() {
             UserBlockHelper.canShowExtra()
         }, closed = {
             startActivity(Intent(activity, MainActivity::class.java).apply {
-                putExtra(EXTRA_SHORTCUT_PAGE, intent?.getStringExtra(EXTRA_SHORTCUT_PAGE))
+                putExtra(EXTRA_DOCUMENT_ACTION_TYPE, readLaunchActionType())
             })
             finish()
         })
+    }
+
+    private fun readLaunchActionType(): DocumentActionType {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            intent?.getParcelableExtra(EXTRA_DOCUMENT_ACTION_TYPE, DocumentActionType::class.java)
+        } else {
+            @Suppress("DEPRECATION")
+            intent?.getParcelableExtra(EXTRA_DOCUMENT_ACTION_TYPE)
+        } ?: DocumentOpenType
     }
 
     private fun bindIntroText(position: Int) {
