@@ -20,7 +20,6 @@ class GuideReasonActivity : BaseActivity<ActivityGuideReasonBinding>() {
     private val settingsLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         hasGoSettings = false
         goMainPage()
-        EventCenter.logEvent("uninstall_back_to_app")
     }
 
     override fun setViewBinding() = ActivityGuideReasonBinding.inflate(layoutInflater)
@@ -43,7 +42,6 @@ class GuideReasonActivity : BaseActivity<ActivityGuideReasonBinding>() {
             eventName = "ad_uninstall_nat2",
             allowed = { UserBlockHelper.canShowExtra() },
         )
-        AdCenter.backInterstitial.preload()
         EventCenter.logEvent("uninstall_page2_show")
     }
 
