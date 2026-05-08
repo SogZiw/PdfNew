@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <shortcut
+        android:enabled="true"
+        android:icon="@drawable/ic_shortcut_view"
+        android:shortcutId="quick_open_files"
+        android:shortcutLongLabel="@string/view"
+        android:shortcutShortLabel="@string/view">
+        <intent
+            android:action="OPEN_SHORTCUT"
+            android:targetClass="com.word.file.manager.pdf.modules.RouteActivity"
+            android:targetPackage="com.word.file.manager.pdf">
+            <extra
+                android:name="shortcut_entry"
+                android:value="quick_open_files" />
+        </intent>
+    </shortcut>
+
+    <shortcut
+        android:enabled="true"
+        android:icon="@drawable/ic_shortcut_scan"
+        android:shortcutId="quick_create_scan"
+        android:shortcutLongLabel="@string/scan"
+        android:shortcutShortLabel="@string/scan">
+        <intent
+            android:action="OPEN_SHORTCUT"
+            android:targetClass="com.word.file.manager.pdf.modules.RouteActivity"
+            android:targetPackage="com.word.file.manager.pdf">
+            <extra
+                android:name="shortcut_entry"
+                android:value="quick_create_scan" />
+        </intent>
+    </shortcut>
+
+    <shortcut
+        android:enabled="true"
+        android:icon="@drawable/ic_shortcut_uninstall"
+        android:shortcutId="quick_exit_guide"
+        android:shortcutLongLabel="@string/uninstall"
+        android:shortcutShortLabel="@string/uninstall">
+        <intent
+            android:action="OPEN_SHORTCUT"
+            android:targetClass="com.word.file.manager.pdf.modules.RouteActivity"
+            android:targetPackage="com.word.file.manager.pdf">
+            <extra
+                android:name="shortcut_entry"
+                android:value="quick_exit_guide" />
+        </intent>
+    </shortcut>
+
+</shortcuts>

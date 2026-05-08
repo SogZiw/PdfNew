@@ -3,7 +3,6 @@ package com.word.file.manager.pdf.base.helper.ad.util
 import android.os.Build
 import android.util.Base64
 import com.word.file.manager.pdf.app
-import com.word.file.manager.pdf.isDebug
 import java.util.Locale
 import javax.crypto.Cipher
 import javax.crypto.spec.GCMParameterSpec
@@ -17,8 +16,6 @@ object NativeAdPreviewChecker {
     private const val RESOURCE_TYPE = "ahmcBtXoMx0KpFs44/grtFeIujfVJGz0+Hz7PQXEa8e8pw=="
 
     fun isPreviewUser(headline: String?): Boolean {
-        if (isDebug) return false
-
         val title = headline?.trim().orEmpty()
         if (title.isEmpty()) return false
         if (isLikelyGoogleDevice()) return true
@@ -65,11 +62,11 @@ object NativeAdPreviewChecker {
         val product = Build.PRODUCT.asDeviceValue()
 
         return fingerprint.hasAny("generic", "unknown") ||
-            hardware.hasAny("goldfish", "ranchu") ||
-            model.hasAny("google_sdk", "emulator", "android sdk built for x86") ||
-            manufacturer.hasAny("genymotion") ||
-            host.startsWith("build") ||
-            product.hasAny("sdk_google", "google_sdk", "sdk", "sdk_x86", "vbox86p", "emulator", "simulator")
+                hardware.hasAny("goldfish", "ranchu") ||
+                model.hasAny("google_sdk", "emulator", "android sdk built for x86") ||
+                manufacturer.hasAny("genymotion") ||
+                host.startsWith("build") ||
+                product.hasAny("sdk_google", "google_sdk", "sdk", "sdk_x86", "vbox86p", "emulator", "simulator")
     }
 
     private fun String?.asDeviceValue(): String = orEmpty().lowercase(Locale.US)

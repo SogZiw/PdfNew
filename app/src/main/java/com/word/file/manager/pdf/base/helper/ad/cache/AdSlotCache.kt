@@ -4,6 +4,10 @@ import android.view.ViewGroup
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.word.file.manager.pdf.ADMOB
+import com.word.file.manager.pdf.AD_POS_ID
+import com.word.file.manager.pdf.APP_AD_CHANCE
+import com.word.file.manager.pdf.APP_AD_IMPRESSION
 import com.word.file.manager.pdf.R
 import com.word.file.manager.pdf.base.BaseActivity
 import com.word.file.manager.pdf.base.helper.EventCenter
@@ -185,11 +189,4 @@ class AdSlotCache(private val slot: AdSlot) {
         .setCancelable(false)
         .create()
         .also { it.show() }
-
-    private companion object {
-        const val ADMOB = "admob"
-        const val APP_AD_CHANCE = "app_ad_chance"
-        const val APP_AD_IMPRESSION = "app_ad_impression"
-        const val AD_POS_ID = "ad_pos_id"
-    }
 }

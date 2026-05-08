@@ -6,6 +6,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.android.ump.ConsentRequestParameters
 import com.google.android.ump.UserMessagingPlatform
+import com.word.file.manager.pdf.AD_POS_ID
+import com.word.file.manager.pdf.APP_AD_CHANCE
 import com.word.file.manager.pdf.base.BaseActivity
 import com.word.file.manager.pdf.base.helper.EventCenter
 import com.word.file.manager.pdf.base.helper.LocalPrefs
@@ -113,8 +115,6 @@ class RouteViewModel : ViewModel() {
         const val RELOAD_AD_STEP_MS = 1_000L
         const val LOADING_SHOW = "loading_show"
         const val NOTIFY_PERMISSION_SHOW = "notify_permission_show"
-        const val APP_AD_CHANCE = "app_ad_chance"
-        const val AD_POS_ID = "ad_pos_id"
 
         val EU_COUNTRIES = setOf(
             "AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HU", "IE", "IT", "LV",

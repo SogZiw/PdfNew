@@ -41,6 +41,9 @@
     <string name="share">Share</string>
     <string name="delete">Delete</string>
     <string name="create_pdf">Create PDF</string>
+    <string name="view">View</string>
+    <string name="scan">Scan</string>
+    <string name="uninstall">Uninstall</string>
     <string name="pdf_created">PDF created</string>
     <string name="pdf_password_title">Enter Password</string>
     <string name="pdf_password_hint">Password</string>
@@ -64,4 +67,14 @@
     <string name="guide_first_feature_explore_action">Explore more</string>
     <string name="guide_first_keep_action">Stay &amp; Explore</string>
     <string name="guide_first_continue_uninstall_action">Continue to uninstall</string>
+    <string name="guide_reason_title">We\'re sorry to see you go</string>
+    <string name="guide_reason_subtitle">(Select all that apply)</string>
+    <string name="guide_reason_option_complex">Interface is too complex</string>
+    <string name="guide_reason_option_ads">Intrusive advertisements</string>
+    <string name="guide_reason_option_quality">Unsatisfying reading quality</string>
+    <string name="guide_reason_option_notification">Overwhelming notifications</string>
+    <string name="guide_reason_option_tools">Need more powerful PDF tools</string>
+    <string name="guide_reason_option_system_viewer">Using system\'s built-in viewer</string>
+    <string name="guide_reason_keep_action">Give us another chance</string>
+    <string name="guide_reason_uninstall_action">Proceed to uninstall</string>
 </resources>

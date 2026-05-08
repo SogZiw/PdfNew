@@ -82,6 +82,9 @@
                 <data android:mimeType="application/json" />
                 <data android:mimeType="application/vnd.android.package-archive" />
             </intent-filter>
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/custom_shortcuts" />
         </activity>
 
         <activity
@@ -92,6 +95,11 @@
 
         <activity
             android:name=".modules.guide.GuideFirstActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".modules.guide.GuideReasonActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:screenOrientation="portrait" />
 

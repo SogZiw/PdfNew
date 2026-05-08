@@ -9,6 +9,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.word.file.manager.pdf.EXTRA_DOCUMENT_ACTION_TYPE
+import com.word.file.manager.pdf.EXTRA_SHORTCUT_PAGE
+import com.word.file.manager.pdf.SHORTCUT_PAGE_SCAN
 import com.word.file.manager.pdf.app
 import com.word.file.manager.pdf.base.data.DocumentActionType
 import com.word.file.manager.pdf.base.data.PdfCreateType
@@ -65,6 +67,13 @@ class MainActivity : StoragePermissionActivity<ActivityMainBinding>() {
         binding.btnAdd.setOnClickListener {
             checkStoragePermission(PdfCreateType)
         }
+        handleShortcutAction()
+    }
+
+    private fun handleShortcutAction() {
+        if (intent?.getStringExtra(EXTRA_SHORTCUT_PAGE) != SHORTCUT_PAGE_SCAN) return
+        intent?.removeExtra(EXTRA_SHORTCUT_PAGE)
+        checkStoragePermission(PdfCreateType)
     }
 
     override fun onStorageAccessGranted(type: DocumentActionType?) {

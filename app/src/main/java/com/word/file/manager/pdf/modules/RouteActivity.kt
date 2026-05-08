@@ -8,9 +8,12 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.word.file.manager.pdf.EXTRA_SHORTCUT_PAGE
 import com.word.file.manager.pdf.base.BaseActivity
 import com.word.file.manager.pdf.base.helper.LocalPrefs
 import com.word.file.manager.pdf.databinding.ActivityRouteBinding
+import com.word.file.manager.pdf.modules.guide.GuideFirstActivity
+import com.word.file.manager.pdf.SHORTCUT_PAGE_UNINSTALL
 
 class RouteActivity : BaseActivity<ActivityRouteBinding>() {
 
@@ -32,7 +35,7 @@ class RouteActivity : BaseActivity<ActivityRouteBinding>() {
             requestNoticeIfNeeded()
         }
         viewModel.nextJobLiveData.observe(this) {
-            goMainPage()
+            goNextPage()
         }
     }
 
@@ -67,8 +70,16 @@ class RouteActivity : BaseActivity<ActivityRouteBinding>() {
                 ContextCompat.checkSelfPermission(activity, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED
     }
 
-    private fun goMainPage() {
-        startActivity(Intent(activity, MainActivity::class.java))
+    private fun goNextPage() {
+        val shortcutPage = intent?.getStringExtra(EXTRA_SHORTCUT_PAGE)
+        if (shortcutPage == SHORTCUT_PAGE_UNINSTALL) {
+            startActivity(Intent(activity, GuideFirstActivity::class.java))
+            finish()
+            return
+        }
+        startActivity(Intent(activity, MainActivity::class.java).apply {
+            putExtra(EXTRA_SHORTCUT_PAGE, shortcutPage)
+        })
         finish()
     }
 

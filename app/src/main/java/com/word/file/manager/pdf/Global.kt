@@ -3,6 +3,14 @@ package com.word.file.manager.pdf
 const val EXTRA_FILE_ITEM = "extra_file_item"
 const val EXTRA_RESULT_TEXT = "extra_result_text"
 const val EXTRA_DOCUMENT_ACTION_TYPE = "extra_document_action_type"
+const val EXTRA_SHORTCUT_PAGE = "shortcut_entry"
+const val SHORTCUT_PAGE_VIEW = "quick_open_files"
+const val SHORTCUT_PAGE_SCAN = "quick_create_scan"
+const val SHORTCUT_PAGE_UNINSTALL = "quick_exit_guide"
+const val ADMOB = "admob"
+const val APP_AD_CHANCE = "app_ad_chance"
+const val APP_AD_IMPRESSION = "app_ad_impression"
+const val AD_POS_ID = "ad_pos_id"
 
 lateinit var app: BaseApp
 var isDebug = true
