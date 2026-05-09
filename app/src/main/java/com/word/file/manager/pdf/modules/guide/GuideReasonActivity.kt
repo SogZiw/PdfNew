@@ -26,7 +26,7 @@ class GuideReasonActivity : BaseActivity<ActivityGuideReasonBinding>() {
 
     override fun initView() {
         binding.toolbar.toolbarTitle.text = getString(R.string.guide_reason_title)
-        binding.toolbar.actionBack.setOnClickListener { onClickBack() }
+        binding.toolbar.actionBack.setOnClickListener { onUserBack() }
         bindReasonOptions()
         binding.guideReasonKeepButton.setOnClickListener {
             goMainPage()
@@ -77,7 +77,7 @@ class GuideReasonActivity : BaseActivity<ActivityGuideReasonBinding>() {
         finish()
     }
 
-    override fun onClickBack() {
+    override fun onUserBack() {
         goMainPage()
     }
 

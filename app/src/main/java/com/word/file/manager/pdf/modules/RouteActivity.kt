@@ -107,5 +107,5 @@ class RouteActivity : BaseActivity<ActivityRouteBinding>() {
         }
     }
 
-    override fun onClickBack() = Unit
+    override fun onUserBack() = Unit
 }

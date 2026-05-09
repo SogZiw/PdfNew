@@ -36,7 +36,7 @@ class LanguageActivity : BaseActivity<ActivityLanguageBinding>() {
     }
 
     override fun initView() {
-        binding.toolbar.actionBack.setOnClickListener { onClickBack() }
+        binding.toolbar.actionBack.setOnClickListener { onUserBack() }
         binding.toolbar.toolbarTitle.text = getString(R.string.language)
         binding.toolbar.actionBack.isInvisible = fromSet.not()
         setupLanguageList()

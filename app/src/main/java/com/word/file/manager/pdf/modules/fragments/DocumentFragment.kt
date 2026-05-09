@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle
@@ -12,12 +11,17 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.word.file.manager.pdf.AD_POS_ID
+import com.word.file.manager.pdf.APP_AD_CHANCE
 import com.word.file.manager.pdf.EXTRA_FILE_ITEM
 import com.word.file.manager.pdf.app
 import com.word.file.manager.pdf.base.BaseFragment
 import com.word.file.manager.pdf.base.data.FileCategory
 import com.word.file.manager.pdf.base.data.FileItem
 import com.word.file.manager.pdf.base.data.FileTabFilter
+import com.word.file.manager.pdf.base.helper.EventCenter
+import com.word.file.manager.pdf.base.helper.UserBlockHelper
+import com.word.file.manager.pdf.base.helper.ad.center.AdCenter
 import com.word.file.manager.pdf.base.utils.buildInfoText
 import com.word.file.manager.pdf.base.utils.getFileCategory
 import com.word.file.manager.pdf.base.utils.matchesFilter
@@ -124,8 +128,13 @@ class DocumentFragment : BaseFragment<FragmentDocumentBinding>() {
 
             null -> return
         }
-        activity.startActivity(Intent(activity, targetClass).apply {
-            putExtra(EXTRA_FILE_ITEM, item)
+        EventCenter.logEvent(APP_AD_CHANCE, mapOf(AD_POS_ID to "ad_file_int"))
+        AdCenter.scanInterstitial.showFullScreen(activity, eventName = "ad_file_int", allowed = {
+            UserBlockHelper.canShowExtra()
+        }, closed = {
+            activity.startActivity(Intent(activity, targetClass).apply {
+                putExtra(EXTRA_FILE_ITEM, item)
+            })
         })
     }
 

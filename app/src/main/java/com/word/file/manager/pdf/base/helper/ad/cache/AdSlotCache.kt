@@ -16,6 +16,7 @@ import com.word.file.manager.pdf.base.helper.ad.fullscreen.CachedFullScreenAd
 import com.word.file.manager.pdf.base.helper.ad.model.AdSlot
 import com.word.file.manager.pdf.base.helper.ad.model.AdType
 import com.word.file.manager.pdf.base.helper.ad.model.AdUnitConfig
+import com.word.file.manager.pdf.base.helper.ad.model.LoadState
 import com.word.file.manager.pdf.base.helper.ad.model.NativeAdStyle
 import com.word.file.manager.pdf.base.helper.ad.nativead.AdmobNativeCachedAd
 import com.word.file.manager.pdf.base.helper.ad.nativead.CachedNativeAd
@@ -48,6 +49,8 @@ class AdSlotCache(private val slot: AdSlot) {
         configs.clear()
         configs.addAll(newConfigs)
     }
+
+    fun getAdUnitConf() = configs.firstOrNull()
 
     fun hasCachedAd(): Boolean {
         removeExpiredAds()
@@ -175,11 +178,6 @@ class AdSlotCache(private val slot: AdSlot) {
             AdType.Native -> AdmobNativeCachedAd(this, slot)
             else -> null
         }
-    }
-
-    private enum class LoadState {
-        Idle,
-        Loading,
     }
 
     private fun BaseActivity<*>.showAdPreparingDialog() = MaterialAlertDialogBuilder(this)

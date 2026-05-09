@@ -7,10 +7,15 @@ import androidx.lifecycle.lifecycleScope
 import com.github.barteksc.pdfviewer.scroll.DefaultScrollHandle
 import com.github.barteksc.pdfviewer.util.FitPolicy
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.word.file.manager.pdf.AD_POS_ID
+import com.word.file.manager.pdf.APP_AD_CHANCE
 import com.word.file.manager.pdf.EXTRA_FILE_ITEM
 import com.word.file.manager.pdf.R
 import com.word.file.manager.pdf.base.BaseActivity
 import com.word.file.manager.pdf.base.data.FileItem
+import com.word.file.manager.pdf.base.helper.EventCenter
+import com.word.file.manager.pdf.base.helper.UserBlockHelper
+import com.word.file.manager.pdf.base.helper.ad.center.AdCenter
 import com.word.file.manager.pdf.base.utils.isPdfPasswordValid
 import com.word.file.manager.pdf.base.utils.isPdfPasswordRequired
 import com.word.file.manager.pdf.base.utils.markFileAsRecent
@@ -38,6 +43,16 @@ class PdfReaderActivity : BaseActivity<ActivityPdfReaderBinding>() {
             showPdfContent(fileItem)
         }
         rememberOpenAction(fileItem)
+        AdCenter.backInterstitial.preload()
+    }
+
+    override fun onUserBack() {
+        EventCenter.logEvent(APP_AD_CHANCE, mapOf(AD_POS_ID to "ad_back_int"))
+        AdCenter.backInterstitial.showFullScreen(activity, eventName = "ad_back_int", allowed = {
+            UserBlockHelper.canShowExtra()
+        }, closed = {
+            super.onUserBack()
+        })
     }
 
     private fun readTargetFile(): FileItem? {
@@ -50,7 +65,7 @@ class PdfReaderActivity : BaseActivity<ActivityPdfReaderBinding>() {
     }
 
     private fun setupHeader(fileItem: FileItem) {
-        binding.toolbar.actionBack.setOnClickListener { onClickBack() }
+        binding.toolbar.actionBack.setOnClickListener { onUserBack() }
         binding.toolbar.toolbarTitle.text = fileItem.documentTitle
     }
 

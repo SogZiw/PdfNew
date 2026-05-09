@@ -18,7 +18,7 @@ class GuideFirstActivity : BaseActivity<ActivityGuideFirstBinding>() {
 
     override fun initView() {
         binding.toolbar.toolbarTitle.text = getString(R.string.guide_first_title)
-        binding.toolbar.actionBack.setOnClickListener { onClickBack() }
+        binding.toolbar.actionBack.setOnClickListener { onUserBack() }
         binding.guideFirstPdfRetryButton.setOnClickListener { goMainPage() }
         binding.guideFirstFeatureExploreButton.setOnClickListener { goMainPage() }
         binding.guideFirstKeepButton.setOnClickListener { goMainPage() }
@@ -46,7 +46,7 @@ class GuideFirstActivity : BaseActivity<ActivityGuideFirstBinding>() {
         finish()
     }
 
-    override fun onClickBack() {
+    override fun onUserBack() {
         goMainPage()
     }
 }

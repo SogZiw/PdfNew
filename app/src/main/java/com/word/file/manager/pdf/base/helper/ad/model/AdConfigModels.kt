@@ -29,3 +29,8 @@ enum class NativeAdStyle {
     NO_ACTION_MEDIA,
     ANIM_MEDIA
 }
+
+enum class LoadState {
+    Idle,
+    Loading,
+}

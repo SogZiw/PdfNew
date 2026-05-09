@@ -30,13 +30,13 @@ abstract class BaseActivity<VB : ViewBinding> : InsetsActivity<VB>() {
 
     protected abstract fun initView()
 
-    protected open fun onClickBack() = closeCurrentPage()
+    protected open fun onUserBack() = closeCurrentPage()
 
     protected open fun closeCurrentPage() = finish()
 
     private fun registerBackHandler() {
         onBackPressedDispatcher.addCallback(owner = this) {
-            onClickBack()
+            onUserBack()
         }
     }
 

@@ -16,7 +16,7 @@ class SettingsActivity : BaseActivity<ActivitySettingsBinding>() {
     }
 
     override fun initView() {
-        binding.toolbar.actionBack.setOnClickListener { onClickBack() }
+        binding.toolbar.actionBack.setOnClickListener { onUserBack() }
         binding.toolbar.toolbarTitle.text = getString(R.string.settings)
         binding.btnLanguage.setOnClickListener { openLanguageSettings() }
         binding.btnPrivacy.setOnClickListener { openPrivacyPolicy() }

@@ -3,23 +3,49 @@ package com.word.file.manager.pdf.modules
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
+import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.lifecycle.lifecycleScope
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.google.ads.mediation.admob.AdMobAdapter
+import com.google.android.gms.ads.AdListener
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdSize
+import com.google.android.gms.ads.AdView
+import com.google.android.gms.ads.LoadAdError
+import com.google.android.gms.ads.OnPaidEventListener
+import com.google.mlkit.vision.documentscanner.GmsDocumentScannerOptions
+import com.google.mlkit.vision.documentscanner.GmsDocumentScanning
+import com.google.mlkit.vision.documentscanner.GmsDocumentScanningResult
+import com.word.file.manager.pdf.AD_POS_ID
+import com.word.file.manager.pdf.APP_AD_CHANCE
+import com.word.file.manager.pdf.APP_AD_IMPRESSION
 import com.word.file.manager.pdf.EXTRA_DOCUMENT_ACTION_TYPE
+import com.word.file.manager.pdf.EXTRA_FILE_ITEM
+import com.word.file.manager.pdf.EXTRA_RESULT_TEXT
+import com.word.file.manager.pdf.R
 import com.word.file.manager.pdf.app
 import com.word.file.manager.pdf.base.data.DocumentActionType
+import com.word.file.manager.pdf.base.data.DocumentOpenType
 import com.word.file.manager.pdf.base.data.PdfCreateType
 import com.word.file.manager.pdf.base.data.PdfLockType
 import com.word.file.manager.pdf.base.data.PdfMergeType
 import com.word.file.manager.pdf.base.data.PdfSplitType
 import com.word.file.manager.pdf.base.data.PdfUnlockType
-import com.word.file.manager.pdf.databinding.ActivityMainBinding
+import com.word.file.manager.pdf.base.helper.EventCenter
+import com.word.file.manager.pdf.base.helper.UserBlockHelper
+import com.word.file.manager.pdf.base.helper.ad.center.AdCenter
+import com.word.file.manager.pdf.base.helper.ad.model.AdSlot
+import com.word.file.manager.pdf.base.helper.ad.model.LoadState
+import com.word.file.manager.pdf.base.helper.ad.util.AdRevenueUtils
 import com.word.file.manager.pdf.base.utils.copyScannerPdfToLibrary
 import com.word.file.manager.pdf.base.utils.showMessageToast
+import com.word.file.manager.pdf.databinding.ActivityMainBinding
+import com.word.file.manager.pdf.hasGoSettings
 import com.word.file.manager.pdf.modules.fragments.BookmarkFragment
 import com.word.file.manager.pdf.modules.fragments.HomeFragment
 import com.word.file.manager.pdf.modules.fragments.RecentFragment
@@ -29,15 +55,8 @@ import com.word.file.manager.pdf.modules.permissions.hasStorageAccessPermission
 import com.word.file.manager.pdf.modules.tools.PdfMergeActivity
 import com.word.file.manager.pdf.modules.tools.PdfSecurityActivity
 import com.word.file.manager.pdf.modules.tools.PdfSplitActivity
-import com.google.mlkit.vision.documentscanner.GmsDocumentScannerOptions
-import com.google.mlkit.vision.documentscanner.GmsDocumentScanning
-import com.google.mlkit.vision.documentscanner.GmsDocumentScanningResult
-import com.word.file.manager.pdf.EXTRA_FILE_ITEM
-import com.word.file.manager.pdf.EXTRA_RESULT_TEXT
-import com.word.file.manager.pdf.R
-import com.word.file.manager.pdf.base.data.DocumentOpenType
-import com.word.file.manager.pdf.hasGoSettings
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -49,6 +68,8 @@ class MainActivity : StoragePermissionActivity<ActivityMainBinding>() {
         val pdfUri = scanResult?.pdf?.uri ?: return@registerForActivityResult
         persistCreatedPdf(pdfUri)
     }
+    private var curLoadState = LoadState.Idle
+    private var curAdView: AdView? = null
 
     override fun setViewBinding(): ActivityMainBinding = ActivityMainBinding.inflate(LayoutInflater.from(this))
 
@@ -145,7 +166,7 @@ class MainActivity : StoragePermissionActivity<ActivityMainBinding>() {
         binding.viewPager.setCurrentItem(index, false)
     }
 
-    override fun onClickBack() {
+    override fun onUserBack() {
         moveTaskToBack(true)
     }
 
@@ -177,12 +198,69 @@ class MainActivity : StoragePermissionActivity<ActivityMainBinding>() {
             }
             val createdItem = app.documentRepository.registerCreatedPdf(createdFile)
             withContext(Dispatchers.Main) {
-                startActivity(Intent(activity, PdfCreateResultActivity::class.java).apply {
-                    putExtra(EXTRA_FILE_ITEM, createdItem)
-                    putExtra(EXTRA_RESULT_TEXT, getString(R.string.pdf_created))
+                EventCenter.logEvent(APP_AD_CHANCE, mapOf(AD_POS_ID to "ad_scan_int"))
+                AdCenter.scanInterstitial.showFullScreen(activity, eventName = "ad_scan_int", allowed = {
+                    UserBlockHelper.canShowExtra()
+                }, closed = {
+                    startActivity(Intent(activity, PdfCreateResultActivity::class.java).apply {
+                        putExtra(EXTRA_FILE_ITEM, createdItem)
+                        putExtra(EXTRA_RESULT_TEXT, getString(R.string.pdf_created))
+                    })
                 })
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        AdCenter.scanInterstitial.preload()
+        lifecycleScope.launch {
+            delay(280L)
+            if (lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) {
+                loadBanner()
+            }
+        }
+    }
+
+    private fun loadBanner() {
+        val config = AdCenter.mainBanner.getAdUnitConf() ?: return
+        EventCenter.logEvent(APP_AD_CHANCE, mapOf(AD_POS_ID to "ad_main_ban"))
+        if (UserBlockHelper.canShowExtra().not()) return
+        if (curLoadState == LoadState.Loading) return
+        curLoadState = LoadState.Loading
+        val adView = AdView(this)
+        adView.adUnitId = config.placementId
+        adView.setAdSize(AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(this, 360))
+        adView.adListener = object : AdListener() {
+            override fun onAdClicked() = Unit
+            override fun onAdClosed() = Unit
+            override fun onAdFailedToLoad(adError: LoadAdError) {
+                curLoadState = LoadState.Idle
+            }
+
+            override fun onAdImpression() {
+                EventCenter.logEvent(APP_AD_IMPRESSION, mapOf(AD_POS_ID to "ad_main_ban"))
+            }
+
+            override fun onAdLoaded() {
+                curLoadState = LoadState.Idle
+            }
+
+            override fun onAdOpened() = Unit
+        }
+        adView.onPaidEventListener = OnPaidEventListener {
+            AdRevenueUtils.logPaidValue(AdSlot.MainBanner, config, it, adView.responseInfo?.loadedAdapterResponseInfo)
+        }
+        curAdView?.destroy()
+        curAdView = adView
+        binding.exBanContainer.removeAllViews()
+        binding.exBanContainer.addView(adView)
+        val extras = Bundle().apply { putString("collapsible", "bottom") }
+        adView.loadAd(
+            AdRequest.Builder()
+                .addNetworkExtrasBundle(AdMobAdapter::class.java, extras)
+                .build()
+        )
     }
 
 }

@@ -8,12 +8,17 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.word.file.manager.pdf.AD_POS_ID
+import com.word.file.manager.pdf.APP_AD_CHANCE
 import com.word.file.manager.pdf.EXTRA_FILE_ITEM
 import com.word.file.manager.pdf.EXTRA_RESULT_TEXT
 import com.word.file.manager.pdf.R
 import com.word.file.manager.pdf.app
 import com.word.file.manager.pdf.base.BaseActivity
 import com.word.file.manager.pdf.base.data.FileItem
+import com.word.file.manager.pdf.base.helper.EventCenter
+import com.word.file.manager.pdf.base.helper.UserBlockHelper
+import com.word.file.manager.pdf.base.helper.ad.center.AdCenter
 import com.word.file.manager.pdf.base.utils.isUsablePdfForTool
 import com.word.file.manager.pdf.base.utils.mergePdfDocuments
 import com.word.file.manager.pdf.base.utils.showMessageToast
@@ -32,7 +37,7 @@ class PdfMergeActivity : BaseActivity<ActivityPdfMergeBinding>() {
     override fun setViewBinding(): ActivityPdfMergeBinding = ActivityPdfMergeBinding.inflate(LayoutInflater.from(this))
 
     override fun initView() {
-        binding.toolbar.actionBack.setOnClickListener { onClickBack() }
+        binding.toolbar.actionBack.setOnClickListener { onUserBack() }
         binding.toolbar.toolbarTitle.text = getString(R.string.merge_pdf)
         fileAdapter = PdfToolFileAdapter(
             pickMode = PdfToolFileAdapter.PickMode.Multiple,
@@ -43,6 +48,17 @@ class PdfMergeActivity : BaseActivity<ActivityPdfMergeBinding>() {
         binding.recyclerView.adapter = fileAdapter
         binding.btnMerge.setOnClickListener { mergeSelectedFiles() }
         observePdfFiles()
+        AdCenter.backInterstitial.preload()
+        AdCenter.scanInterstitial.preload()
+    }
+
+    override fun onUserBack() {
+        EventCenter.logEvent(APP_AD_CHANCE, mapOf(AD_POS_ID to "ad_back_int"))
+        AdCenter.backInterstitial.showFullScreen(activity, eventName = "ad_back_int", allowed = {
+            UserBlockHelper.canShowExtra()
+        }, closed = {
+            super.onUserBack()
+        })
     }
 
     private fun observePdfFiles() {
@@ -85,11 +101,14 @@ class PdfMergeActivity : BaseActivity<ActivityPdfMergeBinding>() {
                 return@launch
             }
             val outputItem = app.documentRepository.registerToolOutputPdf(outputFile)
-            startActivity(Intent(this@PdfMergeActivity, PdfCreateResultActivity::class.java).apply {
-                putExtra(EXTRA_FILE_ITEM, outputItem)
-                putExtra(EXTRA_RESULT_TEXT, getString(R.string.merge_successful))
+            EventCenter.logEvent(APP_AD_CHANCE, mapOf(AD_POS_ID to "ad_scan_int"))
+            AdCenter.scanInterstitial.showFullScreen(activity, eventName = "ad_scan_int", closed = {
+                startActivity(Intent(this@PdfMergeActivity, PdfCreateResultActivity::class.java).apply {
+                    putExtra(EXTRA_FILE_ITEM, outputItem)
+                    putExtra(EXTRA_RESULT_TEXT, getString(R.string.merge_successful))
+                })
+                finish()
             })
-            finish()
         }
     }
 

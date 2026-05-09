@@ -10,6 +10,8 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.word.file.manager.pdf.AD_POS_ID
+import com.word.file.manager.pdf.APP_AD_CHANCE
 import com.word.file.manager.pdf.EXTRA_DOCUMENT_ACTION_TYPE
 import com.word.file.manager.pdf.EXTRA_FILE_ITEM
 import com.word.file.manager.pdf.EXTRA_RESULT_TEXT
@@ -20,6 +22,9 @@ import com.word.file.manager.pdf.base.data.DocumentActionType
 import com.word.file.manager.pdf.base.data.FileItem
 import com.word.file.manager.pdf.base.data.PdfLockType
 import com.word.file.manager.pdf.base.data.PdfUnlockType
+import com.word.file.manager.pdf.base.helper.EventCenter
+import com.word.file.manager.pdf.base.helper.UserBlockHelper
+import com.word.file.manager.pdf.base.helper.ad.center.AdCenter
 import com.word.file.manager.pdf.base.utils.isLockedPdfForTool
 import com.word.file.manager.pdf.base.utils.isPdfPasswordValid
 import com.word.file.manager.pdf.base.utils.isUsablePdfForTool
@@ -47,7 +52,7 @@ class PdfSecurityActivity : BaseActivity<ActivityPdfSecurityBinding>() {
     }
 
     override fun initView() {
-        binding.toolbar.actionBack.setOnClickListener { onClickBack() }
+        binding.toolbar.actionBack.setOnClickListener { onUserBack() }
         binding.toolbar.toolbarTitle.text = getString(securityMode.titleRes)
         fileAdapter = PdfToolFileAdapter(
             pickMode = PdfToolFileAdapter.PickMode.Single,
@@ -56,6 +61,17 @@ class PdfSecurityActivity : BaseActivity<ActivityPdfSecurityBinding>() {
         binding.recyclerView.itemAnimator = null
         binding.recyclerView.adapter = fileAdapter
         observeTargetFiles()
+        AdCenter.backInterstitial.preload()
+        AdCenter.scanInterstitial.preload()
+    }
+
+    override fun onUserBack() {
+        EventCenter.logEvent(APP_AD_CHANCE, mapOf(AD_POS_ID to "ad_back_int"))
+        AdCenter.backInterstitial.showFullScreen(activity, eventName = "ad_back_int", allowed = {
+            UserBlockHelper.canShowExtra()
+        }, closed = {
+            super.onUserBack()
+        })
     }
 
     private fun readActionType(): DocumentActionType {
@@ -156,11 +172,14 @@ class PdfSecurityActivity : BaseActivity<ActivityPdfSecurityBinding>() {
                 fileItem = fileItem,
                 encrypted = securityMode.outputEncrypted,
             )
-            startActivity(Intent(this@PdfSecurityActivity, PdfCreateResultActivity::class.java).apply {
-                putExtra(EXTRA_FILE_ITEM, resultItem)
-                putExtra(EXTRA_RESULT_TEXT, getString(securityMode.resultTextRes))
+            EventCenter.logEvent(APP_AD_CHANCE, mapOf(AD_POS_ID to "ad_scan_int"))
+            AdCenter.scanInterstitial.showFullScreen(activity, eventName = "ad_scan_int", closed = {
+                startActivity(Intent(this@PdfSecurityActivity, PdfCreateResultActivity::class.java).apply {
+                    putExtra(EXTRA_FILE_ITEM, resultItem)
+                    putExtra(EXTRA_RESULT_TEXT, getString(securityMode.resultTextRes))
+                })
+                finish()
             })
-            finish()
         }
     }
 

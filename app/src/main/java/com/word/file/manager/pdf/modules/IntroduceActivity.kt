@@ -99,7 +99,7 @@ class IntroduceActivity : BaseActivity<ActivityIntroduceBinding>() {
         }
     }
 
-    override fun onClickBack() = Unit
+    override fun onUserBack() = Unit
 
     override fun onDestroy() {
         binding.introducePager.unregisterOnPageChangeCallback(pageChangeCallback)

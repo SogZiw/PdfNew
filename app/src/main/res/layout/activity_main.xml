@@ -19,7 +19,7 @@
         android:background="@color/white"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintBottom_toTopOf="@+id/ex_ban_container">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/tab_home"
@@ -221,5 +221,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/layout_bottom_nav"
         app:srcCompat="@drawable/ic_add" />
+
+    <FrameLayout
+        android:id="@+id/ex_ban_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -13,12 +13,16 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.word.file.manager.pdf.AD_POS_ID
+import com.word.file.manager.pdf.APP_AD_CHANCE
 import com.word.file.manager.pdf.EXTRA_FILE_ITEM
 import com.word.file.manager.pdf.EXTRA_RESULT_TEXT
 import com.word.file.manager.pdf.R
 import com.word.file.manager.pdf.app
 import com.word.file.manager.pdf.base.BaseActivity
 import com.word.file.manager.pdf.base.data.FileItem
+import com.word.file.manager.pdf.base.helper.EventCenter
+import com.word.file.manager.pdf.base.helper.ad.center.AdCenter
 import com.word.file.manager.pdf.base.utils.showMessageToast
 import com.word.file.manager.pdf.base.utils.splitPdfDocument
 import com.word.file.manager.pdf.databinding.ActivityPdfSplitPagesBinding
@@ -63,8 +67,9 @@ class PdfSplitPagesActivity : BaseActivity<ActivityPdfSplitPagesBinding>() {
             finish()
             return
         }
-        binding.toolbar.actionBack.setOnClickListener { onClickBack() }
+        binding.toolbar.actionBack.setOnClickListener { onUserBack() }
         binding.toolbar.toolbarTitle.text = targetFile.documentTitle
+        binding.btnSplit.setOnClickListener { splitSelectedPages(targetFile) }
         lifecycleScope.launch {
             val pageCount = withContext(Dispatchers.IO) { prepareRenderer(targetFile) }
             if (pageCount <= 1) {
@@ -79,7 +84,7 @@ class PdfSplitPagesActivity : BaseActivity<ActivityPdfSplitPagesBinding>() {
             binding.recyclerView.itemAnimator = null
             binding.recyclerView.adapter = pageAdapter
         }
-        binding.btnSplit.setOnClickListener { splitSelectedPages(targetFile) }
+        AdCenter.scanInterstitial.preload()
     }
 
     private fun readTargetFile(): FileItem? {
@@ -130,15 +135,19 @@ class PdfSplitPagesActivity : BaseActivity<ActivityPdfSplitPagesBinding>() {
                 return@launch
             }
             val outputItem = app.documentRepository.registerToolOutputPdf(outputFile)
-            startActivity(Intent(this@PdfSplitPagesActivity, PdfCreateResultActivity::class.java).apply {
-                putExtra(EXTRA_FILE_ITEM, outputItem)
-                putExtra(EXTRA_RESULT_TEXT, getString(R.string.split_successful))
+            EventCenter.logEvent(APP_AD_CHANCE, mapOf(AD_POS_ID to "ad_scan_int"))
+            AdCenter.scanInterstitial.showFullScreen(activity, eventName = "ad_scan_int", closed = {
+                startActivity(Intent(this@PdfSplitPagesActivity, PdfCreateResultActivity::class.java).apply {
+                    putExtra(EXTRA_FILE_ITEM, outputItem)
+                    putExtra(EXTRA_RESULT_TEXT, getString(R.string.split_successful))
+                })
+                setResult(RESULT_OK)
+                finish()
             })
-            setResult(RESULT_OK)
-            finish()
         }
     }
 
+    @SuppressLint("SetTextI18n")
     private fun showWorkingDialog(message: String) = MaterialAlertDialogBuilder(this)
         .setView(
             DialogPdfWorkingBinding.inflate(layoutInflater).apply {
