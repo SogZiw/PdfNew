@@ -13,12 +13,18 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.word.file.manager.pdf.app
 import com.word.file.manager.pdf.base.BaseFragment
 import com.word.file.manager.pdf.base.data.FileTabFilter
+import com.word.file.manager.pdf.base.helper.UserBlockHelper
+import com.word.file.manager.pdf.base.helper.ad.center.AdCenter
+import com.word.file.manager.pdf.base.helper.ad.model.NativeAdStyle
 import com.word.file.manager.pdf.databinding.FragmentHomeBinding
 import com.word.file.manager.pdf.modules.SettingsActivity
 import com.word.file.manager.pdf.modules.permissions.hasStorageAccessPermission
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>() {
+
+    private var hasShowedNative: Boolean = false
 
     override fun setViewBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentHomeBinding {
         return FragmentHomeBinding.inflate(inflater, container, false)
@@ -60,6 +66,21 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         }
         binding.viewPermission.root.isVisible = !hasStorageAccessPermission()
         changeSelector(0)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        lifecycleScope.launch {
+            if (hasShowedNative) return@launch
+            delay(250L)
+            if (lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) {
+                AdCenter.mainNative.renderNative(activity, binding.exContainer, NativeAdStyle.NO_ACTION_MEDIA, eventName = "ad_main_nat", allowed = {
+                    UserBlockHelper.canShowExtra()
+                }, shown = {
+                    hasShowedNative = true
+                })
+            }
+        }
     }
 
     private fun changeSelector(index: Int) {

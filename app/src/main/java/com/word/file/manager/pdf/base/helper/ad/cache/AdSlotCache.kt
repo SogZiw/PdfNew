@@ -93,6 +93,7 @@ class AdSlotCache(private val slot: AdSlot) {
         style: NativeAdStyle,
         eventName: String = slot.jsonKey,
         allowed: () -> Boolean = { true },
+        shown: () -> Unit = {},
     ) {
         if (!allowed()) return
         EventCenter.logEvent(APP_AD_CHANCE, mapOf(AD_POS_ID to eventName))
@@ -104,6 +105,7 @@ class AdSlotCache(private val slot: AdSlot) {
                     override fun onDestroy(owner: LifecycleOwner) = cachedAd.release()
                 })
                 cachedAd.render(activity, host, style)
+                shown()
                 EventCenter.logEvent(APP_AD_IMPRESSION, mapOf(AD_POS_ID to eventName))
                 preloadIfNeeded()
             }
