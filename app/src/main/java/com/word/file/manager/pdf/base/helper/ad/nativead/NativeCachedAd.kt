@@ -11,9 +11,11 @@ import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.nativead.NativeAd
 import com.google.android.gms.ads.nativead.NativeAdOptions
 import com.google.android.gms.ads.nativead.NativeAdView
+import com.word.file.manager.pdf.R
 import com.word.file.manager.pdf.app
 import com.word.file.manager.pdf.base.BaseActivity
 import com.word.file.manager.pdf.base.helper.LocalPrefs
+import com.word.file.manager.pdf.base.helper.UserBlockHelper
 import com.word.file.manager.pdf.base.helper.ad.cache.CachedAd
 import com.word.file.manager.pdf.base.helper.ad.model.AdSlot
 import com.word.file.manager.pdf.base.helper.ad.model.AdUnitConfig
@@ -21,6 +23,8 @@ import com.word.file.manager.pdf.base.helper.ad.model.NativeAdStyle
 import com.word.file.manager.pdf.base.helper.ad.util.NativeAdPreviewChecker
 import com.word.file.manager.pdf.databinding.LayoutNativeAdCompactBinding
 import com.word.file.manager.pdf.databinding.LayoutNativeAdFullBinding
+import com.word.file.manager.pdf.databinding.LayoutNativeAdFullShineBinding
+import com.word.file.manager.pdf.ext.startBackgroundAnimation
 
 abstract class CachedNativeAd(
     config: AdUnitConfig,
@@ -88,7 +92,7 @@ class AdmobNativeCachedAd(
 
     private fun buildNativeCard(activity: BaseActivity<*>, ad: NativeAd, style: NativeAdStyle): NativeAdView {
         return when (style) {
-            NativeAdStyle.Media -> {
+            NativeAdStyle.COMMON_MEDIA -> {
                 LayoutNativeAdFullBinding.inflate(LayoutInflater.from(activity)).apply {
                     bindAdContent(ad)
                 }.root
@@ -99,6 +103,32 @@ class AdmobNativeCachedAd(
                     bindAdContent(ad)
                 }.root
             }
+
+            NativeAdStyle.ANIM_MEDIA -> {
+                LayoutNativeAdFullShineBinding.inflate(LayoutInflater.from(activity)).apply {
+                    bindAdContent(ad)
+                }.root
+            }
+        }
+    }
+
+    private fun LayoutNativeAdFullShineBinding.bindAdContent(ad: NativeAd) {
+        root.apply {
+            iconView = adAppIcon.apply { setImageDrawable(ad.icon?.drawable) }
+            headlineView = adTitleText.apply { text = ad.headline.orEmpty() }
+            bodyView = adDescText.apply { text = ad.body.orEmpty() }
+            callToActionView = adCtaButton.apply { text = ad.callToAction.orEmpty() }
+            if (UserBlockHelper.canShowExtra()) {
+                adCtaButton.setBackgroundResource(R.drawable.btn_primary_shine_r10)
+                adCtaButton.startBackgroundAnimation()
+            } else {
+                adCtaButton.setBackgroundResource(R.drawable.btn_primary_r10_ad)
+            }
+            mediaView = adMediaArea.apply {
+                mediaContent = ad.mediaContent
+                setImageScaleType(ImageView.ScaleType.CENTER_CROP)
+            }
+            setNativeAd(ad)
         }
     }
 
@@ -108,6 +138,7 @@ class AdmobNativeCachedAd(
             headlineView = adTitleText.apply { text = ad.headline.orEmpty() }
             bodyView = adDescText.apply { text = ad.body.orEmpty() }
             callToActionView = adCtaButton.apply { text = ad.callToAction.orEmpty() }
+            adCtaButton.setBackgroundResource(if (UserBlockHelper.canShowExtra()) R.drawable.btn_primary_r10 else R.drawable.btn_primary_r10_ad)
             mediaView = adMediaArea.apply {
                 mediaContent = ad.mediaContent
                 setImageScaleType(ImageView.ScaleType.CENTER_CROP)

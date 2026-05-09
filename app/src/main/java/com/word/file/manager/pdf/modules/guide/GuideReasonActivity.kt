@@ -38,7 +38,7 @@ class GuideReasonActivity : BaseActivity<ActivityGuideReasonBinding>() {
         AdCenter.scanNative.renderNative(
             activity = activity,
             host = binding.exContainer,
-            style = NativeAdStyle.Media,
+            style = NativeAdStyle.COMMON_MEDIA,
             eventName = "ad_uninstall_nat2",
             allowed = { UserBlockHelper.canShowExtra() },
         )

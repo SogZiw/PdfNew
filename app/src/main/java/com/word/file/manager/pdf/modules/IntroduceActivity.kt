@@ -49,7 +49,7 @@ class IntroduceActivity : BaseActivity<ActivityIntroduceBinding>() {
         refreshIndicators(position = 0)
         AdCenter.backInterstitial.preload()
         AdCenter.scanNative.renderNative(
-            activity, binding.exContainer, NativeAdStyle.Media, eventName = "ad_new_intro_nat",
+            activity, binding.exContainer, NativeAdStyle.COMMON_MEDIA, eventName = "ad_new_intro_nat",
             allowed = { UserBlockHelper.canShowExtra() })
     }
 

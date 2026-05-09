@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="360dp"
+    android:height="56dp"
+    android:viewportWidth="360"
+    android:viewportHeight="56">
+
+    <group>
+        <clip-path
+            android:name="button_clip"
+            android:pathData="M10,0 H350 C355.5,0 360,4.5 360,10 V46 C360,51.5 355.5,56 350,56 H10 C4.5,56 0,51.5 0,46 V10 C0,4.5 4.5,0 10,0 Z" />
+
+        <path
+            android:fillColor="@color/my_light_primary"
+            android:pathData="M10,0 H350 C355.5,0 360,4.5 360,10 V46 C360,51.5 355.5,56 350,56 H10 C4.5,56 0,51.5 0,46 V10 C0,4.5 4.5,0 10,0 Z" />
+
+        <group
+            android:name="shine_group"
+            android:translateX="-120">
+
+            <path
+                android:fillAlpha="0.35"
+                android:fillColor="@color/white"
+                android:pathData="M6,0 H64 L34,56 H-24 Z" />
+
+        </group>
+    </group>
+</vector>

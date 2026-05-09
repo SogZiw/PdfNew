@@ -25,6 +25,7 @@ enum class AdSlot(val jsonKey: String) {
 }
 
 enum class NativeAdStyle {
-    Media,
+    COMMON_MEDIA,
     NO_ACTION_MEDIA,
+    ANIM_MEDIA
 }

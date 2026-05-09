@@ -33,7 +33,7 @@ class GuideFirstActivity : BaseActivity<ActivityGuideFirstBinding>() {
         }
         AdCenter.scanInterstitial.preload()
         AdCenter.scanNative.preload()
-        AdCenter.mainNative.renderNative(activity, binding.exContainer, NativeAdStyle.Media, eventName = "ad_uninstall_nat1", allowed = {
+        AdCenter.mainNative.renderNative(activity, binding.exContainer, NativeAdStyle.COMMON_MEDIA, eventName = "ad_uninstall_nat1", allowed = {
             UserBlockHelper.canShowExtra()
         })
         EventCenter.logEvent("uninstall_page1_show")

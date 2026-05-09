@@ -44,7 +44,7 @@ class LanguageActivity : BaseActivity<ActivityLanguageBinding>() {
         AdCenter.scanInterstitial.preload()
         AdCenter.backInterstitial.preload()
         AdCenter.mainNative.renderNative(
-            activity, binding.exContainer, NativeAdStyle.Media, eventName = "ad_new_langua_nat",
+            activity, binding.exContainer, NativeAdStyle.COMMON_MEDIA, eventName = "ad_new_langua_nat",
             allowed = { UserBlockHelper.canShowExtra() })
     }
 

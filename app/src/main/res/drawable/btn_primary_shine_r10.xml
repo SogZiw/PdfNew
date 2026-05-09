@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animated-vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:drawable="@drawable/btn_primary_shine_base_r10">
+
+    <target
+        android:name="shine_group"
+        android:animation="@animator/button_shine_translate" />
+
+</animated-vector>
