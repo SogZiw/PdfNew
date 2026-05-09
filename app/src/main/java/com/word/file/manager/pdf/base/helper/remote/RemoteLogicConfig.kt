@@ -1,5 +1,7 @@
 package com.word.file.manager.pdf.base.helper.remote
 
+import com.word.file.manager.pdf.base.helper.UserBlockHelper
+
 object RemoteLogicConfig {
 
     var promotionLogic: PromotionLogic = PromotionLogic()
@@ -29,6 +31,9 @@ object RemoteLogicConfig {
     fun updateFeatureLogic(logic: FeatureLogic) {
         featureLogic = logic
     }
+
+    fun fetchPromotionConfig() = if (UserBlockHelper.canShowExtra()) promotionLogicForWhite else promotionLogic
+    fun fetchFeatureConfig() = if (UserBlockHelper.canShowExtra()) featureLogicForWhite else featureLogic
 }
 
 data class PromotionLogic(
