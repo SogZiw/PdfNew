@@ -218,3 +218,4 @@ This file captures the working conventions established during recent development
 - Added a differentiated AdMob ad wrapper under `base/helper/ad` for placement config, full-screen preload/show, native preload/render, and paid-value logging without wiring business-page show calls or remote config.
 - Added a first-run introduce page using the imported `ic_intro_*` assets, `ViewPager2` paging, local seen-state routing, and no bottom ad area.
 - Added a reusable animated primary button background, `btn_primary_shine_r10`, with a moving white highlight and `startBackgroundAnimation()` helper for starting animated backgrounds.
+- Added `RemoteLogicConfig` parsing for `promotion_logic` and `feature_logic` from the remote `config_user` JSON.
