@@ -15,6 +15,7 @@ import com.word.file.manager.pdf.base.helper.ad.center.AdCenter
 import com.word.file.manager.pdf.base.helper.ad.model.AdSlot
 import com.word.file.manager.pdf.base.helper.net.BaseInfo
 import com.word.file.manager.pdf.base.helper.net.NetworkCenter
+import com.word.file.manager.pdf.base.helper.remote.RemoteLogicConfig
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -45,11 +46,11 @@ class RouteViewModel : ViewModel() {
         waitLoadingJob?.cancel()
         waitLoadingJob = viewModelScope.launch {
             var elapsedMs = 0L
-            while (elapsedMs < MAX_LOADING_WAIT_MS) {
+            while (elapsedMs < RemoteLogicConfig.fetchPromotionConfig().maxPreWait) {
                 delay(LOADING_STEP_MS)
                 elapsedMs += LOADING_STEP_MS
                 if (elapsedMs % RELOAD_AD_STEP_MS == 0L) startLoadAd(logEvent = false)
-                if (activity.fetchResumeState() && elapsedMs >= MIN_LOADING_WAIT_MS && AdCenter.appOpen.hasCachedAd()) {
+                if (activity.fetchResumeState() && elapsedMs >= RemoteLogicConfig.fetchPromotionConfig().minPreWait && AdCenter.appOpen.hasCachedAd()) {
                     waitLoadingJob?.cancel()
                     AdCenter.appOpen.showFullScreen(
                         activity = activity,
@@ -110,8 +111,6 @@ class RouteViewModel : ViewModel() {
 
     private companion object {
         const val LOADING_STEP_MS = 100L
-        const val MIN_LOADING_WAIT_MS = 1_000L
-        const val MAX_LOADING_WAIT_MS = 15_000L
         const val RELOAD_AD_STEP_MS = 1_000L
         const val LOADING_SHOW = "loading_show"
         const val NOTIFY_PERMISSION_SHOW = "notify_permission_show"
