@@ -20,6 +20,7 @@ import com.word.file.manager.pdf.base.data.DocumentOpenType
 import com.word.file.manager.pdf.base.data.PdfCreateType
 import com.word.file.manager.pdf.base.helper.LocalPrefs
 import com.word.file.manager.pdf.base.helper.ad.center.AdCenter
+import com.word.file.manager.pdf.base.helper.remote.RemoteLogicConfig
 import com.word.file.manager.pdf.databinding.ActivityRouteBinding
 import com.word.file.manager.pdf.modules.guide.GuideFirstActivity
 
@@ -88,12 +89,21 @@ class RouteActivity : BaseActivity<ActivityRouteBinding>() {
         }
         val actionType = shortcutPage.toDocumentActionType()
         if (!LocalPrefs.hasSeenIntroduce) {
-            startActivity(Intent(activity, LanguageActivity::class.java).apply {
-                putExtra(EXTRA_FROM_SET, false)
-                putExtra(EXTRA_DOCUMENT_ACTION_TYPE, actionType)
-            })
-            finish()
-            return
+            if (RemoteLogicConfig.fetchFeatureConfig().firstShow.pageLang) {
+                startActivity(Intent(activity, LanguageActivity::class.java).apply {
+                    putExtra(EXTRA_FROM_SET, false)
+                    putExtra(EXTRA_DOCUMENT_ACTION_TYPE, actionType)
+                })
+                finish()
+                return
+            }
+            if (RemoteLogicConfig.fetchFeatureConfig().firstShow.pageIntro) {
+                startActivity(Intent(activity, IntroduceActivity::class.java).apply {
+                    putExtra(EXTRA_DOCUMENT_ACTION_TYPE, actionType)
+                })
+                finish()
+                return
+            }
         }
         startActivity(Intent(activity, MainActivity::class.java).apply {
             putExtra(EXTRA_DOCUMENT_ACTION_TYPE, actionType)

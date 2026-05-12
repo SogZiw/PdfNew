@@ -75,10 +75,17 @@ class LanguageActivity : BaseActivity<ActivityLanguageBinding>() {
             AdCenter.scanInterstitial.showFullScreen(activity, eventName = "ad_new_langua_int", allowed = {
                 RemoteLogicConfig.fetchPromotionConfig().initLangInt && UserBlockHelper.canShowExtra()
             }, closed = {
-                startActivity(Intent(activity, IntroduceActivity::class.java).apply {
-                    putExtra(EXTRA_DOCUMENT_ACTION_TYPE, readLaunchActionType())
-                })
-                finish()
+                if (RemoteLogicConfig.fetchFeatureConfig().firstShow.pageIntro) {
+                    startActivity(Intent(activity, IntroduceActivity::class.java).apply {
+                        putExtra(EXTRA_DOCUMENT_ACTION_TYPE, readLaunchActionType())
+                    })
+                    finish()
+                } else {
+                    startActivity(Intent(this, MainActivity::class.java).apply {
+                        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                    })
+                    finish()
+                }
             })
         }
     }
