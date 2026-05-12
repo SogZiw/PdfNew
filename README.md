@@ -223,3 +223,6 @@ This file captures the working conventions established during recent development
 - Added `AppLifeManger` to track foreground/background activity state and relaunch through `RouteActivity` after the configured hot-start gap.
 - Limited Route-page hot-start relaunch so it only restarts from `RouteActivity` after the launch-position app-open ad has been clicked.
 - Updated lifecycle resume handling to reapply the saved app locale and hide navigation bars through shared helpers.
+- Updated blocked-user promotion defaults so selected ad switches and native-theme sync default to disabled when remote values are absent.
+- Updated blocked-user feature defaults so permission-page display is disabled while wake-manager daily max remains 30.
+- Added `fir_show` feature parsing and first-run language/intro page gating, including skipping each page's ad placements when its page is disabled.

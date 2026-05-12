@@ -71,50 +71,58 @@ object RemoteConfProvider {
             if (json.isBlank()) return@runCatching
             val obj = JSONObject(json)
             obj.optJSONObject("promotion_logic")?.let {
-                RemoteLogicConfig.updatePromotionLogic(it.toPromotionLogic())
+                RemoteLogicConfig.updatePromotionLogic(it.toPromotionLogic(PromotionLogic.blockedUserDefaults()))
             }
             obj.optJSONObject("feature_logic")?.let {
-                RemoteLogicConfig.updateFeatureLogic(it.toFeatureLogic())
+                RemoteLogicConfig.updateFeatureLogic(it.toFeatureLogic(FeatureLogic.blockedUserDefaults()))
             }
         }
     }
 
-    private fun JSONObject.toPromotionLogic(): PromotionLogic {
+    private fun JSONObject.toPromotionLogic(defaults: PromotionLogic = PromotionLogic()): PromotionLogic {
         return PromotionLogic(
-            minPreWait = optLong("min_pre_wait", 1000L),
-            maxPreWait = optLong("max_pre_wait", 15000L),
-            hotStartGap = optLong("hot_start_gap", 1000L),
-            fullAdLimit = optLong("full_ad_limit", 3000L),
-            exitHomeInt = optFlag("exit_home_int", true),
-            overlaySkipInt = optFlag("overlay_skip_int", true),
-            initLangInt = optFlag("init_lang_int", true),
-            initIntroInt = optFlag("init_intro_int", true),
-            initLangNat = optFlag("init_lang_nat", true),
-            initIntroNat = optFlag("init_intro_nat", true),
-            dashboardNat = optFlag("dashboard_nat", false),
-            dashboardBan = optFlag("dashboard_ban", true),
-            entryFileInt = optFlag("entry_file_int", true),
-            actionSplitInt = optFlag("action_split_int", true),
-            reportPageNat = optFlag("report_page_nat", true),
-            removeAppInt = optFlag("remove_app_int", true),
-            removeAppNatA = optFlag("remove_app_nat_a", true),
-            removeAppNatB = optFlag("remove_app_nat_b", true),
-            uiThemeSync = optFlag("ui_theme_sync", false),
+            minPreWait = optLong("min_pre_wait", defaults.minPreWait),
+            maxPreWait = optLong("max_pre_wait", defaults.maxPreWait),
+            hotStartGap = optLong("hot_start_gap", defaults.hotStartGap),
+            fullAdLimit = optLong("full_ad_limit", defaults.fullAdLimit),
+            exitHomeInt = optFlag("exit_home_int", defaults.exitHomeInt),
+            overlaySkipInt = optFlag("overlay_skip_int", defaults.overlaySkipInt),
+            initLangInt = optFlag("init_lang_int", defaults.initLangInt),
+            initIntroInt = optFlag("init_intro_int", defaults.initIntroInt),
+            initLangNat = optFlag("init_lang_nat", defaults.initLangNat),
+            initIntroNat = optFlag("init_intro_nat", defaults.initIntroNat),
+            dashboardNat = optFlag("dashboard_nat", defaults.dashboardNat),
+            dashboardBan = optFlag("dashboard_ban", defaults.dashboardBan),
+            entryFileInt = optFlag("entry_file_int", defaults.entryFileInt),
+            actionSplitInt = optFlag("action_split_int", defaults.actionSplitInt),
+            reportPageNat = optFlag("report_page_nat", defaults.reportPageNat),
+            removeAppInt = optFlag("remove_app_int", defaults.removeAppInt),
+            removeAppNatA = optFlag("remove_app_nat_a", defaults.removeAppNatA),
+            removeAppNatB = optFlag("remove_app_nat_b", defaults.removeAppNatB),
+            uiThemeSync = optFlag("ui_theme_sync", defaults.uiThemeSync),
         )
     }
 
-    private fun JSONObject.toFeatureLogic(): FeatureLogic {
+    private fun JSONObject.toFeatureLogic(defaults: FeatureLogic = FeatureLogic()): FeatureLogic {
         return FeatureLogic(
-            wakeManager = optJSONObject("wake_manager")?.toWakeManagerLogic() ?: WakeManagerLogic(),
-            permissionPage = optFlag("permission_page", true),
-            serviceKeepAlive = optFlag("service_keep_alive", true),
+            wakeManager = optJSONObject("wake_manager")?.toWakeManagerLogic(defaults.wakeManager) ?: defaults.wakeManager,
+            firstShow = optJSONObject("fir_show")?.toFirstShowLogic(defaults.firstShow) ?: defaults.firstShow,
+            permissionPage = optFlag("permission_page", defaults.permissionPage),
+            serviceKeepAlive = optFlag("service_keep_alive", defaults.serviceKeepAlive),
         )
     }
 
-    private fun JSONObject.toWakeManagerLogic(): WakeManagerLogic {
+    private fun JSONObject.toFirstShowLogic(defaults: FirstShowLogic = FirstShowLogic()): FirstShowLogic {
+        return FirstShowLogic(
+            pageLang = optFlag("page_lang", defaults.pageLang),
+            pageIntro = optFlag("page_intro", defaults.pageIntro),
+        )
+    }
+
+    private fun JSONObject.toWakeManagerLogic(defaults: WakeManagerLogic = WakeManagerLogic()): WakeManagerLogic {
         return WakeManagerLogic(
-            triggerEnable = optFlag("trigger_enable", true),
-            dailyMax = optInt("daily_max", 30),
+            triggerEnable = optFlag("trigger_enable", defaults.triggerEnable),
+            dailyMax = optInt("daily_max", defaults.dailyMax),
         )
     }
 

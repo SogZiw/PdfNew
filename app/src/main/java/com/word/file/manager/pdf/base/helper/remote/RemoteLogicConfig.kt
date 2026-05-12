@@ -4,10 +4,10 @@ import com.word.file.manager.pdf.base.helper.UserBlockHelper
 
 object RemoteLogicConfig {
 
-    var promotionLogic: PromotionLogic = PromotionLogic()
+    var promotionLogic: PromotionLogic = PromotionLogic.blockedUserDefaults()
         private set
 
-    var featureLogic: FeatureLogic = FeatureLogic()
+    var featureLogic: FeatureLogic = FeatureLogic.blockedUserDefaults()
         private set
 
     var promotionLogicForWhite: PromotionLogic = PromotionLogic()
@@ -93,17 +93,46 @@ data class PromotionLogic(
 
     /** 原生广告按钮是否与主题色一致，false为不一致，true为一致。 */
     val uiThemeSync: Boolean = false,
-)
+) {
+    companion object {
+        fun blockedUserDefaults() = PromotionLogic(
+            exitHomeInt = false,
+            overlaySkipInt = false,
+            initIntroInt = false,
+            initLangNat = false,
+            initIntroNat = false,
+            uiThemeSync = false,
+        )
+    }
+}
 
 data class FeatureLogic(
     /** 通知屏幕唤醒频率控制配置。 */
     val wakeManager: WakeManagerLogic = WakeManagerLogic(),
+
+    /** 首次引导页面展示控制配置。 */
+    val firstShow: FirstShowLogic = FirstShowLogic(),
 
     /** 悬浮窗授权页面是否展示，false为不展示，true为展示。 */
     val permissionPage: Boolean = true,
 
     /** 前台服务开启控制，false为不启动，true为启动；下发后已启动则不关闭当前服务。 */
     val serviceKeepAlive: Boolean = true,
+) {
+    companion object {
+        fun blockedUserDefaults() = FeatureLogic(
+            wakeManager = WakeManagerLogic(dailyMax = 20),
+            permissionPage = false,
+        )
+    }
+}
+
+data class FirstShowLogic(
+    /** 首次引导多语言页面是否展示，false为不展示，true为展示。 */
+    val pageLang: Boolean = true,
+
+    /** 首次引导介绍页面是否展示，false为不展示，true为展示。 */
+    val pageIntro: Boolean = true,
 )
 
 data class WakeManagerLogic(
@@ -111,5 +140,5 @@ data class WakeManagerLogic(
     val triggerEnable: Boolean = true,
 
     /** 自然日通知唤醒上限，仅针对屏幕不可交互的情况。 */
-    val dailyMax: Int = 30,
+    val dailyMax: Int = 40,
 )
