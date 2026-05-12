@@ -67,6 +67,7 @@ class AdSlotCache(private val slot: AdSlot) {
         allowed: () -> Boolean = { true },
         closed: () -> Unit = {},
         shown: () -> Unit = {},
+        clicked: () -> Unit = {},
     ) {
         adPipelineScope.launch {
             if (!allowed()) {
@@ -84,7 +85,7 @@ class AdSlotCache(private val slot: AdSlot) {
                 delay(850L)
                 dialog.dismiss()
             }
-            cachedAd.show(activity = activity, closed = closed, shown = shown)
+            cachedAd.show(activity = activity, closed = closed, shown = shown, clicked = clicked)
             EventCenter.logEvent(APP_AD_IMPRESSION, mapOf(AD_POS_ID to eventName))
             preloadIfNeeded()
         }

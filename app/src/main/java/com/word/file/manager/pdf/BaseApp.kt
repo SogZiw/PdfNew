@@ -9,6 +9,7 @@ import com.google.firebase.messaging.messaging
 import com.tom_roush.pdfbox.android.PDFBoxResourceLoader
 import com.word.file.manager.pdf.base.data.DocumentRepository
 import com.word.file.manager.pdf.base.data.database.AppDatabase
+import com.word.file.manager.pdf.base.helper.AppLifeManger
 import com.word.file.manager.pdf.base.helper.InstallReferrerHelper
 import com.word.file.manager.pdf.base.helper.LocalPrefs
 import com.word.file.manager.pdf.base.helper.net.BaseInfo
@@ -26,6 +27,7 @@ class BaseApp : Application() {
     override fun onCreate() {
         super.onCreate()
         app = this
+        registerActivityLifecycleCallbacks(AppLifeManger)
         CoroutineScope(Dispatchers.IO).launch { MobileAds.initialize(this@BaseApp) }
         PDFBoxResourceLoader.init(this)
         initAdjust()

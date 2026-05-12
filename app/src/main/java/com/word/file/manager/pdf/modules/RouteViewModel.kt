@@ -9,6 +9,7 @@ import com.google.android.ump.UserMessagingPlatform
 import com.word.file.manager.pdf.AD_POS_ID
 import com.word.file.manager.pdf.APP_AD_CHANCE
 import com.word.file.manager.pdf.base.BaseActivity
+import com.word.file.manager.pdf.base.helper.AppLifeManger
 import com.word.file.manager.pdf.base.helper.EventCenter
 import com.word.file.manager.pdf.base.helper.LocalPrefs
 import com.word.file.manager.pdf.base.helper.ad.center.AdCenter
@@ -60,10 +61,12 @@ class RouteViewModel : ViewModel() {
                 if (elapsedMs % RELOAD_AD_STEP_MS == 0L) startLoadAd(logEvent = false)
                 if (activity.fetchResumeState() && elapsedMs >= RemoteLogicConfig.fetchPromotionConfig().minPreWait && AdCenter.appOpen.hasCachedAd()) {
                     waitLoadingJob?.cancel()
+                    AppLifeManger.resetLaunchAdClicked()
                     AdCenter.appOpen.showFullScreen(
                         activity = activity,
                         eventName = AdSlot.ColdStart.jsonKey,
                         closed = { dispatchNextPage() },
+                        clicked = { AppLifeManger.markLaunchAdClicked() },
                     )
                     return@launch
                 }

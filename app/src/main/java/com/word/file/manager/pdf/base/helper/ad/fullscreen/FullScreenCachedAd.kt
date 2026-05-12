@@ -23,7 +23,7 @@ abstract class CachedFullScreenAd(
     slot: AdSlot,
 ) : CachedAd(config, slot) {
 
-    abstract fun show(activity: BaseActivity<*>, closed: () -> Unit, shown: () -> Unit = {})
+    abstract fun show(activity: BaseActivity<*>, closed: () -> Unit, shown: () -> Unit = {}, clicked: () -> Unit = {})
 
     fun shouldPrepareBeforeShow(): Boolean {
         return config.type == AdType.Interstitial
@@ -96,7 +96,7 @@ class AdmobFullScreenCachedAd(
         }
     }
 
-    override fun show(activity: BaseActivity<*>, closed: () -> Unit, shown: () -> Unit) {
+    override fun show(activity: BaseActivity<*>, closed: () -> Unit, shown: () -> Unit, clicked: () -> Unit) {
         val callback = object : FullScreenContentCallback() {
             override fun onAdDismissedFullScreenContent() {
                 resumeThen(activity, closed)
@@ -114,6 +114,7 @@ class AdmobFullScreenCachedAd(
 
             override fun onAdClicked() {
                 logClick()
+                clicked()
             }
         }
         when (val ad = loadedAd) {
