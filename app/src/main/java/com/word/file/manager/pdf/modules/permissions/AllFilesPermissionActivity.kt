@@ -20,7 +20,7 @@ class AllFilesPermissionActivity : BaseActivity<ActivityAllFilesPermissionBindin
 
     override fun onResume() {
         super.onResume()
-        if (shouldCloseDirectly()) {
+        if (hasOpenedSettings) {
             finish()
         } else {
             openSettingsAndWatchPermission()
@@ -39,21 +39,13 @@ class AllFilesPermissionActivity : BaseActivity<ActivityAllFilesPermissionBindin
         }
     }
 
-    private fun shouldCloseDirectly(): Boolean {
-        return hasOpenedSettings
-    }
-
     private fun openSettingsAndWatchPermission() {
         hasOpenedSettings = true
         lifecycleScope.launch(Dispatchers.Main) {
             hasGoSettings = true
-            openAllFilesAccessSettings()
+            openManageAllFilesAccessSettings(onFallbackFailure = ::finish)
         }
         startPermissionWatcher()
-    }
-
-    private fun openAllFilesAccessSettings() {
-        openManageAllFilesAccessSettings(onFallbackFailure = ::finish)
     }
 
     override fun onDestroy() {

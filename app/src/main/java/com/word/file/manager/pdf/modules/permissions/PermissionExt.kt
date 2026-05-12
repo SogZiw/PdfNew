@@ -30,6 +30,10 @@ fun hasStorageAccessPermission(): Boolean {
     }
 }
 
+fun hasOverlayPermission(): Boolean {
+    return Settings.canDrawOverlays(app)
+}
+
 fun shouldOpenAllFilesAccessPage(): Boolean = isAtLeastApi30()
 
 fun shouldRequestLegacyStoragePermission(activity: Activity, isFirstRequest: Boolean): Boolean {
@@ -40,10 +44,27 @@ fun createAllFilesPermissionPageIntent(context: Context): Intent {
     return Intent(context, AllFilesPermissionActivity::class.java)
 }
 
+fun createOverlayPermissionPageIntent(context: Context): Intent {
+    return Intent(context, ExtraPermissionActivity::class.java)
+}
+
 fun createAppDetailsSettingsIntent(context: Context): Intent {
     return Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
         data = "package:${context.packageName}".toUri()
         addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
+    }
+}
+
+fun Activity.openManageOverlayPermissionSettings(
+    onFallbackFailure: (() -> Unit)? = null,
+) {
+    runCatching {
+        startActivity(Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION).also {
+            it.data = "package:${packageName}".toUri()
+            it.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
+        })
+    }.onFailure {
+        onFallbackFailure?.invoke()
     }
 }
 
