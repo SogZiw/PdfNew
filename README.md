@@ -219,3 +219,4 @@ This file captures the working conventions established during recent development
 - Added a first-run introduce page using the imported `ic_intro_*` assets, `ViewPager2` paging, local seen-state routing, and no bottom ad area.
 - Added a reusable animated primary button background, `btn_primary_shine_r10`, with a moving white highlight and `startBackgroundAnimation()` helper for starting animated backgrounds.
 - Added `RemoteLogicConfig` parsing for `promotion_logic` and `feature_logic` from the remote `config_user` JSON.
+- Updated loading ad preload selection so the first-run language/intro flow uses `mainNative`, then later launches choose `mainNative` or `scanNative` from `dashboardNat`.

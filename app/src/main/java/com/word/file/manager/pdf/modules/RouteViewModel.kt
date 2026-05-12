@@ -38,7 +38,15 @@ class RouteViewModel : ViewModel() {
         if (logEvent) EventCenter.logEvent(APP_AD_CHANCE, mapOf(AD_POS_ID to AdSlot.ColdStart.jsonKey))
         AdCenter.appOpen.preload()
         AdCenter.scanInterstitial.preload()
-        AdCenter.mainNative.preload()
+        if (shouldPreloadMainNative()) {
+            AdCenter.mainNative.preload()
+        } else {
+            AdCenter.scanNative.preload()
+        }
+    }
+
+    private fun shouldPreloadMainNative(): Boolean {
+        return LocalPrefs.hasSeenIntroduce.not() || RemoteLogicConfig.fetchPromotionConfig().dashboardNat
     }
 
     fun startLoadingLaunch(activity: BaseActivity<*>) {
