@@ -41,8 +41,9 @@ object AppLifeManger : Application.ActivityLifecycleCallbacks {
     override fun onActivityStarted(activity: Activity) {
         backgroundJob?.cancel()
         foregroundCount++
-        if (shouldRelaunchOnForeground && openLaunchPageIfNeeded(activity)) {
+        if (shouldRelaunchOnForeground) {
             shouldRelaunchOnForeground = false
+            openLaunchPageIfNeeded(activity)
         }
     }
 
@@ -68,14 +69,13 @@ object AppLifeManger : Application.ActivityLifecycleCallbacks {
 
     override fun onActivityDestroyed(activity: Activity) = Unit
 
-    private fun openLaunchPageIfNeeded(activity: Activity): Boolean {
-        if (!app.isScreenInteractive()) return false
-        if (activity is RouteActivity && !consumeLaunchAdClicked()) return true
+    private fun openLaunchPageIfNeeded(activity: Activity) {
+        if (!app.isScreenInteractive()) return
+        if (activity is RouteActivity && !consumeLaunchAdClicked()) return
         activity.startActivity(Intent(activity, RouteActivity::class.java).apply {
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
         })
         launchAdClicked = false
-        return true
     }
 
     private fun consumeLaunchAdClicked(): Boolean {
