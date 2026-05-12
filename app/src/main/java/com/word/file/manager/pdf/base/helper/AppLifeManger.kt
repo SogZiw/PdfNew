@@ -7,7 +7,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.PowerManager
 import com.word.file.manager.pdf.app
+import com.word.file.manager.pdf.base.BaseActivity
 import com.word.file.manager.pdf.base.helper.remote.RemoteLogicConfig
+import com.word.file.manager.pdf.base.utils.hideNavBars
+import com.word.file.manager.pdf.base.utils.withSavedAppLocale
 import com.word.file.manager.pdf.hasGoSettings
 import com.word.file.manager.pdf.modules.RouteActivity
 import kotlinx.coroutines.CoroutineScope
@@ -47,7 +50,13 @@ object AppLifeManger : Application.ActivityLifecycleCallbacks {
         }
     }
 
-    override fun onActivityResumed(activity: Activity) = Unit
+    override fun onActivityResumed(activity: Activity) {
+        if (activity is BaseActivity<*>) activity.hideNavBars()
+        runCatching {
+            app.withSavedAppLocale()
+            activity.withSavedAppLocale()
+        }
+    }
 
     override fun onActivityPaused(activity: Activity) = Unit
 

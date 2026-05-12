@@ -8,6 +8,7 @@ import java.util.Locale
 fun Context.withSavedAppLocale(): Context {
     val languageCode = LocalPrefs.readDefaultLanguageCode(this)
         .ifBlank { Locale.getDefault().language }
+
     @Suppress("DEPRECATION")
     val locale = Locale(languageCode)
     Locale.setDefault(locale)
@@ -15,5 +16,6 @@ fun Context.withSavedAppLocale(): Context {
         setLocale(locale)
         setLayoutDirection(locale)
     }
+    resources.updateConfiguration(configuration, resources.displayMetrics)
     return createConfigurationContext(configuration)
 }

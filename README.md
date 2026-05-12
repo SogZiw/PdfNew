@@ -222,3 +222,4 @@ This file captures the working conventions established during recent development
 - Updated loading ad preload selection so the first-run language/intro flow uses `mainNative`, then later launches choose `mainNative` or `scanNative` from `dashboardNat`.
 - Added `AppLifeManger` to track foreground/background activity state and relaunch through `RouteActivity` after the configured hot-start gap.
 - Limited Route-page hot-start relaunch so it only restarts from `RouteActivity` after the launch-position app-open ad has been clicked.
+- Updated lifecycle resume handling to reapply the saved app locale and hide navigation bars through shared helpers.
