@@ -15,6 +15,7 @@ import com.word.file.manager.pdf.base.data.PdfUnlockType
 import com.word.file.manager.pdf.base.helper.UserBlockHelper
 import com.word.file.manager.pdf.base.helper.ad.center.AdCenter
 import com.word.file.manager.pdf.base.helper.ad.model.NativeAdStyle
+import com.word.file.manager.pdf.base.helper.remote.RemoteLogicConfig
 import com.word.file.manager.pdf.databinding.FragmentToolsBinding
 import com.word.file.manager.pdf.databinding.ViewToolActionCardBinding
 import com.word.file.manager.pdf.modules.MainActivity
@@ -53,7 +54,7 @@ class ToolsFragment : BaseFragment<FragmentToolsBinding>() {
             delay(250L)
             if (lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) {
                 AdCenter.scanNative.renderNative(activity, binding.exContainer, NativeAdStyle.ANIM_MEDIA, eventName = "ad_tools_nat", allowed = {
-                    UserBlockHelper.canShowExtra()
+                    RemoteLogicConfig.fetchPromotionConfig().dashboardNat && UserBlockHelper.canShowExtra()
                 })
             }
         }

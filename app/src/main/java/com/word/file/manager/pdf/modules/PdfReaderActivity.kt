@@ -16,8 +16,9 @@ import com.word.file.manager.pdf.base.data.FileItem
 import com.word.file.manager.pdf.base.helper.EventCenter
 import com.word.file.manager.pdf.base.helper.UserBlockHelper
 import com.word.file.manager.pdf.base.helper.ad.center.AdCenter
-import com.word.file.manager.pdf.base.utils.isPdfPasswordValid
+import com.word.file.manager.pdf.base.helper.remote.RemoteLogicConfig
 import com.word.file.manager.pdf.base.utils.isPdfPasswordRequired
+import com.word.file.manager.pdf.base.utils.isPdfPasswordValid
 import com.word.file.manager.pdf.base.utils.markFileAsRecent
 import com.word.file.manager.pdf.base.utils.showMessageToast
 import com.word.file.manager.pdf.databinding.ActivityPdfReaderBinding
@@ -49,7 +50,7 @@ class PdfReaderActivity : BaseActivity<ActivityPdfReaderBinding>() {
     override fun onUserBack() {
         EventCenter.logEvent(APP_AD_CHANCE, mapOf(AD_POS_ID to "ad_back_int"))
         AdCenter.backInterstitial.showFullScreen(activity, eventName = "ad_back_int", allowed = {
-            UserBlockHelper.canShowExtra()
+            RemoteLogicConfig.fetchPromotionConfig().exitHomeInt && UserBlockHelper.canShowExtra()
         }, closed = {
             super.onUserBack()
         })

@@ -16,6 +16,7 @@ import com.word.file.manager.pdf.base.data.FileTabFilter
 import com.word.file.manager.pdf.base.helper.UserBlockHelper
 import com.word.file.manager.pdf.base.helper.ad.center.AdCenter
 import com.word.file.manager.pdf.base.helper.ad.model.NativeAdStyle
+import com.word.file.manager.pdf.base.helper.remote.RemoteLogicConfig
 import com.word.file.manager.pdf.databinding.FragmentHomeBinding
 import com.word.file.manager.pdf.modules.SettingsActivity
 import com.word.file.manager.pdf.modules.permissions.hasStorageAccessPermission
@@ -75,7 +76,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             delay(250L)
             if (lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) {
                 AdCenter.mainNative.renderNative(activity, binding.exContainer, NativeAdStyle.NO_ACTION_MEDIA, eventName = "ad_main_nat", allowed = {
-                    UserBlockHelper.canShowExtra()
+                    RemoteLogicConfig.fetchPromotionConfig().dashboardNat && UserBlockHelper.canShowExtra()
                 }, shown = {
                     hasShowedNative = true
                 })

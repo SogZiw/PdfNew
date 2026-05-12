@@ -23,6 +23,7 @@ import com.word.file.manager.pdf.base.BaseActivity
 import com.word.file.manager.pdf.base.data.FileItem
 import com.word.file.manager.pdf.base.helper.EventCenter
 import com.word.file.manager.pdf.base.helper.ad.center.AdCenter
+import com.word.file.manager.pdf.base.helper.remote.RemoteLogicConfig
 import com.word.file.manager.pdf.base.utils.showMessageToast
 import com.word.file.manager.pdf.base.utils.splitPdfDocument
 import com.word.file.manager.pdf.databinding.ActivityPdfSplitPagesBinding
@@ -136,7 +137,9 @@ class PdfSplitPagesActivity : BaseActivity<ActivityPdfSplitPagesBinding>() {
             }
             val outputItem = app.documentRepository.registerToolOutputPdf(outputFile)
             EventCenter.logEvent(APP_AD_CHANCE, mapOf(AD_POS_ID to "ad_scan_int"))
-            AdCenter.scanInterstitial.showFullScreen(activity, eventName = "ad_scan_int", closed = {
+            AdCenter.scanInterstitial.showFullScreen(activity, eventName = "ad_scan_int", allowed = {
+                RemoteLogicConfig.fetchPromotionConfig().actionSplitInt
+            }, closed = {
                 startActivity(Intent(this@PdfSplitPagesActivity, PdfCreateResultActivity::class.java).apply {
                     putExtra(EXTRA_FILE_ITEM, outputItem)
                     putExtra(EXTRA_RESULT_TEXT, getString(R.string.split_successful))

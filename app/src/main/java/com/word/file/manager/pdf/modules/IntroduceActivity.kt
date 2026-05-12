@@ -20,6 +20,7 @@ import com.word.file.manager.pdf.base.helper.LocalPrefs
 import com.word.file.manager.pdf.base.helper.UserBlockHelper
 import com.word.file.manager.pdf.base.helper.ad.center.AdCenter
 import com.word.file.manager.pdf.base.helper.ad.model.NativeAdStyle
+import com.word.file.manager.pdf.base.helper.remote.RemoteLogicConfig
 import com.word.file.manager.pdf.databinding.ActivityIntroduceBinding
 import kotlin.math.roundToInt
 
@@ -50,14 +51,14 @@ class IntroduceActivity : BaseActivity<ActivityIntroduceBinding>() {
         AdCenter.backInterstitial.preload()
         AdCenter.scanNative.renderNative(
             activity, binding.exContainer, NativeAdStyle.COMMON_MEDIA, eventName = "ad_new_intro_nat",
-            allowed = { UserBlockHelper.canShowExtra() })
+            allowed = { RemoteLogicConfig.fetchPromotionConfig().initIntroNat && UserBlockHelper.canShowExtra() })
     }
 
     private fun goMainPage() {
         LocalPrefs.hasSeenIntroduce = true
         EventCenter.logEvent(APP_AD_IMPRESSION, mapOf(AD_POS_ID to "ad_new_intro_int"))
         AdCenter.backInterstitial.showFullScreen(activity, eventName = "ad_new_intro_int", allowed = {
-            UserBlockHelper.canShowExtra()
+            RemoteLogicConfig.fetchPromotionConfig().initIntroInt && UserBlockHelper.canShowExtra()
         }, closed = {
             startActivity(Intent(activity, MainActivity::class.java).apply {
                 putExtra(EXTRA_DOCUMENT_ACTION_TYPE, readLaunchActionType())

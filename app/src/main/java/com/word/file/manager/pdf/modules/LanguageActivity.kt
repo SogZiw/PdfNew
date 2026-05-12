@@ -22,6 +22,7 @@ import com.word.file.manager.pdf.base.helper.LocalPrefs
 import com.word.file.manager.pdf.base.helper.UserBlockHelper
 import com.word.file.manager.pdf.base.helper.ad.center.AdCenter
 import com.word.file.manager.pdf.base.helper.ad.model.NativeAdStyle
+import com.word.file.manager.pdf.base.helper.remote.RemoteLogicConfig
 import com.word.file.manager.pdf.databinding.ActivityLanguageBinding
 import com.word.file.manager.pdf.databinding.ItemLanguageBinding
 import java.util.Locale
@@ -45,7 +46,7 @@ class LanguageActivity : BaseActivity<ActivityLanguageBinding>() {
         AdCenter.backInterstitial.preload()
         AdCenter.mainNative.renderNative(
             activity, binding.exContainer, NativeAdStyle.COMMON_MEDIA, eventName = "ad_new_langua_nat",
-            allowed = { UserBlockHelper.canShowExtra() })
+            allowed = { RemoteLogicConfig.fetchPromotionConfig().initLangNat && UserBlockHelper.canShowExtra() })
     }
 
     private fun setupLanguageList() {
@@ -71,8 +72,8 @@ class LanguageActivity : BaseActivity<ActivityLanguageBinding>() {
         } else {
             LocalPrefs.hasSeenIntroduce = true
             EventCenter.logEvent(APP_AD_IMPRESSION, mapOf(AD_POS_ID to "ad_new_langua_int"))
-            AdCenter.backInterstitial.showFullScreen(activity, eventName = "ad_new_langua_int", allowed = {
-                UserBlockHelper.canShowExtra()
+            AdCenter.scanInterstitial.showFullScreen(activity, eventName = "ad_new_langua_int", allowed = {
+                RemoteLogicConfig.fetchPromotionConfig().initLangInt && UserBlockHelper.canShowExtra()
             }, closed = {
                 startActivity(Intent(activity, IntroduceActivity::class.java).apply {
                     putExtra(EXTRA_DOCUMENT_ACTION_TYPE, readLaunchActionType())

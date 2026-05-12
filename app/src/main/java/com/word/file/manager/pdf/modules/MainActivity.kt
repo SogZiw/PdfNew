@@ -42,6 +42,7 @@ import com.word.file.manager.pdf.base.helper.ad.center.AdCenter
 import com.word.file.manager.pdf.base.helper.ad.model.AdSlot
 import com.word.file.manager.pdf.base.helper.ad.model.LoadState
 import com.word.file.manager.pdf.base.helper.ad.util.AdRevenueUtils
+import com.word.file.manager.pdf.base.helper.remote.RemoteLogicConfig
 import com.word.file.manager.pdf.base.utils.copyScannerPdfToLibrary
 import com.word.file.manager.pdf.base.utils.showMessageToast
 import com.word.file.manager.pdf.databinding.ActivityMainBinding
@@ -224,6 +225,7 @@ class MainActivity : StoragePermissionActivity<ActivityMainBinding>() {
 
     private fun loadBanner() {
         val config = AdCenter.mainBanner.getAdUnitConf() ?: return
+        if (RemoteLogicConfig.fetchPromotionConfig().dashboardBan.not()) return
         EventCenter.logEvent(APP_AD_CHANCE, mapOf(AD_POS_ID to "ad_main_ban"))
         if (UserBlockHelper.canShowExtra().not()) return
         if (curLoadState == LoadState.Loading) return

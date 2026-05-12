@@ -9,6 +9,7 @@ import com.word.file.manager.pdf.base.helper.EventCenter
 import com.word.file.manager.pdf.base.helper.UserBlockHelper
 import com.word.file.manager.pdf.base.helper.ad.center.AdCenter
 import com.word.file.manager.pdf.base.helper.ad.model.NativeAdStyle
+import com.word.file.manager.pdf.base.helper.remote.RemoteLogicConfig
 import com.word.file.manager.pdf.databinding.ActivityGuideFirstBinding
 import com.word.file.manager.pdf.modules.MainActivity
 
@@ -25,7 +26,7 @@ class GuideFirstActivity : BaseActivity<ActivityGuideFirstBinding>() {
         binding.guideFirstContinueUninstallButton.setOnClickListener {
             EventCenter.logEvent(APP_AD_IMPRESSION, mapOf(AD_POS_ID to "ad_uninstall_int"))
             AdCenter.scanInterstitial.showFullScreen(activity, eventName = "ad_uninstall_int", allowed = {
-                UserBlockHelper.canShowExtra()
+                RemoteLogicConfig.fetchPromotionConfig().removeAppInt && UserBlockHelper.canShowExtra()
             }, closed = {
                 startActivity(Intent(activity, GuideReasonActivity::class.java))
                 finish()
@@ -34,7 +35,7 @@ class GuideFirstActivity : BaseActivity<ActivityGuideFirstBinding>() {
         AdCenter.scanInterstitial.preload()
         AdCenter.scanNative.preload()
         AdCenter.mainNative.renderNative(activity, binding.exContainer, NativeAdStyle.COMMON_MEDIA, eventName = "ad_uninstall_nat1", allowed = {
-            UserBlockHelper.canShowExtra()
+            RemoteLogicConfig.fetchPromotionConfig().removeAppNatA && UserBlockHelper.canShowExtra()
         })
         EventCenter.logEvent("uninstall_page1_show")
     }

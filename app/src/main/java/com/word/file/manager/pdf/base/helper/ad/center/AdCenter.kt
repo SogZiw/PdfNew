@@ -17,6 +17,8 @@ object AdCenter {
     val scanNative: AdSlotCache get() = cacheFor(AdSlot.ScanNative)
     val mainBanner: AdSlotCache get() = cacheFor(AdSlot.MainBanner)
 
+    var lastFullAdShowTime = 0L
+
     fun loadConfig(rawConfig: String = DEFAULT_AD_CONFIG) {
         val source = rawConfig.ifBlank { DEFAULT_AD_CONFIG }
         runCatching {

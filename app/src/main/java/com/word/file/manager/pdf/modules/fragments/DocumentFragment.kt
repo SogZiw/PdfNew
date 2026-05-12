@@ -22,6 +22,7 @@ import com.word.file.manager.pdf.base.data.FileTabFilter
 import com.word.file.manager.pdf.base.helper.EventCenter
 import com.word.file.manager.pdf.base.helper.UserBlockHelper
 import com.word.file.manager.pdf.base.helper.ad.center.AdCenter
+import com.word.file.manager.pdf.base.helper.remote.RemoteLogicConfig
 import com.word.file.manager.pdf.base.utils.buildInfoText
 import com.word.file.manager.pdf.base.utils.getFileCategory
 import com.word.file.manager.pdf.base.utils.matchesFilter
@@ -130,7 +131,7 @@ class DocumentFragment : BaseFragment<FragmentDocumentBinding>() {
         }
         EventCenter.logEvent(APP_AD_CHANCE, mapOf(AD_POS_ID to "ad_file_int"))
         AdCenter.scanInterstitial.showFullScreen(activity, eventName = "ad_file_int", allowed = {
-            UserBlockHelper.canShowExtra()
+            RemoteLogicConfig.fetchPromotionConfig().entryFileInt && UserBlockHelper.canShowExtra()
         }, closed = {
             activity.startActivity(Intent(activity, targetClass).apply {
                 putExtra(EXTRA_FILE_ITEM, item)

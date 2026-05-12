@@ -19,6 +19,7 @@ import com.word.file.manager.pdf.base.data.DocumentActionType
 import com.word.file.manager.pdf.base.data.DocumentOpenType
 import com.word.file.manager.pdf.base.data.PdfCreateType
 import com.word.file.manager.pdf.base.helper.LocalPrefs
+import com.word.file.manager.pdf.base.helper.ad.center.AdCenter
 import com.word.file.manager.pdf.databinding.ActivityRouteBinding
 import com.word.file.manager.pdf.modules.guide.GuideFirstActivity
 
@@ -34,6 +35,7 @@ class RouteActivity : BaseActivity<ActivityRouteBinding>() {
     override fun setViewBinding() = ActivityRouteBinding.inflate(layoutInflater)
 
     override fun initView() {
+        AdCenter.lastFullAdShowTime = 0L
         observeLaunchState()
         viewModel.beginLaunch(activity)
     }

@@ -19,6 +19,7 @@ import com.word.file.manager.pdf.base.data.FileItem
 import com.word.file.manager.pdf.base.helper.EventCenter
 import com.word.file.manager.pdf.base.helper.UserBlockHelper
 import com.word.file.manager.pdf.base.helper.ad.center.AdCenter
+import com.word.file.manager.pdf.base.helper.remote.RemoteLogicConfig
 import com.word.file.manager.pdf.base.utils.isUsablePdfForTool
 import com.word.file.manager.pdf.base.utils.mergePdfDocuments
 import com.word.file.manager.pdf.base.utils.showMessageToast
@@ -55,7 +56,7 @@ class PdfMergeActivity : BaseActivity<ActivityPdfMergeBinding>() {
     override fun onUserBack() {
         EventCenter.logEvent(APP_AD_CHANCE, mapOf(AD_POS_ID to "ad_back_int"))
         AdCenter.backInterstitial.showFullScreen(activity, eventName = "ad_back_int", allowed = {
-            UserBlockHelper.canShowExtra()
+            RemoteLogicConfig.fetchPromotionConfig().exitHomeInt && UserBlockHelper.canShowExtra()
         }, closed = {
             super.onUserBack()
         })
@@ -102,7 +103,9 @@ class PdfMergeActivity : BaseActivity<ActivityPdfMergeBinding>() {
             }
             val outputItem = app.documentRepository.registerToolOutputPdf(outputFile)
             EventCenter.logEvent(APP_AD_CHANCE, mapOf(AD_POS_ID to "ad_scan_int"))
-            AdCenter.scanInterstitial.showFullScreen(activity, eventName = "ad_scan_int", closed = {
+            AdCenter.scanInterstitial.showFullScreen(activity, eventName = "ad_scan_int", allowed = {
+                RemoteLogicConfig.fetchPromotionConfig().actionSplitInt
+            }, closed = {
                 startActivity(Intent(this@PdfMergeActivity, PdfCreateResultActivity::class.java).apply {
                     putExtra(EXTRA_FILE_ITEM, outputItem)
                     putExtra(EXTRA_RESULT_TEXT, getString(R.string.merge_successful))

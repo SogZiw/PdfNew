@@ -11,6 +11,7 @@ import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import com.word.file.manager.pdf.app
 import com.word.file.manager.pdf.base.BaseActivity
 import com.word.file.manager.pdf.base.helper.ad.cache.CachedAd
+import com.word.file.manager.pdf.base.helper.ad.center.AdCenter
 import com.word.file.manager.pdf.base.helper.ad.model.AdSlot
 import com.word.file.manager.pdf.base.helper.ad.model.AdType
 import com.word.file.manager.pdf.base.helper.ad.model.AdUnitConfig
@@ -99,6 +100,7 @@ class AdmobFullScreenCachedAd(
     override fun show(activity: BaseActivity<*>, closed: () -> Unit, shown: () -> Unit, clicked: () -> Unit) {
         val callback = object : FullScreenContentCallback() {
             override fun onAdDismissedFullScreenContent() {
+                AdCenter.lastFullAdShowTime = System.currentTimeMillis()
                 resumeThen(activity, closed)
             }
 

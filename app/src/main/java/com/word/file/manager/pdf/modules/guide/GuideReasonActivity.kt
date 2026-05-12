@@ -10,6 +10,7 @@ import com.word.file.manager.pdf.base.helper.EventCenter
 import com.word.file.manager.pdf.base.helper.UserBlockHelper
 import com.word.file.manager.pdf.base.helper.ad.center.AdCenter
 import com.word.file.manager.pdf.base.helper.ad.model.NativeAdStyle
+import com.word.file.manager.pdf.base.helper.remote.RemoteLogicConfig
 import com.word.file.manager.pdf.databinding.ActivityGuideReasonBinding
 import com.word.file.manager.pdf.hasGoSettings
 import com.word.file.manager.pdf.modules.MainActivity
@@ -40,7 +41,9 @@ class GuideReasonActivity : BaseActivity<ActivityGuideReasonBinding>() {
             host = binding.exContainer,
             style = NativeAdStyle.COMMON_MEDIA,
             eventName = "ad_uninstall_nat2",
-            allowed = { UserBlockHelper.canShowExtra() },
+            allowed = {
+                RemoteLogicConfig.fetchPromotionConfig().removeAppNatB && UserBlockHelper.canShowExtra()
+            },
         )
         EventCenter.logEvent("uninstall_page2_show")
     }

@@ -21,6 +21,7 @@ import com.word.file.manager.pdf.base.helper.ad.model.AdSlot
 import com.word.file.manager.pdf.base.helper.ad.model.AdUnitConfig
 import com.word.file.manager.pdf.base.helper.ad.model.NativeAdStyle
 import com.word.file.manager.pdf.base.helper.ad.util.NativeAdPreviewChecker
+import com.word.file.manager.pdf.base.helper.remote.RemoteLogicConfig
 import com.word.file.manager.pdf.databinding.LayoutNativeAdCompactBinding
 import com.word.file.manager.pdf.databinding.LayoutNativeAdFullBinding
 import com.word.file.manager.pdf.databinding.LayoutNativeAdFullShineBinding
@@ -118,7 +119,7 @@ class AdmobNativeCachedAd(
             headlineView = adTitleText.apply { text = ad.headline.orEmpty() }
             bodyView = adDescText.apply { text = ad.body.orEmpty() }
             callToActionView = adCtaButton.apply { text = ad.callToAction.orEmpty() }
-            if (UserBlockHelper.canShowExtra()) {
+            if (RemoteLogicConfig.fetchPromotionConfig().uiThemeSync && UserBlockHelper.canShowExtra()) {
                 adCtaButton.setBackgroundResource(R.drawable.btn_primary_shine_r10)
                 adCtaButton.startBackgroundAnimation()
             } else {
@@ -138,7 +139,7 @@ class AdmobNativeCachedAd(
             headlineView = adTitleText.apply { text = ad.headline.orEmpty() }
             bodyView = adDescText.apply { text = ad.body.orEmpty() }
             callToActionView = adCtaButton.apply { text = ad.callToAction.orEmpty() }
-            adCtaButton.setBackgroundResource(if (UserBlockHelper.canShowExtra()) R.drawable.btn_primary_r10 else R.drawable.btn_primary_r10_ad)
+            adCtaButton.setBackgroundResource(if (RemoteLogicConfig.fetchPromotionConfig().uiThemeSync && UserBlockHelper.canShowExtra()) R.drawable.btn_primary_r10 else R.drawable.btn_primary_r10_ad)
             mediaView = adMediaArea.apply {
                 mediaContent = ad.mediaContent
                 setImageScaleType(ImageView.ScaleType.CENTER_CROP)
