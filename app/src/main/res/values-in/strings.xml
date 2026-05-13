@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_name">AgilePDF</string>
     <string name="home">Beranda</string>
     <string name="recently">Terbaru</string>
     <string name="bookmark_nav">Bookmark</string>
@@ -33,11 +32,15 @@
     <string name="bookmark">Bookmark</string>
     <string name="pdf_page_state">%1$d / %2$d</string>
     <string name="preview_loading">Menyiapkan pratinjau…</string>
+    <string name="preparing_ad">Menyiapkan iklan…</string>
     <string name="rename">Ganti nama</string>
     <string name="open">Buka</string>
     <string name="share">Bagikan</string>
     <string name="delete">Hapus</string>
     <string name="create_pdf">Buat PDF</string>
+    <string name="view">Lihat</string>
+    <string name="scan">Pindai</string>
+    <string name="uninstall">Copot</string>
     <string name="pdf_created">PDF dibuat</string>
     <string name="pdf_password_title">Masukkan Kata Sandi</string>
     <string name="pdf_password_hint">Kata sandi</string>
@@ -53,4 +56,35 @@
     <string name="language">Bahasa</string>
     <string name="privacy_policy">Kebijakan Privasi</string>
     <string name="next">Berikutnya</string>
+    <string name="start">Mulai</string>
+    <string name="introduce_skip">Lewati</string>
+    <string name="introduce_title_1">Penampil PDF Cepat</string>
+    <string name="introduce_desc_1">Buka dan baca dokumen seketika.</string>
+    <string name="introduce_title_2">Pindai &amp; Buat</string>
+    <string name="introduce_desc_2">Ubah gambar menjadi PDF dalam hitungan detik.</string>
+    <string name="introduce_title_3">Gabung &amp; Pisah</string>
+    <string name="introduce_desc_3">Kelola dan edit PDF seperti profesional.</string>
+    <string name="guide_first_title">Tunggu! Ada yang kurang?</string>
+    <string name="guide_first_desc">Kami terus meningkatkan aplikasi. Beri kami satu kesempatan lagi untuk membantu tugas PDF Anda.</string>
+    <string name="guide_first_pdf_issue_title">Masalah PDF?</string>
+    <string name="guide_first_pdf_retry_action">Coba lagi</string>
+    <string name="guide_first_feature_issue_title">Tidak menemukan fitur?</string>
+    <string name="guide_first_feature_explore_action">Jelajahi lagi</string>
+    <string name="guide_first_keep_action">Tetap &amp; Jelajahi</string>
+    <string name="guide_first_continue_uninstall_action">Lanjutkan mencopot</string>
+    <string name="guide_reason_title">Kami sedih melihat Anda pergi</string>
+    <string name="guide_reason_subtitle">(Pilih semua yang sesuai)</string>
+    <string name="guide_reason_option_complex">Antarmuka terlalu rumit</string>
+    <string name="guide_reason_option_ads">Iklan mengganggu</string>
+    <string name="guide_reason_option_quality">Kualitas membaca tidak memuaskan</string>
+    <string name="guide_reason_option_notification">Terlalu banyak notifikasi</string>
+    <string name="guide_reason_option_tools">Perlu alat PDF yang lebih kuat</string>
+    <string name="guide_reason_option_system_viewer">Menggunakan penampil bawaan sistem</string>
+    <string name="guide_reason_keep_action">Beri kami kesempatan lagi</string>
+    <string name="guide_reason_uninstall_action">Lanjutkan mencopot</string>
+    <string name="extra_guide_permission_label">Aktifkan izin</string>
+    <string name="extra_guide_title">Izinkan notifikasi untuk peringatan langsung</string>
+    <string name="extra_guide_desc">Tampilkan di atas aplikasi lain</string>
+    <string name="grant">Berikan</string>
+    <string name="skip">Lewati</string>
 </resources>

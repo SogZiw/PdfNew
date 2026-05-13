@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_name">AgilePDF</string>
     <string name="home">होम</string>
     <string name="recently">हाल ही में</string>
     <string name="bookmark_nav">बुकमार्क</string>
@@ -33,11 +32,15 @@
     <string name="bookmark">बुकमार्क</string>
     <string name="pdf_page_state">%1$d / %2$d</string>
     <string name="preview_loading">पूर्वावलोकन तैयार हो रहा है…</string>
+    <string name="preparing_ad">विज्ञापन तैयार हो रहा है…</string>
     <string name="rename">नाम बदलें</string>
     <string name="open">खोलें</string>
     <string name="share">शेयर</string>
     <string name="delete">हटाएं</string>
     <string name="create_pdf">PDF बनाएं</string>
+    <string name="view">देखें</string>
+    <string name="scan">स्कैन</string>
+    <string name="uninstall">अनइंस्टॉल</string>
     <string name="pdf_created">PDF बन गया</string>
     <string name="pdf_password_title">पासवर्ड दर्ज करें</string>
     <string name="pdf_password_hint">पासवर्ड</string>
@@ -53,4 +56,35 @@
     <string name="language">भाषा</string>
     <string name="privacy_policy">गोपनीयता नीति</string>
     <string name="next">अगला</string>
+    <string name="start">शुरू करें</string>
+    <string name="introduce_skip">छोड़ें</string>
+    <string name="introduce_title_1">तेज़ PDF व्यूअर</string>
+    <string name="introduce_desc_1">दस्तावेज तुरंत खोलें और पढ़ें।</string>
+    <string name="introduce_title_2">स्कैन और बनाएं</string>
+    <string name="introduce_desc_2">छवियों को सेकंडों में PDF में बदलें।</string>
+    <string name="introduce_title_3">मर्ज और स्प्लिट</string>
+    <string name="introduce_desc_3">PDF को प्रो की तरह प्रबंधित और संपादित करें।</string>
+    <string name="guide_first_title">रुकिए! क्या कुछ छूट गया?</string>
+    <string name="guide_first_desc">हम लगातार सुधार कर रहे हैं। PDF कार्यों में मदद के लिए हमें एक और मौका दें।</string>
+    <string name="guide_first_pdf_issue_title">PDF समस्या?</string>
+    <string name="guide_first_pdf_retry_action">फिर से कोशिश करें</string>
+    <string name="guide_first_feature_issue_title">फीचर नहीं मिला?</string>
+    <string name="guide_first_feature_explore_action">और देखें</string>
+    <string name="guide_first_keep_action">रुकें और देखें</string>
+    <string name="guide_first_continue_uninstall_action">अनइंस्टॉल जारी रखें</string>
+    <string name="guide_reason_title">आपको जाते देखकर दुख है</string>
+    <string name="guide_reason_subtitle">(जो लागू हो वे सभी चुनें)</string>
+    <string name="guide_reason_option_complex">इंटरफेस बहुत जटिल है</string>
+    <string name="guide_reason_option_ads">परेशान करने वाले विज्ञापन</string>
+    <string name="guide_reason_option_quality">पढ़ने की गुणवत्ता संतोषजनक नहीं</string>
+    <string name="guide_reason_option_notification">बहुत ज्यादा सूचनाएं</string>
+    <string name="guide_reason_option_tools">अधिक शक्तिशाली PDF टूल चाहिए</string>
+    <string name="guide_reason_option_system_viewer">सिस्टम के बिल्ट-इन व्यूअर का उपयोग कर रहा हूं</string>
+    <string name="guide_reason_keep_action">हमें एक और मौका दें</string>
+    <string name="guide_reason_uninstall_action">अनइंस्टॉल करें</string>
+    <string name="extra_guide_permission_label">अनुमति सक्षम करें</string>
+    <string name="extra_guide_title">तत्काल अलर्ट के लिए सूचनाएं अनुमति दें</string>
+    <string name="extra_guide_desc">अन्य ऐप्स के ऊपर दिखाएं</string>
+    <string name="grant">अनुमति दें</string>
+    <string name="skip">छोड़ें</string>
 </resources>

@@ -229,3 +229,4 @@ This file captures the working conventions established during recent development
 - Added an overlay-permission settings bridge under `modules/permissions` and route-time overlay permission gating controlled by remote feature config.
 - Added `activity_extra_guide.xml` and supporting drawables for the floating-window permission guide.
 - Added `ExtraGuideActivity` for the floating-window guide page and wired Route-time display with a once-per-day local gate.
+- Filled all translatable string keys across the bundled localized `values-*` resources and kept non-translatable app identifiers only in the default strings file.

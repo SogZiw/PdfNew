@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_name">AgilePDF</string>
     <string name="home">หน้าแรก</string>
     <string name="recently">ล่าสุด</string>
     <string name="bookmark_nav">บุ๊กมาร์ก</string>
@@ -33,11 +32,15 @@
     <string name="bookmark">บุ๊กมาร์ก</string>
     <string name="pdf_page_state">%1$d / %2$d</string>
     <string name="preview_loading">กำลังเตรียมตัวอย่าง…</string>
+    <string name="preparing_ad">กำลังเตรียมโฆษณา…</string>
     <string name="rename">เปลี่ยนชื่อ</string>
     <string name="open">เปิด</string>
     <string name="share">แชร์</string>
     <string name="delete">ลบ</string>
     <string name="create_pdf">สร้าง PDF</string>
+    <string name="view">ดู</string>
+    <string name="scan">สแกน</string>
+    <string name="uninstall">ถอนการติดตั้ง</string>
     <string name="pdf_created">สร้าง PDF แล้ว</string>
     <string name="pdf_password_title">ป้อนรหัสผ่าน</string>
     <string name="pdf_password_hint">รหัสผ่าน</string>
@@ -53,4 +56,35 @@
     <string name="language">ภาษา</string>
     <string name="privacy_policy">นโยบายความเป็นส่วนตัว</string>
     <string name="next">ถัดไป</string>
+    <string name="start">เริ่ม</string>
+    <string name="introduce_skip">ข้าม</string>
+    <string name="introduce_title_1">ตัวอ่าน PDF ที่รวดเร็ว</string>
+    <string name="introduce_desc_1">เปิดและอ่านเอกสารได้ทันที</string>
+    <string name="introduce_title_2">สแกนและสร้าง</string>
+    <string name="introduce_desc_2">เปลี่ยนรูปภาพเป็น PDF ในไม่กี่วินาที</string>
+    <string name="introduce_title_3">รวมและแยก</string>
+    <string name="introduce_desc_3">จัดการและแก้ไข PDF ได้เหมือนมืออาชีพ</string>
+    <string name="guide_first_title">เดี๋ยวก่อน! มีอะไรขาดไปไหม?</string>
+    <string name="guide_first_desc">เราปรับปรุงอยู่เสมอ โปรดให้โอกาสเราอีกครั้งเพื่อช่วยงาน PDF ของคุณ</string>
+    <string name="guide_first_pdf_issue_title">มีปัญหา PDF?</string>
+    <string name="guide_first_pdf_retry_action">ลองอีกครั้ง</string>
+    <string name="guide_first_feature_issue_title">ไม่พบฟีเจอร์?</string>
+    <string name="guide_first_feature_explore_action">สำรวจเพิ่มเติม</string>
+    <string name="guide_first_keep_action">อยู่ต่อและสำรวจ</string>
+    <string name="guide_first_continue_uninstall_action">ดำเนินการถอนการติดตั้งต่อ</string>
+    <string name="guide_reason_title">เราเสียใจที่คุณจะไป</string>
+    <string name="guide_reason_subtitle">(เลือกทั้งหมดที่ตรงกับคุณ)</string>
+    <string name="guide_reason_option_complex">อินเทอร์เฟซซับซ้อนเกินไป</string>
+    <string name="guide_reason_option_ads">โฆษณารบกวน</string>
+    <string name="guide_reason_option_quality">คุณภาพการอ่านไม่น่าพอใจ</string>
+    <string name="guide_reason_option_notification">มีการแจ้งเตือนมากเกินไป</string>
+    <string name="guide_reason_option_tools">ต้องการเครื่องมือ PDF ที่ทรงพลังกว่านี้</string>
+    <string name="guide_reason_option_system_viewer">ใช้ตัวดูในระบบ</string>
+    <string name="guide_reason_keep_action">ให้โอกาสเราอีกครั้ง</string>
+    <string name="guide_reason_uninstall_action">ดำเนินการถอนการติดตั้ง</string>
+    <string name="extra_guide_permission_label">เปิดใช้งานสิทธิ์</string>
+    <string name="extra_guide_title">อนุญาตการแจ้งเตือนสำหรับการแจ้งเตือนทันที</string>
+    <string name="extra_guide_desc">แสดงเหนือแอปอื่น</string>
+    <string name="grant">อนุญาต</string>
+    <string name="skip">ข้าม</string>
 </resources>

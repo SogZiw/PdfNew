@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_name">AgilePDF</string>
     <string name="home">Ana sayfa</string>
     <string name="recently">Son</string>
     <string name="bookmark_nav">Yer imi</string>
@@ -33,11 +32,15 @@
     <string name="bookmark">Yer imi</string>
     <string name="pdf_page_state">%1$d / %2$d</string>
     <string name="preview_loading">Önizleme hazırlanıyor…</string>
+    <string name="preparing_ad">Reklam hazırlanıyor…</string>
     <string name="rename">Yeniden adlandır</string>
     <string name="open">Aç</string>
     <string name="share">Paylaş</string>
     <string name="delete">Sil</string>
     <string name="create_pdf">PDF Oluştur</string>
+    <string name="view">Görüntüle</string>
+    <string name="scan">Tara</string>
+    <string name="uninstall">Kaldır</string>
     <string name="pdf_created">PDF oluşturuldu</string>
     <string name="pdf_password_title">Parola Girin</string>
     <string name="pdf_password_hint">Parola</string>
@@ -53,4 +56,35 @@
     <string name="language">Dil</string>
     <string name="privacy_policy">Gizlilik Politikası</string>
     <string name="next">Sonraki</string>
+    <string name="start">Başlat</string>
+    <string name="introduce_skip">Atla</string>
+    <string name="introduce_title_1">Hızlı PDF Görüntüleyici</string>
+    <string name="introduce_desc_1">Belgeleri anında açın ve okuyun.</string>
+    <string name="introduce_title_2">Tara ve Oluştur</string>
+    <string name="introduce_desc_2">Görüntüleri saniyeler içinde PDF’ye dönüştürün.</string>
+    <string name="introduce_title_3">Birleştir ve Böl</string>
+    <string name="introduce_desc_3">PDF’leri profesyonelce yönetin ve düzenleyin.</string>
+    <string name="guide_first_title">Bekleyin! Bir şey mi eksik?</string>
+    <string name="guide_first_desc">Sürekli gelişiyoruz. PDF görevlerinizde yardımcı olmak için bize bir şans daha verin.</string>
+    <string name="guide_first_pdf_issue_title">PDF sorunları mı var?</string>
+    <string name="guide_first_pdf_retry_action">Tekrar dene</string>
+    <string name="guide_first_feature_issue_title">Bir özellik bulamıyor musunuz?</string>
+    <string name="guide_first_feature_explore_action">Daha fazla keşfet</string>
+    <string name="guide_first_keep_action">Kal ve keşfet</string>
+    <string name="guide_first_continue_uninstall_action">Kaldırmaya devam et</string>
+    <string name="guide_reason_title">Gittiğinizi görmek üzücü</string>
+    <string name="guide_reason_subtitle">(Uygun olanların tümünü seçin)</string>
+    <string name="guide_reason_option_complex">Arayüz çok karmaşık</string>
+    <string name="guide_reason_option_ads">Rahatsız edici reklamlar</string>
+    <string name="guide_reason_option_quality">Okuma kalitesi tatmin edici değil</string>
+    <string name="guide_reason_option_notification">Çok fazla bildirim</string>
+    <string name="guide_reason_option_tools">Daha güçlü PDF araçlarına ihtiyacım var</string>
+    <string name="guide_reason_option_system_viewer">Sistemin yerleşik görüntüleyicisini kullanıyorum</string>
+    <string name="guide_reason_keep_action">Bize bir şans daha verin</string>
+    <string name="guide_reason_uninstall_action">Kaldırmaya devam et</string>
+    <string name="extra_guide_permission_label">İzni etkinleştir</string>
+    <string name="extra_guide_title">Anında uyarılar için bildirimlere izin verin</string>
+    <string name="extra_guide_desc">Diğer uygulamaların üzerinde göster</string>
+    <string name="grant">İzin ver</string>
+    <string name="skip">Atla</string>
 </resources>

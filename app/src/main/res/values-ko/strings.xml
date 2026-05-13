@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_name">AgilePDF</string>
     <string name="home">홈</string>
     <string name="recently">최근</string>
     <string name="bookmark_nav">북마크</string>
@@ -33,11 +32,15 @@
     <string name="bookmark">북마크</string>
     <string name="pdf_page_state">%1$d / %2$d</string>
     <string name="preview_loading">미리보기를 준비 중…</string>
+    <string name="preparing_ad">광고 준비 중…</string>
     <string name="rename">이름 변경</string>
     <string name="open">열기</string>
     <string name="share">공유</string>
     <string name="delete">삭제</string>
     <string name="create_pdf">PDF 만들기</string>
+    <string name="view">보기</string>
+    <string name="scan">스캔</string>
+    <string name="uninstall">제거</string>
     <string name="pdf_created">PDF가 생성되었습니다</string>
     <string name="pdf_password_title">비밀번호 입력</string>
     <string name="pdf_password_hint">비밀번호</string>
@@ -53,4 +56,35 @@
     <string name="language">언어</string>
     <string name="privacy_policy">개인정보 처리방침</string>
     <string name="next">다음</string>
+    <string name="start">시작</string>
+    <string name="introduce_skip">건너뛰기</string>
+    <string name="introduce_title_1">빠른 PDF 뷰어</string>
+    <string name="introduce_desc_1">문서를 즉시 열고 읽으세요.</string>
+    <string name="introduce_title_2">스캔 및 만들기</string>
+    <string name="introduce_desc_2">이미지를 몇 초 만에 PDF로 변환하세요.</string>
+    <string name="introduce_title_3">병합 및 분할</string>
+    <string name="introduce_desc_3">전문가처럼 PDF를 관리하고 편집하세요.</string>
+    <string name="guide_first_title">잠깐! 빠진 것이 있나요?</string>
+    <string name="guide_first_desc">우리는 계속 개선하고 있습니다. PDF 작업을 도울 수 있도록 한 번 더 기회를 주세요.</string>
+    <string name="guide_first_pdf_issue_title">PDF 문제가 있나요?</string>
+    <string name="guide_first_pdf_retry_action">다시 시도</string>
+    <string name="guide_first_feature_issue_title">기능을 찾을 수 없나요?</string>
+    <string name="guide_first_feature_explore_action">더 살펴보기</string>
+    <string name="guide_first_keep_action">계속 살펴보기</string>
+    <string name="guide_first_continue_uninstall_action">제거 계속하기</string>
+    <string name="guide_reason_title">떠나신다니 아쉽습니다</string>
+    <string name="guide_reason_subtitle">(해당 항목을 모두 선택)</string>
+    <string name="guide_reason_option_complex">인터페이스가 너무 복잡함</string>
+    <string name="guide_reason_option_ads">광고가 방해됨</string>
+    <string name="guide_reason_option_quality">읽기 품질이 만족스럽지 않음</string>
+    <string name="guide_reason_option_notification">알림이 너무 많음</string>
+    <string name="guide_reason_option_tools">더 강력한 PDF 도구가 필요함</string>
+    <string name="guide_reason_option_system_viewer">시스템 기본 뷰어 사용 중</string>
+    <string name="guide_reason_keep_action">한 번 더 기회를 주세요</string>
+    <string name="guide_reason_uninstall_action">제거 진행</string>
+    <string name="extra_guide_permission_label">권한 사용</string>
+    <string name="extra_guide_title">즉시 알림을 위해 알림 허용</string>
+    <string name="extra_guide_desc">다른 앱 위에 표시</string>
+    <string name="grant">허용</string>
+    <string name="skip">건너뛰기</string>
 </resources>

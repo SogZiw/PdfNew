@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_name">AgilePDF</string>
     <string name="home">ホーム</string>
     <string name="recently">最近</string>
     <string name="bookmark_nav">ブックマーク</string>
@@ -33,11 +32,15 @@
     <string name="bookmark">ブックマーク</string>
     <string name="pdf_page_state">%1$d / %2$d</string>
     <string name="preview_loading">プレビューを準備中…</string>
+    <string name="preparing_ad">広告を準備中…</string>
     <string name="rename">名前を変更</string>
     <string name="open">開く</string>
     <string name="share">共有</string>
     <string name="delete">削除</string>
     <string name="create_pdf">PDFを作成</string>
+    <string name="view">表示</string>
+    <string name="scan">スキャン</string>
+    <string name="uninstall">アンインストール</string>
     <string name="pdf_created">PDFを作成しました</string>
     <string name="pdf_password_title">パスワードを入力</string>
     <string name="pdf_password_hint">パスワード</string>
@@ -53,4 +56,35 @@
     <string name="language">言語</string>
     <string name="privacy_policy">プライバシーポリシー</string>
     <string name="next">次へ</string>
+    <string name="start">開始</string>
+    <string name="introduce_skip">スキップ</string>
+    <string name="introduce_title_1">高速PDFビューア</string>
+    <string name="introduce_desc_1">ドキュメントをすぐに開いて読めます。</string>
+    <string name="introduce_title_2">スキャンと作成</string>
+    <string name="introduce_desc_2">画像を数秒でPDFに変換します。</string>
+    <string name="introduce_title_3">結合と分割</string>
+    <string name="introduce_desc_3">PDFをプロのように管理・編集できます。</string>
+    <string name="guide_first_title">お待ちください！何か足りませんか？</string>
+    <string name="guide_first_desc">私たちは常に改善しています。PDF作業をサポートするために、もう一度チャンスをください。</string>
+    <string name="guide_first_pdf_issue_title">PDFの問題ですか？</string>
+    <string name="guide_first_pdf_retry_action">もう一度試す</string>
+    <string name="guide_first_feature_issue_title">機能が見つかりませんか？</string>
+    <string name="guide_first_feature_explore_action">もっと探す</string>
+    <string name="guide_first_keep_action">残って探す</string>
+    <string name="guide_first_continue_uninstall_action">アンインストールを続行</string>
+    <string name="guide_reason_title">ご利用ありがとうございました</string>
+    <string name="guide_reason_subtitle">（該当するものをすべて選択）</string>
+    <string name="guide_reason_option_complex">画面が複雑すぎる</string>
+    <string name="guide_reason_option_ads">広告が多すぎる</string>
+    <string name="guide_reason_option_quality">読書品質に満足できない</string>
+    <string name="guide_reason_option_notification">通知が多すぎる</string>
+    <string name="guide_reason_option_tools">もっと強力なPDFツールが必要</string>
+    <string name="guide_reason_option_system_viewer">システム内蔵ビューアを使っている</string>
+    <string name="guide_reason_keep_action">もう一度チャンスをください</string>
+    <string name="guide_reason_uninstall_action">アンインストールへ進む</string>
+    <string name="extra_guide_permission_label">権限を有効にする</string>
+    <string name="extra_guide_title">即時通知のために通知を許可</string>
+    <string name="extra_guide_desc">他のアプリの上に表示</string>
+    <string name="grant">許可する</string>
+    <string name="skip">スキップ</string>
 </resources>

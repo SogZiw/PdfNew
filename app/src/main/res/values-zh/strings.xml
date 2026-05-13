@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_name">AgilePDF</string>
     <string name="home">首頁</string>
     <string name="recently">最近</string>
     <string name="bookmark_nav">收藏</string>
@@ -33,11 +32,15 @@
     <string name="bookmark">收藏</string>
     <string name="pdf_page_state">%1$d / %2$d</string>
     <string name="preview_loading">正在準備預覽…</string>
+    <string name="preparing_ad">正在準備廣告…</string>
     <string name="rename">重新命名</string>
     <string name="open">開啟</string>
     <string name="share">分享</string>
     <string name="delete">刪除</string>
     <string name="create_pdf">建立 PDF</string>
+    <string name="view">檢視</string>
+    <string name="scan">掃描</string>
+    <string name="uninstall">解除安裝</string>
     <string name="pdf_created">PDF 已建立</string>
     <string name="pdf_password_title">輸入密碼</string>
     <string name="pdf_password_hint">密碼</string>
@@ -53,4 +56,35 @@
     <string name="language">語言</string>
     <string name="privacy_policy">隱私權政策</string>
     <string name="next">下一步</string>
+    <string name="start">開始</string>
+    <string name="introduce_skip">跳過</string>
+    <string name="introduce_title_1">快速 PDF 檢視器</string>
+    <string name="introduce_desc_1">立即開啟並閱讀文件。</string>
+    <string name="introduce_title_2">掃描與建立</string>
+    <string name="introduce_desc_2">幾秒內將圖片轉成 PDF。</string>
+    <string name="introduce_title_3">合併與分割</string>
+    <string name="introduce_desc_3">像專業人士一樣管理和編輯 PDF。</string>
+    <string name="guide_first_title">等等！是不是少了什麼？</string>
+    <string name="guide_first_desc">我們一直在改進。請再給我們一次機會，協助您處理 PDF 任務。</string>
+    <string name="guide_first_pdf_issue_title">PDF 有問題？</string>
+    <string name="guide_first_pdf_retry_action">再試一次</string>
+    <string name="guide_first_feature_issue_title">找不到功能？</string>
+    <string name="guide_first_feature_explore_action">探索更多</string>
+    <string name="guide_first_keep_action">留下並探索</string>
+    <string name="guide_first_continue_uninstall_action">繼續解除安裝</string>
+    <string name="guide_reason_title">很遺憾您要離開</string>
+    <string name="guide_reason_subtitle">（選取所有符合項目）</string>
+    <string name="guide_reason_option_complex">介面太複雜</string>
+    <string name="guide_reason_option_ads">廣告過於干擾</string>
+    <string name="guide_reason_option_quality">閱讀品質不滿意</string>
+    <string name="guide_reason_option_notification">通知太多</string>
+    <string name="guide_reason_option_tools">需要更強大的 PDF 工具</string>
+    <string name="guide_reason_option_system_viewer">正在使用系統內建檢視器</string>
+    <string name="guide_reason_keep_action">再給我們一次機會</string>
+    <string name="guide_reason_uninstall_action">繼續解除安裝</string>
+    <string name="extra_guide_permission_label">啟用權限</string>
+    <string name="extra_guide_title">允許通知以接收即時提醒</string>
+    <string name="extra_guide_desc">顯示在其他應用程式上層</string>
+    <string name="grant">授予</string>
+    <string name="skip">跳過</string>
 </resources>

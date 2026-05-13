@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_name">AgilePDF</string>
     <string name="home">Início</string>
     <string name="recently">Recentes</string>
     <string name="bookmark_nav">Favoritos</string>
@@ -33,11 +32,15 @@
     <string name="bookmark">Favorito</string>
     <string name="pdf_page_state">%1$d / %2$d</string>
     <string name="preview_loading">Preparando visualização…</string>
+    <string name="preparing_ad">Preparando anúncio…</string>
     <string name="rename">Renomear</string>
     <string name="open">Abrir</string>
     <string name="share">Compartilhar</string>
     <string name="delete">Excluir</string>
     <string name="create_pdf">Criar PDF</string>
+    <string name="view">Ver</string>
+    <string name="scan">Digitalizar</string>
+    <string name="uninstall">Desinstalar</string>
     <string name="pdf_created">PDF criado</string>
     <string name="pdf_password_title">Digite a senha</string>
     <string name="pdf_password_hint">Senha</string>
@@ -53,4 +56,35 @@
     <string name="language">Idioma</string>
     <string name="privacy_policy">Política de Privacidade</string>
     <string name="next">Próximo</string>
+    <string name="start">Começar</string>
+    <string name="introduce_skip">Pular</string>
+    <string name="introduce_title_1">Visualizador de PDF rápido</string>
+    <string name="introduce_desc_1">Abra e leia documentos instantaneamente.</string>
+    <string name="introduce_title_2">Digitalize e crie</string>
+    <string name="introduce_desc_2">Transforme imagens em PDFs em segundos.</string>
+    <string name="introduce_title_3">Mescle e divida</string>
+    <string name="introduce_desc_3">Gerencie e edite PDFs como profissional.</string>
+    <string name="guide_first_title">Espere! Está faltando algo?</string>
+    <string name="guide_first_desc">Estamos sempre melhorando. Dê-nos mais uma chance de ajudar com seus PDFs.</string>
+    <string name="guide_first_pdf_issue_title">Problemas com PDF?</string>
+    <string name="guide_first_pdf_retry_action">Tentar novamente</string>
+    <string name="guide_first_feature_issue_title">Não encontra um recurso?</string>
+    <string name="guide_first_feature_explore_action">Explorar mais</string>
+    <string name="guide_first_keep_action">Ficar e explorar</string>
+    <string name="guide_first_continue_uninstall_action">Continuar para desinstalar</string>
+    <string name="guide_reason_title">Sentimos ver você partir</string>
+    <string name="guide_reason_subtitle">(Selecione tudo que se aplica)</string>
+    <string name="guide_reason_option_complex">A interface é muito complexa</string>
+    <string name="guide_reason_option_ads">Anúncios intrusivos</string>
+    <string name="guide_reason_option_quality">Qualidade de leitura insatisfatória</string>
+    <string name="guide_reason_option_notification">Notificações demais</string>
+    <string name="guide_reason_option_tools">Preciso de ferramentas PDF mais poderosas</string>
+    <string name="guide_reason_option_system_viewer">Uso o visualizador integrado do sistema</string>
+    <string name="guide_reason_keep_action">Dê-nos outra chance</string>
+    <string name="guide_reason_uninstall_action">Prosseguir para desinstalar</string>
+    <string name="extra_guide_permission_label">Ativar permissão</string>
+    <string name="extra_guide_title">Permita notificações para alertas imediatos</string>
+    <string name="extra_guide_desc">Exibir sobre outros apps</string>
+    <string name="grant">Conceder</string>
+    <string name="skip">Pular</string>
 </resources>

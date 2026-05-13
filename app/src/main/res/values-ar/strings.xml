@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_name">AgilePDF</string>
     <string name="home">الرئيسية</string>
     <string name="recently">الأخيرة</string>
     <string name="bookmark_nav">الإشارات</string>
@@ -33,11 +32,15 @@
     <string name="bookmark">إشارة مرجعية</string>
     <string name="pdf_page_state">%1$d / %2$d</string>
     <string name="preview_loading">جار تحضير المعاينة…</string>
+    <string name="preparing_ad">جار تحضير الإعلان…</string>
     <string name="rename">إعادة تسمية</string>
     <string name="open">فتح</string>
     <string name="share">مشاركة</string>
     <string name="delete">حذف</string>
     <string name="create_pdf">إنشاء PDF</string>
+    <string name="view">عرض</string>
+    <string name="scan">مسح</string>
+    <string name="uninstall">إلغاء التثبيت</string>
     <string name="pdf_created">تم إنشاء PDF</string>
     <string name="pdf_password_title">أدخل كلمة المرور</string>
     <string name="pdf_password_hint">كلمة المرور</string>
@@ -53,4 +56,35 @@
     <string name="language">اللغة</string>
     <string name="privacy_policy">سياسة الخصوصية</string>
     <string name="next">التالي</string>
+    <string name="start">بدء</string>
+    <string name="introduce_skip">تخطي</string>
+    <string name="introduce_title_1">عارض PDF سريع</string>
+    <string name="introduce_desc_1">افتح المستندات واقرأها فورا.</string>
+    <string name="introduce_title_2">المسح والإنشاء</string>
+    <string name="introduce_desc_2">حوّل الصور إلى ملفات PDF خلال ثوان.</string>
+    <string name="introduce_title_3">الدمج والتقسيم</string>
+    <string name="introduce_desc_3">أدر ملفات PDF وحررها باحتراف.</string>
+    <string name="guide_first_title">انتظر! هل هناك شيء مفقود؟</string>
+    <string name="guide_first_desc">نحن نتحسن باستمرار. امنحنا فرصة أخرى لمساعدتك في مهام PDF.</string>
+    <string name="guide_first_pdf_issue_title">مشكلات في PDF؟</string>
+    <string name="guide_first_pdf_retry_action">حاول مرة أخرى</string>
+    <string name="guide_first_feature_issue_title">لا تجد ميزة؟</string>
+    <string name="guide_first_feature_explore_action">استكشف المزيد</string>
+    <string name="guide_first_keep_action">ابق واستكشف</string>
+    <string name="guide_first_continue_uninstall_action">متابعة إلغاء التثبيت</string>
+    <string name="guide_reason_title">نأسف لرؤيتك تغادر</string>
+    <string name="guide_reason_subtitle">(حدد كل ما ينطبق)</string>
+    <string name="guide_reason_option_complex">الواجهة معقدة جدا</string>
+    <string name="guide_reason_option_ads">إعلانات مزعجة</string>
+    <string name="guide_reason_option_quality">جودة القراءة غير مرضية</string>
+    <string name="guide_reason_option_notification">إشعارات كثيرة جدا</string>
+    <string name="guide_reason_option_tools">أحتاج أدوات PDF أقوى</string>
+    <string name="guide_reason_option_system_viewer">أستخدم عارض النظام المدمج</string>
+    <string name="guide_reason_keep_action">امنحنا فرصة أخرى</string>
+    <string name="guide_reason_uninstall_action">متابعة إلغاء التثبيت</string>
+    <string name="extra_guide_permission_label">تفعيل الإذن</string>
+    <string name="extra_guide_title">اسمح بالإشعارات للتنبيهات الفورية</string>
+    <string name="extra_guide_desc">العرض فوق التطبيقات الأخرى</string>
+    <string name="grant">منح</string>
+    <string name="skip">تخطي</string>
 </resources>
