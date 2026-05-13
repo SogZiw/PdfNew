@@ -25,6 +25,8 @@ import kotlinx.coroutines.launch
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
+    private var hasShowedNative: Boolean = false
+
     override fun setViewBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentHomeBinding {
         return FragmentHomeBinding.inflate(inflater, container, false)
     }
@@ -70,10 +72,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     override fun onResume() {
         super.onResume()
         lifecycleScope.launch {
+            if (hasShowedNative) return@launch
             delay(250L)
             if (lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) {
                 AdCenter.mainNative.renderNative(activity, binding.exContainer, NativeAdStyle.NO_ACTION_MEDIA, eventName = "ad_main_nat", allowed = {
                     RemoteLogicConfig.fetchPromotionConfig().dashboardNat && UserBlockHelper.canShowExtra()
+                }, shown = {
+                    hasShowedNative = true
                 })
             }
         }
