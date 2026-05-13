@@ -85,4 +85,9 @@
     <string name="guide_reason_option_system_viewer">Using system\'s built-in viewer</string>
     <string name="guide_reason_keep_action">Give us another chance</string>
     <string name="guide_reason_uninstall_action">Proceed to uninstall</string>
+    <string name="extra_guide_permission_label">Enable Permission</string>
+    <string name="extra_guide_title">Allow notifications for immediate alerts</string>
+    <string name="extra_guide_desc">Display over other apps</string>
+    <string name="grant">Grant</string>
+    <string name="skip">Skip</string>
 </resources>

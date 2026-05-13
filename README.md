@@ -227,3 +227,4 @@ This file captures the working conventions established during recent development
 - Updated blocked-user feature defaults so permission-page display is disabled while wake-manager daily max remains 30.
 - Added `fir_show` feature parsing and first-run language/intro page gating, including skipping each page's ad placements when its page is disabled.
 - Added an overlay-permission settings bridge under `modules/permissions` and route-time overlay permission gating controlled by remote feature config.
+- Added `activity_extra_guide.xml` and supporting drawables for the floating-window permission guide.
