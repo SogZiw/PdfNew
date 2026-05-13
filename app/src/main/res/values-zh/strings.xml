@@ -87,4 +87,9 @@
     <string name="extra_guide_desc">顯示在其他應用程式上層</string>
     <string name="grant">授予</string>
     <string name="skip">跳過</string>
+    <string name="reminder_post_notice_title">通知權限</string>
+    <string name="reminder_post_notice_content">我們需要通知存取權限，以便提醒您 PDF 套件的重要更新。</string>
+    <string name="rate_title">請給我們好評</string>
+    <string name="rate_message">這對我們非常重要</string>
+    <string name="ok">確定</string>
 </resources>

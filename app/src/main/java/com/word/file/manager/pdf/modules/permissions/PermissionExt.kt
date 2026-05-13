@@ -6,9 +6,11 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Environment
 import android.provider.Settings
 import androidx.core.app.ActivityCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
 import com.word.file.manager.pdf.app
@@ -34,6 +36,14 @@ fun hasOverlayPermission(): Boolean {
     return Settings.canDrawOverlays(app)
 }
 
+fun hasPostNotificationPermission(): Boolean {
+    return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        ContextCompat.checkSelfPermission(app, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED
+    } else {
+        NotificationManagerCompat.from(app).areNotificationsEnabled()
+    }
+}
+
 fun shouldOpenAllFilesAccessPage(): Boolean = isAtLeastApi30()
 
 fun shouldRequestLegacyStoragePermission(activity: Activity, isFirstRequest: Boolean): Boolean {
@@ -52,6 +62,12 @@ fun createAppDetailsSettingsIntent(context: Context): Intent {
     return Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
         data = "package:${context.packageName}".toUri()
         addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
+    }
+}
+
+fun createNotificationSettingsIntent(context: Context): Intent {
+    return Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS).apply {
+        putExtra(Settings.EXTRA_APP_PACKAGE, context.packageName)
     }
 }
 

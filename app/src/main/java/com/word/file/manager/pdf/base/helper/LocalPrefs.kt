@@ -24,6 +24,8 @@ object LocalPrefs {
     var totalRevenueFor001 by store.double()
     var hasSubscribeFMS by store.boolean(defaultValue = false)
     var lastWinPageShow by store.long(defaultValue = 0L)
+    var reviewDialogShowTime by store.long(defaultValue = 0L)
+    var hasReviewedDevice by store.boolean(defaultValue = false)
 
     fun readDefaultLanguageCode(context: Context): String {
         return context.getSharedPreferences(STORE_NAME, MODE_PRIVATE)

@@ -87,4 +87,9 @@
     <string name="extra_guide_desc">他のアプリの上に表示</string>
     <string name="grant">許可する</string>
     <string name="skip">スキップ</string>
+    <string name="reminder_post_notice_title">通知の許可</string>
+    <string name="reminder_post_notice_content">PDFパッケージの重要な更新をお知らせするため、通知へのアクセスが必要です。</string>
+    <string name="rate_title">よいレビューをお願いします</string>
+    <string name="rate_message">私たちにとってとても重要です</string>
+    <string name="ok">OK</string>
 </resources>

@@ -24,6 +24,10 @@ fun String.showLog(tag: String = DEFAULT_LOG_TAG) {
     if (isDebug) Log.d(tag, this)
 }
 
+fun Int.dpToPx(activity: Activity): Int {
+    return (this * activity.resources.displayMetrics.density).toInt()
+}
+
 fun buildPeriodicSignalFlow(
     intervalMs: Long,
     firstDelayMs: Long = 0L,

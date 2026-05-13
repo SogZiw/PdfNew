@@ -87,4 +87,9 @@
     <string name="extra_guide_desc">Tampilkan di atas aplikasi lain</string>
     <string name="grant">Berikan</string>
     <string name="skip">Lewati</string>
+    <string name="reminder_post_notice_title">Izin Notifikasi</string>
+    <string name="reminder_post_notice_content">Kami memerlukan akses notifikasi untuk memberi tahu Anda tentang pembaruan penting paket PDF Anda.</string>
+    <string name="rate_title">Beri kami ulasan yang baik</string>
+    <string name="rate_message">Ini sangat penting bagi kami</string>
+    <string name="ok">OK</string>
 </resources>

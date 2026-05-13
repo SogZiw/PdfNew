@@ -19,6 +19,7 @@ import com.word.file.manager.pdf.base.BaseActivity
 import com.word.file.manager.pdf.base.data.DocumentActionType
 import com.word.file.manager.pdf.base.data.DocumentOpenType
 import com.word.file.manager.pdf.base.data.PdfCreateType
+import com.word.file.manager.pdf.base.helper.EventCenter
 import com.word.file.manager.pdf.base.helper.LocalPrefs
 import com.word.file.manager.pdf.base.helper.UserBlockHelper
 import com.word.file.manager.pdf.base.helper.ad.center.AdCenter
@@ -27,13 +28,15 @@ import com.word.file.manager.pdf.databinding.ActivityRouteBinding
 import com.word.file.manager.pdf.modules.guide.GuideFirstActivity
 import com.word.file.manager.pdf.modules.permissions.ExtraGuideActivity
 import com.word.file.manager.pdf.modules.permissions.hasOverlayPermission
+import com.word.file.manager.pdf.modules.permissions.hasPostNotificationPermission
 
 class RouteActivity : BaseActivity<ActivityRouteBinding>() {
 
     private val shortcutPage by lazy { intent?.getStringExtra(EXTRA_SHORTCUT_PAGE) }
     private val viewModel by viewModels<RouteViewModel>()
-
+    private var isFirstNF = false
     private val notificationPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) {
+        if (hasPostNotificationPermission()) EventCenter.logEvent("notify_permission_success", mapOf("list" to if (isFirstNF) "first" else "second"))
         viewModel.startLoadingLaunch(activity)
     }
 
@@ -62,11 +65,13 @@ class RouteActivity : BaseActivity<ActivityRouteBinding>() {
         if (!LocalPrefs.hasAskedNotificationPermission) {
             LocalPrefs.hasAskedNotificationPermission = true
             viewModel.startLoadAd(logEvent = false)
+            isFirstNF = true
             requestPostNotification(tag = "start")
             return
         }
         if (ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.POST_NOTIFICATIONS)) {
             viewModel.startLoadAd(logEvent = false)
+            isFirstNF = false
             requestPostNotification(tag = "second")
             return
         }

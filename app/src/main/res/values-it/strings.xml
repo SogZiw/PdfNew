@@ -87,4 +87,9 @@
     <string name="extra_guide_desc">Visualizza sopra altre app</string>
     <string name="grant">Concedi</string>
     <string name="skip">Salta</string>
+    <string name="reminder_post_notice_title">Autorizzazione notifiche</string>
+    <string name="reminder_post_notice_content">Abbiamo bisogno dell’accesso alle notifiche per avvisarti degli aggiornamenti importanti del tuo pacchetto PDF.</string>
+    <string name="rate_title">Lasciaci una buona recensione</string>
+    <string name="rate_message">È molto importante per noi</string>
+    <string name="ok">OK</string>
 </resources>

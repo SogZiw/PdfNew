@@ -1,5 +1,6 @@
 package com.word.file.manager.pdf.modules
 
+import android.Manifest
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
@@ -7,6 +8,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
+import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -18,6 +21,7 @@ import com.google.android.gms.ads.AdSize
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.OnPaidEventListener
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.mlkit.vision.documentscanner.GmsDocumentScannerOptions
 import com.google.mlkit.vision.documentscanner.GmsDocumentScanning
 import com.google.mlkit.vision.documentscanner.GmsDocumentScanningResult
@@ -36,7 +40,9 @@ import com.word.file.manager.pdf.base.data.PdfLockType
 import com.word.file.manager.pdf.base.data.PdfMergeType
 import com.word.file.manager.pdf.base.data.PdfSplitType
 import com.word.file.manager.pdf.base.data.PdfUnlockType
+import com.word.file.manager.pdf.base.helper.AppReviewHelper
 import com.word.file.manager.pdf.base.helper.EventCenter
+import com.word.file.manager.pdf.base.helper.LocalPrefs
 import com.word.file.manager.pdf.base.helper.UserBlockHelper
 import com.word.file.manager.pdf.base.helper.ad.center.AdCenter
 import com.word.file.manager.pdf.base.helper.ad.model.AdSlot
@@ -47,11 +53,14 @@ import com.word.file.manager.pdf.base.utils.copyScannerPdfToLibrary
 import com.word.file.manager.pdf.base.utils.showMessageToast
 import com.word.file.manager.pdf.databinding.ActivityMainBinding
 import com.word.file.manager.pdf.hasGoSettings
+import com.word.file.manager.pdf.hasShownMainNoticeGuide
 import com.word.file.manager.pdf.modules.fragments.BookmarkFragment
 import com.word.file.manager.pdf.modules.fragments.HomeFragment
 import com.word.file.manager.pdf.modules.fragments.RecentFragment
 import com.word.file.manager.pdf.modules.fragments.ToolsFragment
 import com.word.file.manager.pdf.modules.permissions.StoragePermissionActivity
+import com.word.file.manager.pdf.modules.permissions.createNotificationSettingsIntent
+import com.word.file.manager.pdf.modules.permissions.hasPostNotificationPermission
 import com.word.file.manager.pdf.modules.permissions.hasStorageAccessPermission
 import com.word.file.manager.pdf.modules.tools.PdfMergeActivity
 import com.word.file.manager.pdf.modules.tools.PdfSecurityActivity
@@ -68,6 +77,13 @@ class MainActivity : StoragePermissionActivity<ActivityMainBinding>() {
         val scanResult = GmsDocumentScanningResult.fromActivityResultIntent(result.data)
         val pdfUri = scanResult?.pdf?.uri ?: return@registerForActivityResult
         persistCreatedPdf(pdfUri)
+    }
+    private val noticePermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) {
+        if (hasPostNotificationPermission()) EventCenter.logEvent(NOTICE_PERMISSION_GRANTED)
+    }
+    private val noticeSettingsLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        hasGoSettings = false
+        if (hasPostNotificationPermission()) EventCenter.logEvent(NOTICE_PERMISSION_GRANTED)
     }
     private var curLoadState = LoadState.Idle
     private var curAdView: AdView? = null
@@ -89,7 +105,9 @@ class MainActivity : StoragePermissionActivity<ActivityMainBinding>() {
         binding.btnAdd.setOnClickListener {
             checkStoragePermission(PdfCreateType)
         }
-        handleLaunchAction(intent)
+        if (!handleLaunchAction(intent)) {
+            maybeShowMainPrompts()
+        }
     }
 
     override fun onNewIntent(intent: Intent) {
@@ -98,13 +116,62 @@ class MainActivity : StoragePermissionActivity<ActivityMainBinding>() {
         handleLaunchAction(intent)
     }
 
-    private fun handleLaunchAction(sourceIntent: Intent?) {
-        val actionType = sourceIntent.readDocumentActionType() ?: return
+    private fun handleLaunchAction(sourceIntent: Intent?): Boolean {
+        val actionType = sourceIntent.readDocumentActionType() ?: return false
         sourceIntent?.removeExtra(EXTRA_DOCUMENT_ACTION_TYPE)
         when (actionType) {
             DocumentOpenType -> changeTab(0)
             else -> checkStoragePermission(actionType)
         }
+        return true
+    }
+
+    private fun maybeShowMainPrompts() {
+        lifecycleScope.launch(Dispatchers.Main) {
+            delay(200L)
+            if (!showNoticeGuideIfCan()) AppReviewHelper.showIfCan(activity)
+        }
+    }
+
+    private fun showNoticeGuideIfCan(): Boolean {
+        if (hasPostNotificationPermission()) return false
+        if (hasShownMainNoticeGuide) return false
+        hasShownMainNoticeGuide = true
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (!LocalPrefs.hasAskedNotificationPermission) {
+                LocalPrefs.hasAskedNotificationPermission = true
+                requestPostNotificationPermission()
+            } else if (ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.POST_NOTIFICATIONS)) {
+                requestPostNotificationPermission()
+            } else {
+                showNotificationSettingsDialog()
+            }
+        } else {
+            showNotificationSettingsDialog()
+        }
+        return true
+    }
+
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+    private fun requestPostNotificationPermission() {
+        EventCenter.logEvent(NOTICE_PERMISSION_SHOWN)
+        noticePermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+    }
+
+    private fun showNotificationSettingsDialog() {
+        MaterialAlertDialogBuilder(this)
+            .setTitle(getString(R.string.reminder_post_notice_title))
+            .setMessage(getString(R.string.reminder_post_notice_content))
+            .setPositiveButton(getString(R.string.grant)) { dialog, _ ->
+                dialog.dismiss()
+                hasGoSettings = true
+                EventCenter.logEvent(NOTICE_PERMISSION_SHOWN)
+                noticeSettingsLauncher.launch(createNotificationSettingsIntent(activity))
+            }
+            .setNegativeButton(getString(R.string.cancel)) { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
     }
 
     private fun Intent?.readDocumentActionType(): DocumentActionType? {
@@ -263,6 +330,11 @@ class MainActivity : StoragePermissionActivity<ActivityMainBinding>() {
                 .addNetworkExtrasBundle(AdMobAdapter::class.java, extras)
                 .build()
         )
+    }
+
+    private companion object {
+        const val NOTICE_PERMISSION_SHOWN = "notif_permission_shown"
+        const val NOTICE_PERMISSION_GRANTED = "notify_permission_success"
     }
 
 }

@@ -230,3 +230,5 @@ This file captures the working conventions established during recent development
 - Added `activity_extra_guide.xml` and supporting drawables for the floating-window permission guide.
 - Added `ExtraGuideActivity` for the floating-window guide page and wired Route-time display with a once-per-day local gate.
 - Filled all translatable string keys across the bundled localized `values-*` resources and kept non-translatable app identifiers only in the default strings file.
+- Added Main-page notification permission prompting and daily review dialog flow modeled after PDFReader's notice-guide/review sequence.
+- Extracted the Main-page review dialog flow into `AppReviewHelper` so `MainActivity` only coordinates when it should appear.

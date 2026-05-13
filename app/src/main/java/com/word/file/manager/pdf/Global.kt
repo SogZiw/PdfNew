@@ -16,3 +16,4 @@ const val AD_POS_ID = "ad_pos_id"
 lateinit var app: BaseApp
 var isDebug = true
 var hasGoSettings: Boolean = false
+var hasShownMainNoticeGuide = false
