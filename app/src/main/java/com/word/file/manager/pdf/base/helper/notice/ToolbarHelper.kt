@@ -1,4 +1,4 @@
-package com.word.file.manager.pdf.base.helper
+package com.word.file.manager.pdf.base.helper.notice
 
 import android.annotation.SuppressLint
 import android.app.Notification
@@ -8,7 +8,6 @@ import android.widget.RemoteViews
 import androidx.annotation.LayoutRes
 import androidx.core.app.NotificationChannelCompat
 import androidx.core.app.NotificationCompat
-import androidx.core.app.NotificationCompat.DecoratedCustomViewStyle
 import androidx.core.app.NotificationManagerCompat
 import com.word.file.manager.pdf.EXTRA_DOCUMENT_ACTION_TYPE
 import com.word.file.manager.pdf.R
@@ -44,7 +43,7 @@ object ToolbarHelper {
             builder.setCustomContentView(tinyRemoteViews)
                 .setCustomBigContentView(largeRemoteViews)
                 .setCustomHeadsUpContentView(largeRemoteViews)
-                .setStyle(DecoratedCustomViewStyle())
+                .setStyle(NotificationCompat.DecoratedCustomViewStyle())
         } else {
             builder.setCustomContentView(largeRemoteViews)
                 .setCustomBigContentView(largeRemoteViews)
@@ -70,7 +69,7 @@ object ToolbarHelper {
             putExtra(EXTRA_DOCUMENT_ACTION_TYPE, actionType)
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
         }
-        return PendingIntent.getActivity(app, Random.nextInt(), intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+        return PendingIntent.getActivity(app, Random.Default.nextInt(), intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
     }
 
     private fun ensureNotificationChannel() {

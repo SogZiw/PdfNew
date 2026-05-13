@@ -9,6 +9,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
 import com.word.file.manager.pdf.EXTRA_DOCUMENT_ACTION_TYPE
 import com.word.file.manager.pdf.EXTRA_FROM_SET
 import com.word.file.manager.pdf.EXTRA_SHORTCUT_PAGE
@@ -23,12 +24,16 @@ import com.word.file.manager.pdf.base.helper.EventCenter
 import com.word.file.manager.pdf.base.helper.LocalPrefs
 import com.word.file.manager.pdf.base.helper.UserBlockHelper
 import com.word.file.manager.pdf.base.helper.ad.center.AdCenter
+import com.word.file.manager.pdf.base.helper.services.CoreService
 import com.word.file.manager.pdf.base.helper.remote.RemoteLogicConfig
 import com.word.file.manager.pdf.databinding.ActivityRouteBinding
 import com.word.file.manager.pdf.modules.guide.GuideFirstActivity
 import com.word.file.manager.pdf.modules.permissions.ExtraGuideActivity
 import com.word.file.manager.pdf.modules.permissions.hasOverlayPermission
 import com.word.file.manager.pdf.modules.permissions.hasPostNotificationPermission
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class RouteActivity : BaseActivity<ActivityRouteBinding>() {
 
@@ -52,6 +57,10 @@ class RouteActivity : BaseActivity<ActivityRouteBinding>() {
     private fun observeLaunchState() {
         viewModel.afterUMPLiveData.observe(this) {
             requestNoticeIfNeeded()
+            lifecycleScope.launch(Dispatchers.Main) {
+                delay(2000L)
+                CoreService.showToolbar(activity)
+            }
         }
         viewModel.nextJobLiveData.observe(this) {
             goNextPage()
