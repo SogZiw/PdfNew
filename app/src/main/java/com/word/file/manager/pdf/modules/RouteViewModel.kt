@@ -66,6 +66,7 @@ class RouteViewModel : ViewModel() {
                         activity = activity,
                         eventName = AdSlot.ColdStart.jsonKey,
                         closed = { dispatchNextPage() },
+                        shown = { AdCenter.backInterstitial.preload() },
                         clicked = { AppLifeManger.markLaunchAdClicked() },
                     )
                     return@launch

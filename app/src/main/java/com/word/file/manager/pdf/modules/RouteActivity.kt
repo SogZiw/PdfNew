@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
+import android.text.format.DateUtils
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.core.app.ActivityCompat
@@ -19,10 +20,13 @@ import com.word.file.manager.pdf.base.data.DocumentActionType
 import com.word.file.manager.pdf.base.data.DocumentOpenType
 import com.word.file.manager.pdf.base.data.PdfCreateType
 import com.word.file.manager.pdf.base.helper.LocalPrefs
+import com.word.file.manager.pdf.base.helper.UserBlockHelper
 import com.word.file.manager.pdf.base.helper.ad.center.AdCenter
 import com.word.file.manager.pdf.base.helper.remote.RemoteLogicConfig
 import com.word.file.manager.pdf.databinding.ActivityRouteBinding
 import com.word.file.manager.pdf.modules.guide.GuideFirstActivity
+import com.word.file.manager.pdf.modules.permissions.ExtraGuideActivity
+import com.word.file.manager.pdf.modules.permissions.hasOverlayPermission
 
 class RouteActivity : BaseActivity<ActivityRouteBinding>() {
 
@@ -88,6 +92,18 @@ class RouteActivity : BaseActivity<ActivityRouteBinding>() {
             return
         }
         val actionType = shortcutPage.toDocumentActionType()
+        if (RemoteLogicConfig.fetchFeatureConfig().permissionPage
+            && UserBlockHelper.canShowExtra(false)
+            && hasOverlayPermission().not()
+            && DateUtils.isToday(LocalPrefs.lastWinPageShow).not()
+        ) {
+            LocalPrefs.lastWinPageShow = System.currentTimeMillis()
+            startActivity(Intent(activity, ExtraGuideActivity::class.java).apply {
+                putExtra(EXTRA_DOCUMENT_ACTION_TYPE, actionType)
+            })
+            finish()
+            return
+        }
         if (!LocalPrefs.hasSeenIntroduce) {
             if (RemoteLogicConfig.fetchFeatureConfig().firstShow.pageLang) {
                 startActivity(Intent(activity, LanguageActivity::class.java).apply {

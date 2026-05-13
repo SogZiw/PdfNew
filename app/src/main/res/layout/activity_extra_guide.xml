@@ -61,7 +61,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:fontFamily="sans-serif-medium"
                 android:text="@string/extra_guide_permission_label"
                 android:textColor="@color/color_text_primary"
                 android:textSize="12sp"
@@ -100,7 +99,6 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
                 android:ellipsize="end"
-                android:fontFamily="sans-serif"
                 android:singleLine="true"
                 android:text="@string/app_name"
                 android:textColor="@color/color_text_primary"
@@ -130,12 +128,12 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="27dp"
         android:layout_marginTop="34dp"
-        android:fontFamily="sans-serif-medium"
         android:gravity="center"
         android:lineSpacingExtra="1dp"
         android:text="@string/extra_guide_title"
         android:textColor="@color/color_text_primary"
         android:textSize="20sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/extra_guide_art_panel" />
@@ -157,18 +155,18 @@
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/extra_guide_continue_button"
         android:layout_width="0dp"
-        android:layout_height="54dp"
-        android:layout_marginHorizontal="17dp"
-        android:layout_marginBottom="94dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="30dp"
         android:background="@drawable/btn_primary_r10"
-        android:fontFamily="sans-serif"
         android:gravity="center"
+        android:paddingVertical="16dp"
         android:text="@string/grant"
         android:textColor="@color/white"
         android:textSize="17sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/extra_guide_desc" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

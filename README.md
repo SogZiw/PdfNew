@@ -228,3 +228,4 @@ This file captures the working conventions established during recent development
 - Added `fir_show` feature parsing and first-run language/intro page gating, including skipping each page's ad placements when its page is disabled.
 - Added an overlay-permission settings bridge under `modules/permissions` and route-time overlay permission gating controlled by remote feature config.
 - Added `activity_extra_guide.xml` and supporting drawables for the floating-window permission guide.
+- Added `ExtraGuideActivity` for the floating-window guide page and wired Route-time display with a once-per-day local gate.

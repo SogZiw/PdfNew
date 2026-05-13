@@ -7,6 +7,8 @@ import android.util.Log
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowInsetsController
+import android.view.animation.Animation
+import android.view.animation.ScaleAnimation
 import android.widget.Toast
 import com.word.file.manager.pdf.isDebug
 import kotlinx.coroutines.delay
@@ -43,4 +45,24 @@ fun Activity.hideNavBars() {
             window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY or View.SYSTEM_UI_FLAG_FULLSCREEN
         }
     }
+}
+
+fun View.startButtonAnimation() {
+    startAnimation(
+        ScaleAnimation(
+            1f,
+            1.1f,
+            1f,
+            1.1f,
+            Animation.RELATIVE_TO_SELF,
+            0.5f,
+            Animation.RELATIVE_TO_SELF,
+            0.5f,
+        ).apply {
+            duration = 450L
+            repeatMode = Animation.REVERSE
+            repeatCount = Animation.INFINITE
+            fillAfter = true
+        }
+    )
 }
