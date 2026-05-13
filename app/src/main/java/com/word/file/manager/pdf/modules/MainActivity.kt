@@ -79,14 +79,15 @@ class MainActivity : StoragePermissionActivity<ActivityMainBinding>() {
         persistCreatedPdf(pdfUri)
     }
     private val noticePermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) {
-        if (hasPostNotificationPermission()) EventCenter.logEvent(NOTICE_PERMISSION_GRANTED)
+        if (hasPostNotificationPermission()) logNoticePermissionSuccess()
     }
     private val noticeSettingsLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         hasGoSettings = false
-        if (hasPostNotificationPermission()) EventCenter.logEvent(NOTICE_PERMISSION_GRANTED)
+        if (hasPostNotificationPermission()) logNoticePermissionSuccess()
     }
     private var curLoadState = LoadState.Idle
     private var curAdView: AdView? = null
+    private var noticeTrackLabel = NOTICE_STAGE_OTHER
 
     override fun setViewBinding(): ActivityMainBinding = ActivityMainBinding.inflate(LayoutInflater.from(this))
 
@@ -140,9 +141,9 @@ class MainActivity : StoragePermissionActivity<ActivityMainBinding>() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             if (!LocalPrefs.hasAskedNotificationPermission) {
                 LocalPrefs.hasAskedNotificationPermission = true
-                requestPostNotificationPermission()
+                requestPostNotificationPermission(NOTICE_STAGE_FIRST)
             } else if (ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.POST_NOTIFICATIONS)) {
-                requestPostNotificationPermission()
+                requestPostNotificationPermission(NOTICE_STAGE_SECOND)
             } else {
                 showNotificationSettingsDialog()
             }
@@ -153,25 +154,35 @@ class MainActivity : StoragePermissionActivity<ActivityMainBinding>() {
     }
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
-    private fun requestPostNotificationPermission() {
-        EventCenter.logEvent(NOTICE_PERMISSION_SHOWN)
+    private fun requestPostNotificationPermission(label: String) {
+        noticeTrackLabel = label
+        logNoticePermissionShown()
         noticePermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
     }
 
     private fun showNotificationSettingsDialog() {
+        noticeTrackLabel = NOTICE_STAGE_OTHER
         MaterialAlertDialogBuilder(this)
             .setTitle(getString(R.string.reminder_post_notice_title))
             .setMessage(getString(R.string.reminder_post_notice_content))
             .setPositiveButton(getString(R.string.grant)) { dialog, _ ->
                 dialog.dismiss()
                 hasGoSettings = true
-                EventCenter.logEvent(NOTICE_PERMISSION_SHOWN)
+                logNoticePermissionShown()
                 noticeSettingsLauncher.launch(createNotificationSettingsIntent(activity))
             }
             .setNegativeButton(getString(R.string.cancel)) { dialog, _ ->
                 dialog.dismiss()
             }
             .show()
+    }
+
+    private fun logNoticePermissionShown() {
+        EventCenter.logEvent(NOTICE_PERMISSION_SHOWN, mapOf("list" to noticeTrackLabel))
+    }
+
+    private fun logNoticePermissionSuccess() {
+        EventCenter.logEvent(NOTICE_PERMISSION_GRANTED, mapOf("list" to noticeTrackLabel))
     }
 
     private fun Intent?.readDocumentActionType(): DocumentActionType? {
@@ -333,8 +344,11 @@ class MainActivity : StoragePermissionActivity<ActivityMainBinding>() {
     }
 
     private companion object {
-        const val NOTICE_PERMISSION_SHOWN = "notif_permission_shown"
+        const val NOTICE_PERMISSION_SHOWN = "notify_permission_show"
         const val NOTICE_PERMISSION_GRANTED = "notify_permission_success"
+        const val NOTICE_STAGE_FIRST = "first"
+        const val NOTICE_STAGE_SECOND = "second"
+        const val NOTICE_STAGE_OTHER = "other"
     }
 
 }

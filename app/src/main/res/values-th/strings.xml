@@ -87,8 +87,8 @@
     <string name="extra_guide_desc">แสดงเหนือแอปอื่น</string>
     <string name="grant">อนุญาต</string>
     <string name="skip">ข้าม</string>
-    <string name="reminder_post_notice_title">สิทธิ์การแจ้งเตือน</string>
-    <string name="reminder_post_notice_content">เราต้องการการเข้าถึงการแจ้งเตือนเพื่อแจ้งเตือนคุณเกี่ยวกับการอัปเดตสำคัญของแพ็กเกจ PDF ของคุณ</string>
+    <string name="reminder_post_notice_title">อนุญาตการแจ้งเตือน</string>
+    <string name="reminder_post_notice_content">เปิดการแจ้งเตือนเพื่อรับการเตือนงาน PDF ได้ทันเวลาและการแจ้งเตือนสำคัญ</string>
     <string name="rate_title">โปรดให้รีวิวที่ดีกับเรา</string>
     <string name="rate_message">สิ่งนี้สำคัญมากสำหรับเรา</string>
     <string name="ok">ตกลง</string>

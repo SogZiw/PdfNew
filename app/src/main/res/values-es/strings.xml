@@ -87,8 +87,8 @@
     <string name="extra_guide_desc">Mostrar sobre otras aplicaciones</string>
     <string name="grant">Conceder</string>
     <string name="skip">Omitir</string>
-    <string name="reminder_post_notice_title">Permiso de notificación</string>
-    <string name="reminder_post_notice_content">Necesitamos acceso a notificaciones para avisarte sobre actualizaciones importantes de tu paquete PDF.</string>
+    <string name="reminder_post_notice_title">Permitir notificaciones</string>
+    <string name="reminder_post_notice_content">Activa las notificaciones para recibir avisos oportunos de tareas PDF y recordatorios importantes.</string>
     <string name="rate_title">Danos una buena reseña</string>
     <string name="rate_message">Es muy importante para nosotros</string>
     <string name="ok">OK</string>

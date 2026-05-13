@@ -87,8 +87,8 @@
     <string name="extra_guide_desc">अन्य ऐप्स के ऊपर दिखाएं</string>
     <string name="grant">अनुमति दें</string>
     <string name="skip">छोड़ें</string>
-    <string name="reminder_post_notice_title">सूचना अनुमति</string>
-    <string name="reminder_post_notice_content">आपके PDF पैकेज के महत्वपूर्ण अपडेट बताने के लिए हमें सूचना एक्सेस की जरूरत है।</string>
+    <string name="reminder_post_notice_title">सूचनाएं अनुमति दें</string>
+    <string name="reminder_post_notice_content">PDF कार्यों की समय पर चेतावनियां और महत्वपूर्ण रिमाइंडर पाने के लिए सूचनाएं चालू करें।</string>
     <string name="rate_title">कृपया हमें अच्छी समीक्षा दें</string>
     <string name="rate_message">यह हमारे लिए बहुत महत्वपूर्ण है</string>
     <string name="ok">ठीक है</string>

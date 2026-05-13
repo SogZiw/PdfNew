@@ -87,8 +87,8 @@
     <string name="extra_guide_desc">العرض فوق التطبيقات الأخرى</string>
     <string name="grant">منح</string>
     <string name="skip">تخطي</string>
-    <string name="reminder_post_notice_title">إذن الإشعارات</string>
-    <string name="reminder_post_notice_content">نحتاج إلى الوصول إلى الإشعارات لتنبيهك بالتحديثات المهمة لحزمة PDF الخاصة بك.</string>
+    <string name="reminder_post_notice_title">السماح بالإشعارات</string>
+    <string name="reminder_post_notice_content">فعّل الإشعارات لتلقي تنبيهات مهام PDF في الوقت المناسب والتذكيرات المهمة.</string>
     <string name="rate_title">يرجى منحنا تقييما جيدا</string>
     <string name="rate_message">هذا مهم جدا بالنسبة لنا</string>
     <string name="ok">موافق</string>

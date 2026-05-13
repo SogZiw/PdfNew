@@ -232,3 +232,5 @@ This file captures the working conventions established during recent development
 - Filled all translatable string keys across the bundled localized `values-*` resources and kept non-translatable app identifiers only in the default strings file.
 - Added Main-page notification permission prompting and daily review dialog flow modeled after PDFReader's notice-guide/review sequence.
 - Extracted the Main-page review dialog flow into `AppReviewHelper` so `MainActivity` only coordinates when it should appear.
+- Aligned Main-page notification analytics with the Route flow, including `list` values for `first`, `second`, and `other` permission paths.
+- Updated notification permission dialog copy across the default and localized string resources.

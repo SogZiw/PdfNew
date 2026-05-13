@@ -68,7 +68,7 @@ data class PromotionLogic(
     val initIntroNat: Boolean = true,
 
     /** 首页原生\Tools页面原生，false为不展示，true为展示。 */
-    val dashboardNat: Boolean = false,
+    val dashboardNat: Boolean = true,
 
     /** 首页banner，false为不展示，true为展示。 */
     val dashboardBan: Boolean = true,
@@ -92,7 +92,7 @@ data class PromotionLogic(
     val removeAppNatB: Boolean = true,
 
     /** 原生广告按钮是否与主题色一致，false为不一致，true为一致。 */
-    val uiThemeSync: Boolean = false,
+    val uiThemeSync: Boolean = true,
 ) {
     companion object {
         fun blockedUserDefaults() = PromotionLogic(

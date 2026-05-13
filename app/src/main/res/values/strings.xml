@@ -91,8 +91,8 @@
     <string name="extra_guide_desc">Display over other apps</string>
     <string name="grant">Grant</string>
     <string name="skip">Skip</string>
-    <string name="reminder_post_notice_title">Notification Permission</string>
-    <string name="reminder_post_notice_content">We need notification access to alert you about important updates to your PDF package.</string>
+    <string name="reminder_post_notice_title">Allow Notifications</string>
+    <string name="reminder_post_notice_content">Turn on notifications to receive timely PDF task alerts and important reminders.</string>
     <string name="rate_title">Please give us a good review</string>
     <string name="rate_message">It is very important to us</string>
     <string name="ok">OK</string>

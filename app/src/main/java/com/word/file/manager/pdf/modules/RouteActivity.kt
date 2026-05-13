@@ -132,11 +132,11 @@ class RouteActivity : BaseActivity<ActivityRouteBinding>() {
         finish()
     }
 
-    private fun String?.toDocumentActionType(): DocumentActionType {
+    private fun String?.toDocumentActionType(): DocumentActionType? {
         return when (this) {
             SHORTCUT_PAGE_SCAN -> PdfCreateType
             SHORTCUT_PAGE_VIEW -> DocumentOpenType
-            else -> DocumentOpenType
+            else -> null
         }
     }
 

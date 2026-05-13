@@ -87,8 +87,8 @@
     <string name="extra_guide_desc">Afficher par-dessus les autres applications</string>
     <string name="grant">Autoriser</string>
     <string name="skip">Ignorer</string>
-    <string name="reminder_post_notice_title">Autorisation de notification</string>
-    <string name="reminder_post_notice_content">Nous avons besoin de l’accès aux notifications pour vous informer des mises à jour importantes de votre pack PDF.</string>
+    <string name="reminder_post_notice_title">Autoriser les notifications</string>
+    <string name="reminder_post_notice_content">Activez les notifications pour recevoir des alertes de tâches PDF en temps utile et des rappels importants.</string>
     <string name="rate_title">Veuillez nous laisser un bon avis</string>
     <string name="rate_message">C’est très important pour nous</string>
     <string name="ok">OK</string>

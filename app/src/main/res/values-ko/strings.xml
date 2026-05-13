@@ -87,8 +87,8 @@
     <string name="extra_guide_desc">다른 앱 위에 표시</string>
     <string name="grant">허용</string>
     <string name="skip">건너뛰기</string>
-    <string name="reminder_post_notice_title">알림 권한</string>
-    <string name="reminder_post_notice_content">PDF 패키지의 중요한 업데이트를 알려드리기 위해 알림 접근이 필요합니다.</string>
+    <string name="reminder_post_notice_title">알림 허용</string>
+    <string name="reminder_post_notice_content">PDF 작업 알림과 중요한 리마인더를 제때 받으려면 알림을 켜세요.</string>
     <string name="rate_title">좋은 리뷰를 남겨 주세요</string>
     <string name="rate_message">저희에게 매우 중요합니다</string>
     <string name="ok">확인</string>

@@ -87,8 +87,8 @@
     <string name="extra_guide_desc">Über anderen Apps anzeigen</string>
     <string name="grant">Gewähren</string>
     <string name="skip">Überspringen</string>
-    <string name="reminder_post_notice_title">Benachrichtigungsberechtigung</string>
-    <string name="reminder_post_notice_content">Wir benötigen Benachrichtigungszugriff, um Sie über wichtige Updates Ihres PDF-Pakets zu informieren.</string>
+    <string name="reminder_post_notice_title">Benachrichtigungen erlauben</string>
+    <string name="reminder_post_notice_content">Aktivieren Sie Benachrichtigungen, um rechtzeitig Hinweise zu PDF-Aufgaben und wichtige Erinnerungen zu erhalten.</string>
     <string name="rate_title">Bitte geben Sie uns eine gute Bewertung</string>
     <string name="rate_message">Das ist sehr wichtig für uns</string>
     <string name="ok">OK</string>

@@ -87,8 +87,8 @@
     <string name="extra_guide_desc">Diğer uygulamaların üzerinde göster</string>
     <string name="grant">İzin ver</string>
     <string name="skip">Atla</string>
-    <string name="reminder_post_notice_title">Bildirim izni</string>
-    <string name="reminder_post_notice_content">PDF paketinizle ilgili önemli güncellemeleri bildirmek için bildirim erişimine ihtiyacımız var.</string>
+    <string name="reminder_post_notice_title">Bildirimlere izin ver</string>
+    <string name="reminder_post_notice_content">PDF görev uyarılarını ve önemli hatırlatmaları zamanında almak için bildirimleri açın.</string>
     <string name="rate_title">Lütfen bize iyi bir yorum verin</string>
     <string name="rate_message">Bu bizim için çok önemli</string>
     <string name="ok">Tamam</string>
