@@ -86,13 +86,14 @@ This file captures the working conventions established during recent development
   - `SystemVersionExt.kt`
     - Central Android version checks.
     - Prefer:
-      - `isAtLeastApi(...)`
-      - `isAtLeastApi26()`
-      - `isAtLeastApi29()`
-      - `isAtLeastApi30()`
-      - `isAtLeastApi31()`
-      - `isAtLeastApi33()`
-      - `isAtLeastApi34()`
+      - `isAtLeastAndroidVersion(...)`
+      - `isAtLeastAndroid8()`
+      - `isAtLeastAndroid10()`
+      - `isAtLeastAndroid11()`
+      - `isAtLeastAndroid12()`
+      - `isAtLeastAndroid13()`
+      - `isAtLeastAndroid14()`
+      - `isAtLeastAndroid15()`
 
 ## Naming Preferences
 
@@ -140,7 +141,7 @@ This file captures the working conventions established during recent development
 ## Notes For Future Changes
 
 - When introducing new preference fields, add them to `LocalPrefs` and back them with `PreferenceStore`.
-- When adding new version checks, prefer `isAtLeastApiXX()` naming instead of Android dessert names.
+- When adding new version checks, prefer `isAtLeastAndroidX()` naming instead of API-level or dessert names.
 - When adding new permission behaviors, first check whether the logic belongs in:
   - `modules/permissions/PermissionExt.kt`
   - `modules/permissions/StoragePermissionActivity.kt`
@@ -234,3 +235,10 @@ This file captures the working conventions established during recent development
 - Extracted the Main-page review dialog flow into `AppReviewHelper` so `MainActivity` only coordinates when it should appear.
 - Aligned Main-page notification analytics with the Route flow, including `list` values for `first`, `second`, and `other` permission paths.
 - Updated notification permission dialog copy across the default and localized string resources.
+- Added a `ic_shortcut_history` vector drawable matching the existing shortcut icon style.
+- Normalized the four shortcut vector drawables so their artwork uses consistent margins inside the 30dp canvas.
+- Added a `ic_shortcut_tools` vector drawable using the same shortcut icon style and margins.
+- Added `ToolbarHelper` for building the notification toolbar from `layout_toolbar_large` and `layout_toolbar_tiny`.
+- Added a dedicated monochrome notification small icon for the toolbar notification.
+- Updated Route/Main launch handling so toolbar actions can pass `DocumentActionType` directly, including bookmark/tools tab routing.
+- Renamed Android version helpers from `ApiXX` style to Android release-number names such as `isAtLeastAndroid11`.

@@ -34,7 +34,9 @@ import com.word.file.manager.pdf.EXTRA_RESULT_TEXT
 import com.word.file.manager.pdf.R
 import com.word.file.manager.pdf.app
 import com.word.file.manager.pdf.base.data.DocumentActionType
+import com.word.file.manager.pdf.base.data.DocumentBookmark
 import com.word.file.manager.pdf.base.data.DocumentOpenType
+import com.word.file.manager.pdf.base.data.DocumentTools
 import com.word.file.manager.pdf.base.data.PdfCreateType
 import com.word.file.manager.pdf.base.data.PdfLockType
 import com.word.file.manager.pdf.base.data.PdfMergeType
@@ -121,7 +123,21 @@ class MainActivity : StoragePermissionActivity<ActivityMainBinding>() {
         val actionType = sourceIntent.readDocumentActionType() ?: return false
         sourceIntent?.removeExtra(EXTRA_DOCUMENT_ACTION_TYPE)
         when (actionType) {
-            DocumentOpenType -> changeTab(0)
+            DocumentOpenType -> {
+                changeTab(0)
+                return false
+            }
+
+            DocumentBookmark -> {
+                changeTab(2)
+                return false
+            }
+
+            DocumentTools -> {
+                changeTab(3)
+                return false
+            }
+
             else -> checkStoragePermission(actionType)
         }
         return true

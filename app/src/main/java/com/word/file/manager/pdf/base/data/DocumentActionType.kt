@@ -9,13 +9,22 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 sealed class DocumentActionType : Parcelable {
     open fun getActionName(context: Context): String = ""
+
     @DrawableRes
     open fun getMenuIconRes(): Int = R.drawable.ic_menu_open
 }
 
 data object DocumentOpenType : DocumentActionType() {
-    override fun getActionName(context: Context): String = "view"
+    override fun getActionName(context: Context): String = context.getString(R.string.view)
     override fun getMenuIconRes(): Int = R.drawable.ic_menu_open
+}
+
+data object DocumentBookmark : DocumentActionType() {
+    override fun getActionName(context: Context): String = context.getString(R.string.bookmark)
+}
+
+data object DocumentTools : DocumentActionType() {
+    override fun getActionName(context: Context): String = context.getString(R.string.tools)
 }
 
 data object PdfMergeType : DocumentActionType() {

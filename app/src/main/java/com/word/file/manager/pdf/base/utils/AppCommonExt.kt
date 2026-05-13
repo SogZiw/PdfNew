@@ -39,6 +39,10 @@ fun buildPeriodicSignalFlow(
     }
 }
 
+fun isSamsungDevice() = Build.MANUFACTURER.equals("Samsung", ignoreCase = true)
+
+fun isGoogleDevice() = Build.MANUFACTURER.equals("Google", ignoreCase = true)
+
 fun Activity.hideNavBars() {
     runCatching {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {

@@ -32,6 +32,7 @@ import com.word.file.manager.pdf.modules.permissions.hasPostNotificationPermissi
 
 class RouteActivity : BaseActivity<ActivityRouteBinding>() {
 
+    private val documentActionType by lazy { intent?.getParcelableExtra<DocumentActionType>(EXTRA_DOCUMENT_ACTION_TYPE) }
     private val shortcutPage by lazy { intent?.getStringExtra(EXTRA_SHORTCUT_PAGE) }
     private val viewModel by viewModels<RouteViewModel>()
     private var isFirstNF = false
@@ -96,7 +97,7 @@ class RouteActivity : BaseActivity<ActivityRouteBinding>() {
             finish()
             return
         }
-        val actionType = shortcutPage.toDocumentActionType()
+        val actionType = readLaunchActionType()
         if (RemoteLogicConfig.fetchFeatureConfig().permissionPage
             && UserBlockHelper.canShowExtra(false)
             && hasOverlayPermission().not()
@@ -104,7 +105,7 @@ class RouteActivity : BaseActivity<ActivityRouteBinding>() {
         ) {
             LocalPrefs.lastWinPageShow = System.currentTimeMillis()
             startActivity(Intent(activity, ExtraGuideActivity::class.java).apply {
-                putExtra(EXTRA_DOCUMENT_ACTION_TYPE, actionType)
+                putLaunchActionType(actionType)
             })
             finish()
             return
@@ -113,23 +114,31 @@ class RouteActivity : BaseActivity<ActivityRouteBinding>() {
             if (RemoteLogicConfig.fetchFeatureConfig().firstShow.pageLang) {
                 startActivity(Intent(activity, LanguageActivity::class.java).apply {
                     putExtra(EXTRA_FROM_SET, false)
-                    putExtra(EXTRA_DOCUMENT_ACTION_TYPE, actionType)
+                    putLaunchActionType(actionType)
                 })
                 finish()
                 return
             }
             if (RemoteLogicConfig.fetchFeatureConfig().firstShow.pageIntro) {
                 startActivity(Intent(activity, IntroduceActivity::class.java).apply {
-                    putExtra(EXTRA_DOCUMENT_ACTION_TYPE, actionType)
+                    putLaunchActionType(actionType)
                 })
                 finish()
                 return
             }
         }
         startActivity(Intent(activity, MainActivity::class.java).apply {
-            putExtra(EXTRA_DOCUMENT_ACTION_TYPE, actionType)
+            putLaunchActionType(actionType)
         })
         finish()
+    }
+
+    private fun readLaunchActionType(): DocumentActionType? {
+        return documentActionType ?: shortcutPage.toDocumentActionType()
+    }
+
+    private fun Intent.putLaunchActionType(actionType: DocumentActionType?) {
+        if (actionType != null) putExtra(EXTRA_DOCUMENT_ACTION_TYPE, actionType)
     }
 
     private fun String?.toDocumentActionType(): DocumentActionType? {

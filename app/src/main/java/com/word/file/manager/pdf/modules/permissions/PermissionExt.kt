@@ -14,13 +14,13 @@ import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
 import com.word.file.manager.pdf.app
-import com.word.file.manager.pdf.base.utils.isAtLeastApi30
+import com.word.file.manager.pdf.base.utils.isAtLeastAndroid11
 
 val legacyStoragePermissions: Array<String>
     get() = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
 
 fun hasStorageAccessPermission(): Boolean {
-    return if (isAtLeastApi30()) {
+    return if (isAtLeastAndroid11()) {
         Environment.isExternalStorageManager()
     } else {
         listOf(
@@ -44,7 +44,7 @@ fun hasPostNotificationPermission(): Boolean {
     }
 }
 
-fun shouldOpenAllFilesAccessPage(): Boolean = isAtLeastApi30()
+fun shouldOpenAllFilesAccessPage(): Boolean = isAtLeastAndroid11()
 
 fun shouldRequestLegacyStoragePermission(activity: Activity, isFirstRequest: Boolean): Boolean {
     return isFirstRequest || ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.READ_EXTERNAL_STORAGE)

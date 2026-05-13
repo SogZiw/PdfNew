@@ -82,6 +82,7 @@ class LanguageActivity : BaseActivity<ActivityLanguageBinding>() {
                     finish()
                 } else {
                     startActivity(Intent(this, MainActivity::class.java).apply {
+                        putExtra(EXTRA_DOCUMENT_ACTION_TYPE, readLaunchActionType())
                         addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
                     })
                     finish()
