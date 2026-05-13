@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.pdf.PdfRenderer
-import android.os.Build
 import android.os.ParcelFileDescriptor
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -24,6 +23,7 @@ import com.word.file.manager.pdf.base.data.FileItem
 import com.word.file.manager.pdf.base.helper.EventCenter
 import com.word.file.manager.pdf.base.helper.ad.center.AdCenter
 import com.word.file.manager.pdf.base.helper.remote.RemoteLogicConfig
+import com.word.file.manager.pdf.base.utils.isAtLeastAndroid13
 import com.word.file.manager.pdf.base.utils.showMessageToast
 import com.word.file.manager.pdf.base.utils.splitPdfDocument
 import com.word.file.manager.pdf.databinding.ActivityPdfSplitPagesBinding
@@ -89,7 +89,7 @@ class PdfSplitPagesActivity : BaseActivity<ActivityPdfSplitPagesBinding>() {
     }
 
     private fun readTargetFile(): FileItem? {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        return if (isAtLeastAndroid13()) {
             intent?.getParcelableExtra(EXTRA_FILE_ITEM, FileItem::class.java)
         } else {
             @Suppress("DEPRECATION")

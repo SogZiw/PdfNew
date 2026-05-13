@@ -52,6 +52,7 @@ import com.word.file.manager.pdf.base.helper.ad.model.LoadState
 import com.word.file.manager.pdf.base.helper.ad.util.AdRevenueUtils
 import com.word.file.manager.pdf.base.helper.remote.RemoteLogicConfig
 import com.word.file.manager.pdf.base.utils.copyScannerPdfToLibrary
+import com.word.file.manager.pdf.base.utils.isAtLeastAndroid13
 import com.word.file.manager.pdf.base.utils.showMessageToast
 import com.word.file.manager.pdf.databinding.ActivityMainBinding
 import com.word.file.manager.pdf.hasGoSettings
@@ -154,7 +155,7 @@ class MainActivity : StoragePermissionActivity<ActivityMainBinding>() {
         if (hasPostNotificationPermission()) return false
         if (hasShownMainNoticeGuide) return false
         hasShownMainNoticeGuide = true
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        if (isAtLeastAndroid13()) {
             if (!LocalPrefs.hasAskedNotificationPermission) {
                 LocalPrefs.hasAskedNotificationPermission = true
                 requestPostNotificationPermission(NOTICE_STAGE_FIRST)
@@ -202,7 +203,7 @@ class MainActivity : StoragePermissionActivity<ActivityMainBinding>() {
     }
 
     private fun Intent?.readDocumentActionType(): DocumentActionType? {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        return if (isAtLeastAndroid13()) {
             this?.getParcelableExtra(EXTRA_DOCUMENT_ACTION_TYPE, DocumentActionType::class.java)
         } else {
             @Suppress("DEPRECATION")

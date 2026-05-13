@@ -2,7 +2,6 @@ package com.word.file.manager.pdf.modules.tools
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.os.Build
 import android.view.LayoutInflater
 import androidx.annotation.StringRes
 import androidx.core.view.isVisible
@@ -26,6 +25,7 @@ import com.word.file.manager.pdf.base.helper.EventCenter
 import com.word.file.manager.pdf.base.helper.UserBlockHelper
 import com.word.file.manager.pdf.base.helper.ad.center.AdCenter
 import com.word.file.manager.pdf.base.helper.remote.RemoteLogicConfig
+import com.word.file.manager.pdf.base.utils.isAtLeastAndroid13
 import com.word.file.manager.pdf.base.utils.isLockedPdfForTool
 import com.word.file.manager.pdf.base.utils.isPdfPasswordValid
 import com.word.file.manager.pdf.base.utils.isUsablePdfForTool
@@ -76,7 +76,7 @@ class PdfSecurityActivity : BaseActivity<ActivityPdfSecurityBinding>() {
     }
 
     private fun readActionType(): DocumentActionType {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        return if (isAtLeastAndroid13()) {
             intent?.getParcelableExtra(EXTRA_DOCUMENT_ACTION_TYPE, DocumentActionType::class.java)
         } else {
             @Suppress("DEPRECATION")

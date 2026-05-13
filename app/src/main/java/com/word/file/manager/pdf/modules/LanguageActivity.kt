@@ -2,7 +2,6 @@ package com.word.file.manager.pdf.modules
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isInvisible
@@ -23,6 +22,7 @@ import com.word.file.manager.pdf.base.helper.UserBlockHelper
 import com.word.file.manager.pdf.base.helper.ad.center.AdCenter
 import com.word.file.manager.pdf.base.helper.ad.model.NativeAdStyle
 import com.word.file.manager.pdf.base.helper.remote.RemoteLogicConfig
+import com.word.file.manager.pdf.base.utils.isAtLeastAndroid13
 import com.word.file.manager.pdf.databinding.ActivityLanguageBinding
 import com.word.file.manager.pdf.databinding.ItemLanguageBinding
 import java.util.Locale
@@ -92,7 +92,7 @@ class LanguageActivity : BaseActivity<ActivityLanguageBinding>() {
     }
 
     private fun readLaunchActionType(): DocumentActionType {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        return if (isAtLeastAndroid13()) {
             intent?.getParcelableExtra(EXTRA_DOCUMENT_ACTION_TYPE, DocumentActionType::class.java)
         } else {
             @Suppress("DEPRECATION")

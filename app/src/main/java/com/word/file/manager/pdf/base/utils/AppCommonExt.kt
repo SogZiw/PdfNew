@@ -45,7 +45,7 @@ fun isGoogleDevice() = Build.MANUFACTURER.equals("Google", ignoreCase = true)
 
 fun Activity.hideNavBars() {
     runCatching {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+        if (isAtLeastAndroid11()) {
             val controller = window.insetsController ?: return
             controller.hide(WindowInsets.Type.navigationBars())
             controller.systemBarsBehavior = WindowInsetsController.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE

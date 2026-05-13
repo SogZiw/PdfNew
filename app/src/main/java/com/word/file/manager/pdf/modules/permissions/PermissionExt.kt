@@ -6,7 +6,6 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.os.Build
 import android.os.Environment
 import android.provider.Settings
 import androidx.core.app.ActivityCompat
@@ -15,6 +14,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
 import com.word.file.manager.pdf.app
 import com.word.file.manager.pdf.base.utils.isAtLeastAndroid11
+import com.word.file.manager.pdf.base.utils.isAtLeastAndroid13
 
 val legacyStoragePermissions: Array<String>
     get() = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
@@ -37,7 +37,7 @@ fun hasOverlayPermission(): Boolean {
 }
 
 fun hasPostNotificationPermission(): Boolean {
-    return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+    return if (isAtLeastAndroid13()) {
         ContextCompat.checkSelfPermission(app, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED
     } else {
         NotificationManagerCompat.from(app).areNotificationsEnabled()

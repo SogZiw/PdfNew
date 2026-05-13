@@ -1,7 +1,6 @@
 package com.word.file.manager.pdf.modules
 
 import android.content.Intent
-import android.os.Build
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -21,6 +20,7 @@ import com.word.file.manager.pdf.base.helper.UserBlockHelper
 import com.word.file.manager.pdf.base.helper.ad.center.AdCenter
 import com.word.file.manager.pdf.base.helper.ad.model.NativeAdStyle
 import com.word.file.manager.pdf.base.helper.remote.RemoteLogicConfig
+import com.word.file.manager.pdf.base.utils.isAtLeastAndroid13
 import com.word.file.manager.pdf.databinding.ActivityIntroduceBinding
 import kotlin.math.roundToInt
 
@@ -68,7 +68,7 @@ class IntroduceActivity : BaseActivity<ActivityIntroduceBinding>() {
     }
 
     private fun readLaunchActionType(): DocumentActionType {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        return if (isAtLeastAndroid13()) {
             intent?.getParcelableExtra(EXTRA_DOCUMENT_ACTION_TYPE, DocumentActionType::class.java)
         } else {
             @Suppress("DEPRECATION")

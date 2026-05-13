@@ -3,7 +3,6 @@ package com.word.file.manager.pdf.modules
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.os.Build
 import android.text.format.DateUtils
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
@@ -26,6 +25,7 @@ import com.word.file.manager.pdf.base.helper.UserBlockHelper
 import com.word.file.manager.pdf.base.helper.ad.center.AdCenter
 import com.word.file.manager.pdf.base.helper.services.CoreService
 import com.word.file.manager.pdf.base.helper.remote.RemoteLogicConfig
+import com.word.file.manager.pdf.base.utils.isAtLeastAndroid13
 import com.word.file.manager.pdf.databinding.ActivityRouteBinding
 import com.word.file.manager.pdf.modules.guide.GuideFirstActivity
 import com.word.file.manager.pdf.modules.permissions.ExtraGuideActivity
@@ -90,13 +90,13 @@ class RouteActivity : BaseActivity<ActivityRouteBinding>() {
 
     private fun requestPostNotification(tag: String) {
         viewModel.logNoticeRequest(tag)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        if (isAtLeastAndroid13()) {
             notificationPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
         } else viewModel.startLoadingLaunch(activity)
     }
 
     private fun shouldRequestNoticePermission(): Boolean {
-        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
+        return isAtLeastAndroid13() &&
                 ContextCompat.checkSelfPermission(activity, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED
     }
 

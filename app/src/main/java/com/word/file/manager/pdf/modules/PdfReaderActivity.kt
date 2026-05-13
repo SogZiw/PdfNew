@@ -1,6 +1,5 @@
 package com.word.file.manager.pdf.modules
 
-import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
@@ -19,6 +18,7 @@ import com.word.file.manager.pdf.base.helper.ad.center.AdCenter
 import com.word.file.manager.pdf.base.helper.remote.RemoteLogicConfig
 import com.word.file.manager.pdf.base.utils.isPdfPasswordRequired
 import com.word.file.manager.pdf.base.utils.isPdfPasswordValid
+import com.word.file.manager.pdf.base.utils.isAtLeastAndroid13
 import com.word.file.manager.pdf.base.utils.markFileAsRecent
 import com.word.file.manager.pdf.base.utils.showMessageToast
 import com.word.file.manager.pdf.databinding.ActivityPdfReaderBinding
@@ -57,7 +57,7 @@ class PdfReaderActivity : BaseActivity<ActivityPdfReaderBinding>() {
     }
 
     private fun readTargetFile(): FileItem? {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        return if (isAtLeastAndroid13()) {
             intent?.getParcelableExtra(EXTRA_FILE_ITEM, FileItem::class.java)
         } else {
             @Suppress("DEPRECATION")

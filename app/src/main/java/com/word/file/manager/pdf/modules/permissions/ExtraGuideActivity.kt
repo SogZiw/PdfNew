@@ -2,7 +2,6 @@ package com.word.file.manager.pdf.modules.permissions
 
 import android.content.Intent
 import android.graphics.Paint
-import android.os.Build
 import androidx.activity.result.contract.ActivityResultContracts
 import com.word.file.manager.pdf.EXTRA_DOCUMENT_ACTION_TYPE
 import com.word.file.manager.pdf.EXTRA_FROM_SET
@@ -14,6 +13,7 @@ import com.word.file.manager.pdf.base.helper.LocalPrefs
 import com.word.file.manager.pdf.base.helper.UserBlockHelper
 import com.word.file.manager.pdf.base.helper.ad.center.AdCenter
 import com.word.file.manager.pdf.base.helper.remote.RemoteLogicConfig
+import com.word.file.manager.pdf.base.utils.isAtLeastAndroid13
 import com.word.file.manager.pdf.base.utils.startButtonAnimation
 import com.word.file.manager.pdf.databinding.ActivityExtraGuideBinding
 import com.word.file.manager.pdf.hasGoSettings
@@ -77,7 +77,7 @@ class ExtraGuideActivity : BaseActivity<ActivityExtraGuideBinding>() {
     }
 
     private fun readLaunchActionType(): DocumentActionType {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        return if (isAtLeastAndroid13()) {
             intent?.getParcelableExtra(EXTRA_DOCUMENT_ACTION_TYPE, DocumentActionType::class.java)
         } else {
             @Suppress("DEPRECATION")

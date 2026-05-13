@@ -2,7 +2,6 @@ package com.word.file.manager.pdf.modules
 
 import android.annotation.SuppressLint
 import android.net.Uri
-import android.os.Build
 import android.view.LayoutInflater
 import android.webkit.WebResourceRequest
 import android.webkit.WebSettings
@@ -21,6 +20,7 @@ import com.word.file.manager.pdf.base.helper.UserBlockHelper
 import com.word.file.manager.pdf.base.helper.ad.center.AdCenter
 import com.word.file.manager.pdf.base.helper.remote.RemoteLogicConfig
 import com.word.file.manager.pdf.base.utils.getFileCategory
+import com.word.file.manager.pdf.base.utils.isAtLeastAndroid13
 import com.word.file.manager.pdf.base.utils.markFileAsRecent
 import com.word.file.manager.pdf.base.utils.showMessageToast
 import com.word.file.manager.pdf.databinding.ActivityOfficePreviewBinding
@@ -63,7 +63,7 @@ class OfficePreviewActivity : BaseActivity<ActivityOfficePreviewBinding>() {
     }
 
     private fun readTargetFile(): FileItem? {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        return if (isAtLeastAndroid13()) {
             intent?.getParcelableExtra(EXTRA_FILE_ITEM, FileItem::class.java)
         } else {
             @Suppress("DEPRECATION")

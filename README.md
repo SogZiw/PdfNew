@@ -242,3 +242,4 @@ This file captures the working conventions established during recent development
 - Added a dedicated monochrome notification small icon for the toolbar notification.
 - Updated Route/Main launch handling so toolbar actions can pass `DocumentActionType` directly, including bookmark/tools tab routing.
 - Renamed Android version helpers from `ApiXX` style to Android release-number names such as `isAtLeastAndroid11`.
+- Replaced direct in-app SDK version comparisons with shared `SystemVersionExt` Android-version helpers.

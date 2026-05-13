@@ -2,7 +2,6 @@ package com.word.file.manager.pdf.modules.dialogs
 
 import android.app.Dialog
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -19,6 +18,7 @@ import com.word.file.manager.pdf.base.data.FileCategory
 import com.word.file.manager.pdf.base.data.FileItem
 import com.word.file.manager.pdf.base.utils.getPdfPageCount
 import com.word.file.manager.pdf.base.utils.getFileCategory
+import com.word.file.manager.pdf.base.utils.isAtLeastAndroid13
 import com.word.file.manager.pdf.base.utils.isUsablePdfForTool
 import com.word.file.manager.pdf.base.utils.printPdf
 import com.word.file.manager.pdf.base.utils.shareFile
@@ -80,7 +80,7 @@ class FileActionsDialogFragment : BottomSheetDialogFragment() {
     }
 
     private fun readFileItem(): FileItem? {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        return if (isAtLeastAndroid13()) {
             arguments?.getParcelable(ARG_FILE_ITEM, FileItem::class.java)
         } else {
             @Suppress("DEPRECATION")
