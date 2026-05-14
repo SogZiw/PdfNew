@@ -1,7 +1,6 @@
 <resources>
     <string name="home">ホーム</string>
     <string name="recently">最近</string>
-    <string name="bookmark_nav">ブックマーク</string>
     <string name="settings">設定</string>
     <string name="all">すべて</string>
     <string name="pdf">PDF</string>
@@ -57,7 +56,6 @@
     <string name="privacy_policy">プライバシーポリシー</string>
     <string name="next">次へ</string>
     <string name="start">開始</string>
-    <string name="introduce_skip">スキップ</string>
     <string name="introduce_title_1">高速PDFビューア</string>
     <string name="introduce_desc_1">ドキュメントをすぐに開いて読めます。</string>
     <string name="introduce_title_2">スキャンと作成</string>
@@ -92,4 +90,37 @@
     <string name="rate_title">よいレビューをお願いします</string>
     <string name="rate_message">私たちにとってとても重要です</string>
     <string name="ok">OK</string>
+    <string name="content_1_type_1">📂 すべてのPDFを1か所で管理</string>
+    <string name="content_1_type_2">✨ 作業スペースをすっきり高速に保つ</string>
+    <string name="content_1_type_3">🚀 よく使うドキュメントへすばやくアクセス</string>
+    <string name="content_1_type_4">📥 新しいファイルを検出しました！読む準備はできましたか？</string>
+    <string name="content_1_type_5">📊 ドキュメントのストレージ状態を確認</string>
+    <string name="content_2_type_1">📂 不要なPDFファイルを削除</string>
+    <string name="content_2_type_2">✨ 多くのPDFファイルがストレージを使用しています</string>
+    <string name="content_2_type_3">🚀 不要なPDFを1分でクリーンアップ</string>
+    <string name="content_2_type_4">📥 不要なOfficeドキュメントを表示して削除。</string>
+    <string name="content_2_type_5">📊 大きなPDFファイルを削除</string>
+    <string name="content_3_type_1">🕒 最近の読書に戻る</string>
+    <string name="content_3_type_2">🔍 開いたファイルを探していますか？</string>
+    <string name="content_3_type_3">📑 履歴を見やすく整理しました</string>
+    <string name="content_3_type_4">🔄 同期済みの記録：いつでも再開</string>
+    <string name="content_4_type_1">📸 紙を数秒でPDFに変換</string>
+    <string name="content_4_type_2">📄 身分証のデジタルコピーを作成</string>
+    <string name="content_4_type_3">🖼️ 画像を鮮明なPDFに変換</string>
+    <string name="content_4_type_4">⚡ 高速スキャンツールを使えます</string>
+    <string name="content_5_type_1">🛠️ すべてのプロ向けPDFツールを利用</string>
+    <string name="content_5_type_2">🔗 PDFの結合や分割を簡単に</string>
+    <string name="content_5_type_3">🔐 パスワードでファイルを保護</string>
+    <string name="content_5_type_4">📝 編集が必要ですか？さらにツールを入手</string>
+    <string name="button_optimize">最適化</string>
+    <string name="button_read">読む</string>
+    <string name="button_check">確認</string>
+    <string name="button_resume">再開</string>
+    <string name="button_find">探す</string>
+    <string name="button_go">移動</string>
+    <string name="button_create">作成</string>
+    <string name="button_explore">探す</string>
+    <string name="button_try">試す</string>
+    <string name="button_protect">保護</string>
+    <string name="button_more">その他</string>
 </resources>

@@ -1,7 +1,6 @@
 <resources>
     <string name="home">होम</string>
     <string name="recently">हाल ही में</string>
-    <string name="bookmark_nav">बुकमार्क</string>
     <string name="settings">सेटिंग्स</string>
     <string name="all">सभी</string>
     <string name="pdf">PDF</string>
@@ -57,7 +56,6 @@
     <string name="privacy_policy">गोपनीयता नीति</string>
     <string name="next">अगला</string>
     <string name="start">शुरू करें</string>
-    <string name="introduce_skip">छोड़ें</string>
     <string name="introduce_title_1">तेज़ PDF व्यूअर</string>
     <string name="introduce_desc_1">दस्तावेज तुरंत खोलें और पढ़ें।</string>
     <string name="introduce_title_2">स्कैन और बनाएं</string>
@@ -92,4 +90,37 @@
     <string name="rate_title">कृपया हमें अच्छी समीक्षा दें</string>
     <string name="rate_message">यह हमारे लिए बहुत महत्वपूर्ण है</string>
     <string name="ok">ठीक है</string>
+    <string name="content_1_type_1">📂 अपने सभी PDF एक ही जगह प्रबंधित करें</string>
+    <string name="content_1_type_2">✨ अपना कार्यक्षेत्र साफ और तेज रखें</string>
+    <string name="content_1_type_3">🚀 अपने प्रमुख दस्तावेजों तक तुरंत पहुंचें</string>
+    <string name="content_1_type_4">📥 नई फाइलें मिलीं! पढ़ने के लिए तैयार हैं?</string>
+    <string name="content_1_type_5">📊 दस्तावेज संग्रहण की स्थिति देखें</string>
+    <string name="content_2_type_1">📂 बेकार PDF फाइलें हटाएं</string>
+    <string name="content_2_type_2">✨ कई PDF फाइलें संग्रहण स्थान ले रही हैं</string>
+    <string name="content_2_type_3">🚀 बेकार PDF फाइलें एक मिनट में साफ करें</string>
+    <string name="content_2_type_4">📥 बेकार Office दस्तावेज देखें और हटाएं।</string>
+    <string name="content_2_type_5">📊 बड़ी PDF फाइलें हटाएं</string>
+    <string name="content_3_type_1">🕒 अपनी हाल की पढ़ाई पर लौटें</string>
+    <string name="content_3_type_2">🔍 खोली गई फाइल खोज रहे हैं?</string>
+    <string name="content_3_type_3">📑 आपका इतिहास आपके लिए व्यवस्थित है</string>
+    <string name="content_3_type_4">🔄 सिंक किए गए रिकॉर्ड: कभी भी जारी रखें</string>
+    <string name="content_4_type_1">📸 कागज को सेकंडों में PDF बनाएं</string>
+    <string name="content_4_type_2">📄 अपने पहचान दस्तावेजों की डिजिटल कॉपी बनाएं</string>
+    <string name="content_4_type_3">🖼️ चित्रों को साफ PDF में बदलें</string>
+    <string name="content_4_type_4">⚡ तेज स्कैन टूल आपके लिए तैयार है</string>
+    <string name="content_5_type_1">🛠️ सभी प्रो PDF टूलकिट अनलॉक करें</string>
+    <string name="content_5_type_2">🔗 अपने PDF आसानी से मर्ज या स्प्लिट करें</string>
+    <string name="content_5_type_3">🔐 पासवर्ड से अपनी फाइलें सुरक्षित करें</string>
+    <string name="content_5_type_4">📝 संपादन चाहिए? अधिक टूल पाएं</string>
+    <string name="button_optimize">ऑप्टिमाइज़</string>
+    <string name="button_read">पढ़ें</string>
+    <string name="button_check">जांचें</string>
+    <string name="button_resume">जारी रखें</string>
+    <string name="button_find">खोजें</string>
+    <string name="button_go">जाएं</string>
+    <string name="button_create">बनाएं</string>
+    <string name="button_explore">एक्सप्लोर</string>
+    <string name="button_try">आजमाएं</string>
+    <string name="button_protect">सुरक्षित करें</string>
+    <string name="button_more">अधिक</string>
 </resources>

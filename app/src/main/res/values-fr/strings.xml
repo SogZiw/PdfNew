@@ -1,7 +1,6 @@
 <resources>
     <string name="home">Accueil</string>
     <string name="recently">Récents</string>
-    <string name="bookmark_nav">Favori</string>
     <string name="settings">Paramètres</string>
     <string name="all">TOUT</string>
     <string name="pdf">PDF</string>
@@ -57,7 +56,6 @@
     <string name="privacy_policy">Politique de confidentialité</string>
     <string name="next">Suivant</string>
     <string name="start">Commencer</string>
-    <string name="introduce_skip">Ignorer</string>
     <string name="introduce_title_1">Lecteur PDF rapide</string>
     <string name="introduce_desc_1">Ouvrez et lisez des documents instantanément.</string>
     <string name="introduce_title_2">Scanner et créer</string>
@@ -92,4 +90,37 @@
     <string name="rate_title">Veuillez nous laisser un bon avis</string>
     <string name="rate_message">C’est très important pour nous</string>
     <string name="ok">OK</string>
+    <string name="content_1_type_1">📂 Gérez tous vos PDF au même endroit</string>
+    <string name="content_1_type_2">✨ Gardez votre espace de travail propre et rapide</string>
+    <string name="content_1_type_3">🚀 Accès rapide à vos documents principaux</string>
+    <string name="content_1_type_4">📥 Nouveaux fichiers détectés ! Prêt à lire ?</string>
+    <string name="content_1_type_5">📊 Vérifiez l\'état du stockage des documents</string>
+    <string name="content_2_type_1">📂 Supprimez les fichiers PDF inutiles</string>
+    <string name="content_2_type_2">✨ De nombreux PDF occupent de l\'espace de stockage</string>
+    <string name="content_2_type_3">🚀 Nettoyez les PDF inutiles en une minute</string>
+    <string name="content_2_type_4">📥 Affichez et supprimez les documents Office inutiles.</string>
+    <string name="content_2_type_5">📊 Supprimez les gros fichiers PDF</string>
+    <string name="content_3_type_1">🕒 Revenez à votre lecture récente</string>
+    <string name="content_3_type_2">🔍 Vous cherchez un fichier ouvert ?</string>
+    <string name="content_3_type_3">📑 Votre historique est organisé pour vous</string>
+    <string name="content_3_type_4">🔄 Enregistrements synchronisés : reprenez à tout moment</string>
+    <string name="content_4_type_1">📸 Transformez le papier en PDF en quelques secondes</string>
+    <string name="content_4_type_2">📄 Créez une copie numérique de vos pièces d\'identité</string>
+    <string name="content_4_type_3">🖼️ Convertissez les images en PDF nets</string>
+    <string name="content_4_type_4">⚡ L\'outil de scan rapide est prêt</string>
+    <string name="content_5_type_1">🛠️ Débloquez tous les outils PDF pro</string>
+    <string name="content_5_type_2">🔗 Fusionnez ou divisez vos PDF facilement</string>
+    <string name="content_5_type_3">🔐 Protégez vos fichiers avec des mots de passe</string>
+    <string name="content_5_type_4">📝 Besoin de modifier ? Obtenez plus d\'outils</string>
+    <string name="button_optimize">Optimiser</string>
+    <string name="button_read">Lire</string>
+    <string name="button_check">Vérifier</string>
+    <string name="button_resume">Reprendre</string>
+    <string name="button_find">Trouver</string>
+    <string name="button_go">Aller</string>
+    <string name="button_create">Créer</string>
+    <string name="button_explore">Explorer</string>
+    <string name="button_try">Essayer</string>
+    <string name="button_protect">Protéger</string>
+    <string name="button_more">Plus</string>
 </resources>

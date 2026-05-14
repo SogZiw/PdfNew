@@ -1,7 +1,6 @@
 <resources>
     <string name="home">หน้าแรก</string>
     <string name="recently">ล่าสุด</string>
-    <string name="bookmark_nav">บุ๊กมาร์ก</string>
     <string name="settings">การตั้งค่า</string>
     <string name="all">ทั้งหมด</string>
     <string name="pdf">PDF</string>
@@ -57,7 +56,6 @@
     <string name="privacy_policy">นโยบายความเป็นส่วนตัว</string>
     <string name="next">ถัดไป</string>
     <string name="start">เริ่ม</string>
-    <string name="introduce_skip">ข้าม</string>
     <string name="introduce_title_1">ตัวอ่าน PDF ที่รวดเร็ว</string>
     <string name="introduce_desc_1">เปิดและอ่านเอกสารได้ทันที</string>
     <string name="introduce_title_2">สแกนและสร้าง</string>
@@ -92,4 +90,37 @@
     <string name="rate_title">โปรดให้รีวิวที่ดีกับเรา</string>
     <string name="rate_message">สิ่งนี้สำคัญมากสำหรับเรา</string>
     <string name="ok">ตกลง</string>
+    <string name="content_1_type_1">📂 จัดการ PDF ทั้งหมดในที่เดียว</string>
+    <string name="content_1_type_2">✨ ทำให้พื้นที่ทำงานเป็นระเบียบและรวดเร็ว</string>
+    <string name="content_1_type_3">🚀 เข้าถึงเอกสารสำคัญได้อย่างรวดเร็ว</string>
+    <string name="content_1_type_4">📥 พบไฟล์ใหม่! พร้อมอ่านหรือยัง?</string>
+    <string name="content_1_type_5">📊 ตรวจสอบสถานะพื้นที่จัดเก็บเอกสาร</string>
+    <string name="content_2_type_1">📂 ลบไฟล์ PDF ที่ไม่จำเป็น</string>
+    <string name="content_2_type_2">✨ ไฟล์ PDF จำนวนมากกำลังใช้พื้นที่จัดเก็บ</string>
+    <string name="content_2_type_3">🚀 ล้างไฟล์ PDF ที่ไม่จำเป็นภายในหนึ่งนาที</string>
+    <string name="content_2_type_4">📥 ดูและลบเอกสาร Office ที่ไม่จำเป็น</string>
+    <string name="content_2_type_5">📊 ลบไฟล์ PDF ขนาดใหญ่</string>
+    <string name="content_3_type_1">🕒 กลับไปอ่านรายการล่าสุด</string>
+    <string name="content_3_type_2">🔍 กำลังหาไฟล์ที่เคยเปิดอยู่หรือไม่?</string>
+    <string name="content_3_type_3">📑 ประวัติของคุณถูกจัดระเบียบไว้แล้ว</string>
+    <string name="content_3_type_4">🔄 บันทึกที่ซิงค์แล้ว: อ่านต่อได้ทุกเวลา</string>
+    <string name="content_4_type_1">📸 เปลี่ยนกระดาษเป็น PDF ในไม่กี่วินาที</string>
+    <string name="content_4_type_2">📄 สร้างสำเนาดิจิทัลของเอกสารประจำตัว</string>
+    <string name="content_4_type_3">🖼️ แปลงรูปภาพเป็น PDF คมชัด</string>
+    <string name="content_4_type_4">⚡ เครื่องมือสแกนด่วนพร้อมใช้งานแล้ว</string>
+    <string name="content_5_type_1">🛠️ ปลดล็อกชุดเครื่องมือ PDF ระดับโปรทั้งหมด</string>
+    <string name="content_5_type_2">🔗 รวม หรือแยก PDF ได้ง่าย</string>
+    <string name="content_5_type_3">🔐 ปกป้องไฟล์ด้วยรหัสผ่าน</string>
+    <string name="content_5_type_4">📝 ต้องการแก้ไขหรือไม่? รับเครื่องมือเพิ่มเติม</string>
+    <string name="button_optimize">เพิ่มประสิทธิภาพ</string>
+    <string name="button_read">อ่าน</string>
+    <string name="button_check">ตรวจสอบ</string>
+    <string name="button_resume">อ่านต่อ</string>
+    <string name="button_find">ค้นหา</string>
+    <string name="button_go">ไป</string>
+    <string name="button_create">สร้าง</string>
+    <string name="button_explore">สำรวจ</string>
+    <string name="button_try">ลอง</string>
+    <string name="button_protect">ปกป้อง</string>
+    <string name="button_more">เพิ่มเติม</string>
 </resources>

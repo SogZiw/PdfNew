@@ -5,7 +5,6 @@
     <string name="facebook_client_token" translatable="false">56789</string>
     <string name="home">Home</string>
     <string name="recently">Recently</string>
-    <string name="bookmark_nav">Bookmark</string>
     <string name="settings">Settings</string>
     <string name="all">ALL</string>
     <string name="pdf">PDF</string>
@@ -61,7 +60,6 @@
     <string name="privacy_policy">Privacy Policy</string>
     <string name="next">Next</string>
     <string name="start">Start</string>
-    <string name="introduce_skip">Skip</string>
     <string name="introduce_title_1">Fast PDF Viewer</string>
     <string name="introduce_desc_1">Open and read documents instantly.</string>
     <string name="introduce_title_2">Scan &amp; Create</string>
@@ -96,4 +94,37 @@
     <string name="rate_title">Please give us a good review</string>
     <string name="rate_message">It is very important to us</string>
     <string name="ok">OK</string>
+    <string name="content_1_type_1">📂 Manage all your PDFs in one place</string>
+    <string name="content_1_type_2">✨ Keep your workspace tidy and fast</string>
+    <string name="content_1_type_3">🚀 Quick access to your top documents</string>
+    <string name="content_1_type_4">📥 New files detected! Ready to read?</string>
+    <string name="content_1_type_5">📊 Check your document storage status</string>
+    <string name="content_2_type_1">📂 Delete useless PDF files</string>
+    <string name="content_2_type_2">✨ Many PDF files are taking up storage space</string>
+    <string name="content_2_type_3">🚀 Clean up useless PDF files in one minute</string>
+    <string name="content_2_type_4">📥 View and delete useless office documents.</string>
+    <string name="content_2_type_5">📊 Delete large PDF files</string>
+    <string name="content_3_type_1">🕒 Back to your recent reading</string>
+    <string name="content_3_type_2">🔍 Looking for a file you opened?</string>
+    <string name="content_3_type_3">📑 Your history is organized for you</string>
+    <string name="content_3_type_4">🔄 Synced records: pick up any time</string>
+    <string name="content_4_type_1">📸 Turn paper into PDF in seconds</string>
+    <string name="content_4_type_2">📄 Create a digital copy of your IDs</string>
+    <string name="content_4_type_3">🖼️ Convert images to crisp PDFs</string>
+    <string name="content_4_type_4">⚡ Fast scan tool is ready for you</string>
+    <string name="content_5_type_1">🛠️ Unlock all pro PDF toolkits</string>
+    <string name="content_5_type_2">🔗 Merge or Split your PDFs easily</string>
+    <string name="content_5_type_3">🔐 Secure your files with passwords</string>
+    <string name="content_5_type_4">📝 Need to edit? Get more tools</string>
+    <string name="button_optimize">Optimize</string>
+    <string name="button_read">Read</string>
+    <string name="button_check">Check</string>
+    <string name="button_resume">Resume</string>
+    <string name="button_find">Find</string>
+    <string name="button_go">Go</string>
+    <string name="button_create">Create</string>
+    <string name="button_explore">Explore</string>
+    <string name="button_try">Try</string>
+    <string name="button_protect">Protect</string>
+    <string name="button_more">More</string>
 </resources>

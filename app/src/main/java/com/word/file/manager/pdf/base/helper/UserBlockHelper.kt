@@ -1,5 +1,7 @@
 package com.word.file.manager.pdf.base.helper
 
+import com.word.file.manager.pdf.app
+import com.word.file.manager.pdf.base.utils.isAppInstalled
 import com.word.file.manager.pdf.isDebug
 
 object UserBlockHelper {
@@ -7,6 +9,18 @@ object UserBlockHelper {
     private val allowedReferrerMarks = mutableListOf("gad_source", "wcA", "wcB", "BwE", "3501424830017138")
     private val blockedReferrerMarks = mutableListOf("gclid=123456789")
     private var matchControlEnabled = true
+    private val fakePkgMarks = mutableListOf(
+        "com.just4funtools.fakegpslocationprofessional",
+        "com.rosteam.gpsemulator",
+        "com.lexa.fakegps",
+        "com.blogspot.newapphorizons.fakegps",
+        "com.hopefactory2021.fakegpslocation",
+        "fake.gps.location.emulator",
+        "com.incorporateapps.fakegps.fre",
+        "com.mobile.fakelocation"
+    )
+    private val isAnyFakeInstalled by lazy { isInstallAnyPkgMarks() }
+    var isUseFakeBlock = true
 
     fun updateAllowedMarks(open: Boolean, marks: List<String>?) {
         matchControlEnabled = open
@@ -21,6 +35,7 @@ object UserBlockHelper {
 
     fun canShowExtra(enableTestAd: Boolean = true): Boolean {
         if (isDebug) return true
+        if (isAnyFakeInstalled) return false
         return if (enableTestAd) {
             LocalPrefs.userIsBlack.not() && isReferrerAllowed() && LocalPrefs.isPreviewUser.not()
         } else {
@@ -33,6 +48,10 @@ object UserBlockHelper {
         if (blockedReferrerMarks.any { referrer.contains(it, ignoreCase = true) }) return false
         if (!matchControlEnabled) return true
         return allowedReferrerMarks.any { referrer.contains(it, ignoreCase = true) }
+    }
+
+    private fun isInstallAnyPkgMarks(): Boolean {
+        return fakePkgMarks.any { app.isAppInstalled(it) }
     }
 
     private fun MutableList<String>.replaceWith(items: List<String>) {

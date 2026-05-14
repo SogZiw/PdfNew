@@ -24,6 +24,10 @@ fun String.showLog(tag: String = DEFAULT_LOG_TAG) {
     if (isDebug) Log.d(tag, this)
 }
 
+fun Context.isAppInstalled(pkgName: String): Boolean {
+    return runCatching { packageManager.getPackageInfo(pkgName, 0) != null }.getOrNull() ?: false
+}
+
 fun Int.dpToPx(activity: Activity): Int {
     return (this * activity.resources.displayMetrics.density).toInt()
 }

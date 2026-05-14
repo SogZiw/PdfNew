@@ -1,7 +1,6 @@
 <resources>
     <string name="home">الرئيسية</string>
     <string name="recently">الأخيرة</string>
-    <string name="bookmark_nav">الإشارات</string>
     <string name="settings">الإعدادات</string>
     <string name="all">الكل</string>
     <string name="pdf">PDF</string>
@@ -57,7 +56,6 @@
     <string name="privacy_policy">سياسة الخصوصية</string>
     <string name="next">التالي</string>
     <string name="start">بدء</string>
-    <string name="introduce_skip">تخطي</string>
     <string name="introduce_title_1">عارض PDF سريع</string>
     <string name="introduce_desc_1">افتح المستندات واقرأها فورا.</string>
     <string name="introduce_title_2">المسح والإنشاء</string>
@@ -92,4 +90,37 @@
     <string name="rate_title">يرجى منحنا تقييما جيدا</string>
     <string name="rate_message">هذا مهم جدا بالنسبة لنا</string>
     <string name="ok">موافق</string>
+    <string name="content_1_type_1">📂 أدر كل ملفات PDF في مكان واحد</string>
+    <string name="content_1_type_2">✨ حافظ على مساحة عملك مرتبة وسريعة</string>
+    <string name="content_1_type_3">🚀 وصول سريع إلى أهم مستنداتك</string>
+    <string name="content_1_type_4">📥 تم اكتشاف ملفات جديدة! هل أنت جاهز للقراءة؟</string>
+    <string name="content_1_type_5">📊 تحقق من حالة تخزين المستندات</string>
+    <string name="content_2_type_1">📂 احذف ملفات PDF غير المفيدة</string>
+    <string name="content_2_type_2">✨ العديد من ملفات PDF تشغل مساحة التخزين</string>
+    <string name="content_2_type_3">🚀 نظف ملفات PDF غير المفيدة في دقيقة واحدة</string>
+    <string name="content_2_type_4">📥 اعرض مستندات Office غير المفيدة واحذفها.</string>
+    <string name="content_2_type_5">📊 احذف ملفات PDF الكبيرة</string>
+    <string name="content_3_type_1">🕒 عد إلى قراءتك الأخيرة</string>
+    <string name="content_3_type_2">🔍 هل تبحث عن ملف فتحته؟</string>
+    <string name="content_3_type_3">📑 تم تنظيم سجلك من أجلك</string>
+    <string name="content_3_type_4">🔄 سجلات متزامنة: تابع في أي وقت</string>
+    <string name="content_4_type_1">📸 حوّل الورق إلى PDF خلال ثوان</string>
+    <string name="content_4_type_2">📄 أنشئ نسخة رقمية من مستندات هويتك</string>
+    <string name="content_4_type_3">🖼️ حوّل الصور إلى ملفات PDF واضحة</string>
+    <string name="content_4_type_4">⚡ أداة المسح السريع جاهزة لك</string>
+    <string name="content_5_type_1">🛠️ افتح كل أدوات PDF الاحترافية</string>
+    <string name="content_5_type_2">🔗 ادمج ملفات PDF أو قسمها بسهولة</string>
+    <string name="content_5_type_3">🔐 احم ملفاتك بكلمات مرور</string>
+    <string name="content_5_type_4">📝 تحتاج إلى التحرير؟ احصل على المزيد من الأدوات</string>
+    <string name="button_optimize">تحسين</string>
+    <string name="button_read">قراءة</string>
+    <string name="button_check">تحقق</string>
+    <string name="button_resume">متابعة</string>
+    <string name="button_find">بحث</string>
+    <string name="button_go">انتقال</string>
+    <string name="button_create">إنشاء</string>
+    <string name="button_explore">استكشاف</string>
+    <string name="button_try">تجربة</string>
+    <string name="button_protect">حماية</string>
+    <string name="button_more">المزيد</string>
 </resources>

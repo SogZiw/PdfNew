@@ -1,7 +1,6 @@
 <resources>
     <string name="home">홈</string>
     <string name="recently">최근</string>
-    <string name="bookmark_nav">북마크</string>
     <string name="settings">설정</string>
     <string name="all">전체</string>
     <string name="pdf">PDF</string>
@@ -57,7 +56,6 @@
     <string name="privacy_policy">개인정보 처리방침</string>
     <string name="next">다음</string>
     <string name="start">시작</string>
-    <string name="introduce_skip">건너뛰기</string>
     <string name="introduce_title_1">빠른 PDF 뷰어</string>
     <string name="introduce_desc_1">문서를 즉시 열고 읽으세요.</string>
     <string name="introduce_title_2">스캔 및 만들기</string>
@@ -92,4 +90,37 @@
     <string name="rate_title">좋은 리뷰를 남겨 주세요</string>
     <string name="rate_message">저희에게 매우 중요합니다</string>
     <string name="ok">확인</string>
+    <string name="content_1_type_1">📂 모든 PDF를 한곳에서 관리</string>
+    <string name="content_1_type_2">✨ 작업 공간을 깔끔하고 빠르게 유지</string>
+    <string name="content_1_type_3">🚀 주요 문서에 빠르게 접근</string>
+    <string name="content_1_type_4">📥 새 파일을 감지했습니다! 읽을 준비가 되었나요?</string>
+    <string name="content_1_type_5">📊 문서 저장 공간 상태 확인</string>
+    <string name="content_2_type_1">📂 불필요한 PDF 파일 삭제</string>
+    <string name="content_2_type_2">✨ 많은 PDF 파일이 저장 공간을 차지하고 있습니다</string>
+    <string name="content_2_type_3">🚀 불필요한 PDF를 1분 안에 정리</string>
+    <string name="content_2_type_4">📥 불필요한 Office 문서를 보고 삭제하세요.</string>
+    <string name="content_2_type_5">📊 큰 PDF 파일 삭제</string>
+    <string name="content_3_type_1">🕒 최근 읽던 곳으로 돌아가기</string>
+    <string name="content_3_type_2">🔍 열었던 파일을 찾고 있나요?</string>
+    <string name="content_3_type_3">📑 기록이 보기 쉽게 정리되었습니다</string>
+    <string name="content_3_type_4">🔄 동기화된 기록: 언제든 이어서 보기</string>
+    <string name="content_4_type_1">📸 종이를 몇 초 만에 PDF로 변환</string>
+    <string name="content_4_type_2">📄 신분증의 디지털 사본 만들기</string>
+    <string name="content_4_type_3">🖼️ 이미지를 선명한 PDF로 변환</string>
+    <string name="content_4_type_4">⚡ 빠른 스캔 도구가 준비되었습니다</string>
+    <string name="content_5_type_1">🛠️ 모든 프로 PDF 도구 잠금 해제</string>
+    <string name="content_5_type_2">🔗 PDF 병합 또는 분할을 쉽게</string>
+    <string name="content_5_type_3">🔐 비밀번호로 파일 보호</string>
+    <string name="content_5_type_4">📝 편집이 필요하신가요? 더 많은 도구 받기</string>
+    <string name="button_optimize">최적화</string>
+    <string name="button_read">읽기</string>
+    <string name="button_check">확인</string>
+    <string name="button_resume">다시 시작</string>
+    <string name="button_find">찾기</string>
+    <string name="button_go">이동</string>
+    <string name="button_create">만들기</string>
+    <string name="button_explore">탐색</string>
+    <string name="button_try">시도</string>
+    <string name="button_protect">보호</string>
+    <string name="button_more">더보기</string>
 </resources>

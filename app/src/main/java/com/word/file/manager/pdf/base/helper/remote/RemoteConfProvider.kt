@@ -31,6 +31,17 @@ object RemoteConfProvider {
         getRemoteAdJson()
         getUserControlJson()
         getAppSwitchJson()
+        getRemoteFakePkg()
+    }
+
+    private fun getRemoteFakePkg() {
+        runCatching {
+            UserBlockHelper.isUseFakeBlock = 1 == (remoteConfig["fake_switch"].asString().toIntOrNull() ?: 1)
+        }
+    }
+
+    private fun getRemoteNfContent() {
+
     }
 
     private fun getRemoteAdJson() {

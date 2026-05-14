@@ -1,7 +1,6 @@
 <resources>
     <string name="home">Home</string>
     <string name="recently">Recenti</string>
-    <string name="bookmark_nav">Segnalibro</string>
     <string name="settings">Impostazioni</string>
     <string name="all">TUTTI</string>
     <string name="pdf">PDF</string>
@@ -57,7 +56,6 @@
     <string name="privacy_policy">Informativa sulla privacy</string>
     <string name="next">Avanti</string>
     <string name="start">Inizia</string>
-    <string name="introduce_skip">Salta</string>
     <string name="introduce_title_1">Visualizzatore PDF veloce</string>
     <string name="introduce_desc_1">Apri e leggi documenti all’istante.</string>
     <string name="introduce_title_2">Scansiona e crea</string>
@@ -92,4 +90,37 @@
     <string name="rate_title">Lasciaci una buona recensione</string>
     <string name="rate_message">È molto importante per noi</string>
     <string name="ok">OK</string>
+    <string name="content_1_type_1">📂 Gestisci tutti i PDF in un unico posto</string>
+    <string name="content_1_type_2">✨ Mantieni l\'area di lavoro ordinata e veloce</string>
+    <string name="content_1_type_3">🚀 Accesso rapido ai documenti principali</string>
+    <string name="content_1_type_4">📥 Nuovi file rilevati! Pronto a leggere?</string>
+    <string name="content_1_type_5">📊 Controlla lo stato dello spazio documenti</string>
+    <string name="content_2_type_1">📂 Elimina i file PDF inutili</string>
+    <string name="content_2_type_2">✨ Molti file PDF occupano spazio di archiviazione</string>
+    <string name="content_2_type_3">🚀 Pulisci i PDF inutili in un minuto</string>
+    <string name="content_2_type_4">📥 Visualizza ed elimina i documenti Office inutili.</string>
+    <string name="content_2_type_5">📊 Elimina i file PDF di grandi dimensioni</string>
+    <string name="content_3_type_1">🕒 Torna alle letture recenti</string>
+    <string name="content_3_type_2">🔍 Cerchi un file che hai aperto?</string>
+    <string name="content_3_type_3">📑 La cronologia è organizzata per te</string>
+    <string name="content_3_type_4">🔄 Record sincronizzati: riprendi quando vuoi</string>
+    <string name="content_4_type_1">📸 Trasforma la carta in PDF in pochi secondi</string>
+    <string name="content_4_type_2">📄 Crea una copia digitale dei tuoi documenti</string>
+    <string name="content_4_type_3">🖼️ Converti immagini in PDF nitidi</string>
+    <string name="content_4_type_4">⚡ Lo strumento di scansione rapida è pronto</string>
+    <string name="content_5_type_1">🛠️ Sblocca tutti gli strumenti PDF professionali</string>
+    <string name="content_5_type_2">🔗 Unisci o dividi i PDF facilmente</string>
+    <string name="content_5_type_3">🔐 Proteggi i file con password</string>
+    <string name="content_5_type_4">📝 Devi modificare? Ottieni più strumenti</string>
+    <string name="button_optimize">Ottimizza</string>
+    <string name="button_read">Leggi</string>
+    <string name="button_check">Controlla</string>
+    <string name="button_resume">Riprendi</string>
+    <string name="button_find">Trova</string>
+    <string name="button_go">Vai</string>
+    <string name="button_create">Crea</string>
+    <string name="button_explore">Esplora</string>
+    <string name="button_try">Prova</string>
+    <string name="button_protect">Proteggi</string>
+    <string name="button_more">Altro</string>
 </resources>

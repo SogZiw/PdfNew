@@ -1,7 +1,6 @@
 <resources>
     <string name="home">Ana sayfa</string>
     <string name="recently">Son</string>
-    <string name="bookmark_nav">Yer imi</string>
     <string name="settings">Ayarlar</string>
     <string name="all">TÜMÜ</string>
     <string name="pdf">PDF</string>
@@ -57,7 +56,6 @@
     <string name="privacy_policy">Gizlilik Politikası</string>
     <string name="next">Sonraki</string>
     <string name="start">Başlat</string>
-    <string name="introduce_skip">Atla</string>
     <string name="introduce_title_1">Hızlı PDF Görüntüleyici</string>
     <string name="introduce_desc_1">Belgeleri anında açın ve okuyun.</string>
     <string name="introduce_title_2">Tara ve Oluştur</string>
@@ -92,4 +90,37 @@
     <string name="rate_title">Lütfen bize iyi bir yorum verin</string>
     <string name="rate_message">Bu bizim için çok önemli</string>
     <string name="ok">Tamam</string>
+    <string name="content_1_type_1">📂 Tüm PDF\'lerinizi tek yerde yönetin</string>
+    <string name="content_1_type_2">✨ Çalışma alanınızı düzenli ve hızlı tutun</string>
+    <string name="content_1_type_3">🚀 Önemli belgelerinize hızlı erişim</string>
+    <string name="content_1_type_4">📥 Yeni dosyalar algılandı! Okumaya hazır mısınız?</string>
+    <string name="content_1_type_5">📊 Belge depolama durumunuzu kontrol edin</string>
+    <string name="content_2_type_1">📂 Gereksiz PDF dosyalarını silin</string>
+    <string name="content_2_type_2">✨ Birçok PDF dosyası depolama alanı kaplıyor</string>
+    <string name="content_2_type_3">🚀 Gereksiz PDF dosyalarını bir dakikada temizleyin</string>
+    <string name="content_2_type_4">📥 Gereksiz Office belgelerini görüntüleyin ve silin.</string>
+    <string name="content_2_type_5">📊 Büyük PDF dosyalarını silin</string>
+    <string name="content_3_type_1">🕒 Son okumanıza dönün</string>
+    <string name="content_3_type_2">🔍 Açtığınız bir dosyayı mı arıyorsunuz?</string>
+    <string name="content_3_type_3">📑 Geçmişiniz sizin için düzenlendi</string>
+    <string name="content_3_type_4">🔄 Senkronize kayıtlar: istediğiniz zaman devam edin</string>
+    <string name="content_4_type_1">📸 Kağıdı saniyeler içinde PDF\'ye dönüştürün</string>
+    <string name="content_4_type_2">📄 Kimliklerinizin dijital kopyasını oluşturun</string>
+    <string name="content_4_type_3">🖼️ Görselleri net PDF\'lere dönüştürün</string>
+    <string name="content_4_type_4">⚡ Hızlı tarama aracı hazır</string>
+    <string name="content_5_type_1">🛠️ Tüm profesyonel PDF araçlarını açın</string>
+    <string name="content_5_type_2">🔗 PDF\'lerinizi kolayca birleştirin veya bölün</string>
+    <string name="content_5_type_3">🔐 Dosyalarınızı parolalarla koruyun</string>
+    <string name="content_5_type_4">📝 Düzenlemeniz mi gerekiyor? Daha fazla araç edinin</string>
+    <string name="button_optimize">Optimize et</string>
+    <string name="button_read">Oku</string>
+    <string name="button_check">Kontrol et</string>
+    <string name="button_resume">Devam et</string>
+    <string name="button_find">Bul</string>
+    <string name="button_go">Git</string>
+    <string name="button_create">Oluştur</string>
+    <string name="button_explore">Keşfet</string>
+    <string name="button_try">Dene</string>
+    <string name="button_protect">Koru</string>
+    <string name="button_more">Daha fazla</string>
 </resources>

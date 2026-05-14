@@ -243,3 +243,6 @@ This file captures the working conventions established during recent development
 - Updated Route/Main launch handling so toolbar actions can pass `DocumentActionType` directly, including bookmark/tools tab routing.
 - Renamed Android version helpers from `ApiXX` style to Android release-number names such as `isAtLeastAndroid11`.
 - Replaced direct in-app SDK version comparisons with shared `SystemVersionExt` Android-version helpers.
+- Added local notification content resources and de-duplicated semantic button string resources.
+- Added `Context.isPackageInstalled(packageName)` in `AppCommonExt.kt` for safe package-install checks.
+- Split local notification content in `NoticeContentManager` into per-page item groups, with one notification id per group.

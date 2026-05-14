@@ -1,7 +1,6 @@
 <resources>
     <string name="home">Início</string>
     <string name="recently">Recentes</string>
-    <string name="bookmark_nav">Favoritos</string>
     <string name="settings">Configurações</string>
     <string name="all">TODOS</string>
     <string name="pdf">PDF</string>
@@ -57,7 +56,6 @@
     <string name="privacy_policy">Política de Privacidade</string>
     <string name="next">Próximo</string>
     <string name="start">Começar</string>
-    <string name="introduce_skip">Pular</string>
     <string name="introduce_title_1">Visualizador de PDF rápido</string>
     <string name="introduce_desc_1">Abra e leia documentos instantaneamente.</string>
     <string name="introduce_title_2">Digitalize e crie</string>
@@ -92,4 +90,37 @@
     <string name="rate_title">Dê-nos uma boa avaliação</string>
     <string name="rate_message">Isso é muito importante para nós</string>
     <string name="ok">OK</string>
+    <string name="content_1_type_1">📂 Gerencie todos os seus PDFs em um só lugar</string>
+    <string name="content_1_type_2">✨ Mantenha seu espaço de trabalho organizado e rápido</string>
+    <string name="content_1_type_3">🚀 Acesso rápido aos seus principais documentos</string>
+    <string name="content_1_type_4">📥 Novos arquivos detectados! Pronto para ler?</string>
+    <string name="content_1_type_5">📊 Verifique o status do armazenamento de documentos</string>
+    <string name="content_2_type_1">📂 Exclua arquivos PDF inúteis</string>
+    <string name="content_2_type_2">✨ Muitos arquivos PDF estão ocupando espaço</string>
+    <string name="content_2_type_3">🚀 Limpe PDFs inúteis em um minuto</string>
+    <string name="content_2_type_4">📥 Veja e exclua documentos Office inúteis.</string>
+    <string name="content_2_type_5">📊 Exclua arquivos PDF grandes</string>
+    <string name="content_3_type_1">🕒 Volte à sua leitura recente</string>
+    <string name="content_3_type_2">🔍 Procurando um arquivo que você abriu?</string>
+    <string name="content_3_type_3">📑 Seu histórico está organizado para você</string>
+    <string name="content_3_type_4">🔄 Registros sincronizados: continue a qualquer hora</string>
+    <string name="content_4_type_1">📸 Transforme papel em PDF em segundos</string>
+    <string name="content_4_type_2">📄 Crie uma cópia digital dos seus documentos</string>
+    <string name="content_4_type_3">🖼️ Converta imagens em PDFs nítidos</string>
+    <string name="content_4_type_4">⚡ A ferramenta de digitalização rápida está pronta</string>
+    <string name="content_5_type_1">🛠️ Desbloqueie todos os kits PDF profissionais</string>
+    <string name="content_5_type_2">🔗 Mescle ou divida seus PDFs facilmente</string>
+    <string name="content_5_type_3">🔐 Proteja seus arquivos com senhas</string>
+    <string name="content_5_type_4">📝 Precisa editar? Obtenha mais ferramentas</string>
+    <string name="button_optimize">Otimizar</string>
+    <string name="button_read">Ler</string>
+    <string name="button_check">Verificar</string>
+    <string name="button_resume">Continuar</string>
+    <string name="button_find">Encontrar</string>
+    <string name="button_go">Ir</string>
+    <string name="button_create">Criar</string>
+    <string name="button_explore">Explorar</string>
+    <string name="button_try">Testar</string>
+    <string name="button_protect">Proteger</string>
+    <string name="button_more">Mais</string>
 </resources>

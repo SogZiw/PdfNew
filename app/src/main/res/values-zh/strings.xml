@@ -1,7 +1,6 @@
 <resources>
     <string name="home">首頁</string>
     <string name="recently">最近</string>
-    <string name="bookmark_nav">收藏</string>
     <string name="settings">設定</string>
     <string name="all">全部</string>
     <string name="pdf">PDF</string>
@@ -57,7 +56,6 @@
     <string name="privacy_policy">隱私權政策</string>
     <string name="next">下一步</string>
     <string name="start">開始</string>
-    <string name="introduce_skip">跳過</string>
     <string name="introduce_title_1">快速 PDF 檢視器</string>
     <string name="introduce_desc_1">立即開啟並閱讀文件。</string>
     <string name="introduce_title_2">掃描與建立</string>
@@ -92,4 +90,37 @@
     <string name="rate_title">請給我們好評</string>
     <string name="rate_message">這對我們非常重要</string>
     <string name="ok">確定</string>
+    <string name="content_1_type_1">📂 在一處管理所有 PDF</string>
+    <string name="content_1_type_2">✨ 讓工作區保持整潔快速</string>
+    <string name="content_1_type_3">🚀 快速開啟常用文件</string>
+    <string name="content_1_type_4">📥 偵測到新檔案！準備閱讀了嗎？</string>
+    <string name="content_1_type_5">📊 查看文件儲存空間狀態</string>
+    <string name="content_2_type_1">📂 刪除無用的 PDF 檔案</string>
+    <string name="content_2_type_2">✨ 許多 PDF 檔案正在佔用儲存空間</string>
+    <string name="content_2_type_3">🚀 一分鐘清理無用 PDF 檔案</string>
+    <string name="content_2_type_4">📥 檢視並刪除無用的 Office 文件。</string>
+    <string name="content_2_type_5">📊 刪除大型 PDF 檔案</string>
+    <string name="content_3_type_1">🕒 回到最近閱讀</string>
+    <string name="content_3_type_2">🔍 正在找開啟過的檔案？</string>
+    <string name="content_3_type_3">📑 已為您整理閱讀記錄</string>
+    <string name="content_3_type_4">🔄 同步記錄：隨時接著看</string>
+    <string name="content_4_type_1">📸 幾秒內把紙本轉成 PDF</string>
+    <string name="content_4_type_2">📄 建立身分證件的數位副本</string>
+    <string name="content_4_type_3">🖼️ 將圖片轉成清晰 PDF</string>
+    <string name="content_4_type_4">⚡ 快速掃描工具已準備好</string>
+    <string name="content_5_type_1">🛠️ 解鎖所有專業 PDF 工具</string>
+    <string name="content_5_type_2">🔗 輕鬆合併或分割 PDF</string>
+    <string name="content_5_type_3">🔐 使用密碼保護檔案</string>
+    <string name="content_5_type_4">📝 需要編輯？取得更多工具</string>
+    <string name="button_optimize">最佳化</string>
+    <string name="button_read">閱讀</string>
+    <string name="button_check">檢查</string>
+    <string name="button_resume">繼續</string>
+    <string name="button_find">尋找</string>
+    <string name="button_go">前往</string>
+    <string name="button_create">建立</string>
+    <string name="button_explore">探索</string>
+    <string name="button_try">試試</string>
+    <string name="button_protect">保護</string>
+    <string name="button_more">更多</string>
 </resources>

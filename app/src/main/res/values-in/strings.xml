@@ -1,7 +1,6 @@
 <resources>
     <string name="home">Beranda</string>
     <string name="recently">Terbaru</string>
-    <string name="bookmark_nav">Bookmark</string>
     <string name="settings">Pengaturan</string>
     <string name="all">SEMUA</string>
     <string name="pdf">PDF</string>
@@ -57,7 +56,6 @@
     <string name="privacy_policy">Kebijakan Privasi</string>
     <string name="next">Berikutnya</string>
     <string name="start">Mulai</string>
-    <string name="introduce_skip">Lewati</string>
     <string name="introduce_title_1">Penampil PDF Cepat</string>
     <string name="introduce_desc_1">Buka dan baca dokumen seketika.</string>
     <string name="introduce_title_2">Pindai &amp; Buat</string>
@@ -92,4 +90,37 @@
     <string name="rate_title">Beri kami ulasan yang baik</string>
     <string name="rate_message">Ini sangat penting bagi kami</string>
     <string name="ok">OK</string>
+    <string name="content_1_type_1">📂 Kelola semua PDF di satu tempat</string>
+    <string name="content_1_type_2">✨ Jaga ruang kerja tetap rapi dan cepat</string>
+    <string name="content_1_type_3">🚀 Akses cepat ke dokumen utama Anda</string>
+    <string name="content_1_type_4">📥 File baru terdeteksi! Siap membaca?</string>
+    <string name="content_1_type_5">📊 Periksa status penyimpanan dokumen</string>
+    <string name="content_2_type_1">📂 Hapus file PDF yang tidak berguna</string>
+    <string name="content_2_type_2">✨ Banyak file PDF memakai ruang penyimpanan</string>
+    <string name="content_2_type_3">🚀 Bersihkan PDF yang tidak berguna dalam satu menit</string>
+    <string name="content_2_type_4">📥 Lihat dan hapus dokumen Office yang tidak berguna.</string>
+    <string name="content_2_type_5">📊 Hapus file PDF besar</string>
+    <string name="content_3_type_1">🕒 Kembali ke bacaan terbaru Anda</string>
+    <string name="content_3_type_2">🔍 Mencari file yang pernah Anda buka?</string>
+    <string name="content_3_type_3">📑 Riwayat Anda sudah tertata</string>
+    <string name="content_3_type_4">🔄 Catatan tersinkron: lanjutkan kapan saja</string>
+    <string name="content_4_type_1">📸 Ubah kertas menjadi PDF dalam hitungan detik</string>
+    <string name="content_4_type_2">📄 Buat salinan digital dokumen identitas Anda</string>
+    <string name="content_4_type_3">🖼️ Ubah gambar menjadi PDF yang tajam</string>
+    <string name="content_4_type_4">⚡ Alat pindai cepat siap digunakan</string>
+    <string name="content_5_type_1">🛠️ Buka semua toolkit PDF pro</string>
+    <string name="content_5_type_2">🔗 Gabungkan atau pisahkan PDF dengan mudah</string>
+    <string name="content_5_type_3">🔐 Amankan file Anda dengan kata sandi</string>
+    <string name="content_5_type_4">📝 Perlu mengedit? Dapatkan lebih banyak alat</string>
+    <string name="button_optimize">Optimalkan</string>
+    <string name="button_read">Baca</string>
+    <string name="button_check">Periksa</string>
+    <string name="button_resume">Lanjutkan</string>
+    <string name="button_find">Cari</string>
+    <string name="button_go">Buka</string>
+    <string name="button_create">Buat</string>
+    <string name="button_explore">Jelajahi</string>
+    <string name="button_try">Coba</string>
+    <string name="button_protect">Lindungi</string>
+    <string name="button_more">Lainnya</string>
 </resources>
