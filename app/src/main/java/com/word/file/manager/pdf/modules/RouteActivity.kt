@@ -49,9 +49,10 @@ class RouteActivity : BaseActivity<ActivityRouteBinding>() {
     private var isFirstNF = false
     private val notificationPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) {
         if (hasPostNotificationPermission()) EventCenter.logEvent("notify_permission_success", mapOf("list" to if (isFirstNF) "first" else "second"))
-        viewModel.startLoadingLaunch(activity)
+        viewModel.startLoadingLaunch(activity, source)
     }
     private val isFirstLoading by lazy { LocalPrefs.isFirstLaunch }
+    private var source: String = "open_launch"
 
     override fun setViewBinding() = ActivityRouteBinding.inflate(layoutInflater)
 
@@ -61,24 +62,31 @@ class RouteActivity : BaseActivity<ActivityRouteBinding>() {
         viewModel.beginLaunch(activity)
         when (noticeSurface) {
             NoticeSurface.NORMAL -> {
+                source = "normal_launch"
                 EventCenter.logEvent("notification_popup_click", mapOf("list" to notificationScene?.sceneName))
             }
 
             NoticeSurface.MEDIA -> {
+                source = "media_launch"
                 EventCenter.logEvent("notification_media_click", mapOf("list" to notificationScene?.sceneName))
             }
 
             NoticeSurface.WINDOW -> {
+                source = "win_launch"
                 EventCenter.logEvent("notification_win_click", mapOf("list" to notificationScene?.sceneName))
             }
 
             else -> {
                 if (NotificationScene.TOOLBAR == notificationScene) {
+                    source = "notification_launch"
                     EventCenter.logEvent("notification_serve_click")
                 }
             }
         }
-        if (shortcutPage == SHORTCUT_PAGE_UNINSTALL) EventCenter.logEvent("shortcut_uninstall_click")
+        if (shortcutPage == SHORTCUT_PAGE_UNINSTALL) {
+            source = "shortcut_launch"
+            EventCenter.logEvent("shortcut_uninstall_click")
+        }
         if (isFirstLoading) {
             LocalPrefs.isFirstLaunch = false
             EventCenter.logEvent("Loading_show_first")
@@ -103,7 +111,7 @@ class RouteActivity : BaseActivity<ActivityRouteBinding>() {
 
     private fun requestNoticeIfNeeded() {
         if (!shouldRequestNoticePermission()) {
-            viewModel.startLoadingLaunch(activity)
+            viewModel.startLoadingLaunch(activity, source)
             return
         }
         if (!LocalPrefs.hasAskedNotificationPermission) {
@@ -119,14 +127,14 @@ class RouteActivity : BaseActivity<ActivityRouteBinding>() {
             requestPostNotification(tag = "second")
             return
         }
-        viewModel.startLoadingLaunch(activity)
+        viewModel.startLoadingLaunch(activity, source)
     }
 
     private fun requestPostNotification(tag: String) {
         viewModel.logNoticeRequest(tag)
         if (isAtLeastAndroid13()) {
             notificationPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
-        } else viewModel.startLoadingLaunch(activity)
+        } else viewModel.startLoadingLaunch(activity, source)
     }
 
     private fun shouldRequestNoticePermission(): Boolean {

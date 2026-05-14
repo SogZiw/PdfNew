@@ -67,6 +67,7 @@ class AdSlotCache(private val slot: AdSlot) {
     fun showFullScreen(
         activity: BaseActivity<*>,
         eventName: String = slot.jsonKey,
+        source: String = "",
         allowed: () -> Boolean = { true },
         closed: () -> Unit = {},
         shown: () -> Unit = {},
@@ -96,7 +97,11 @@ class AdSlotCache(private val slot: AdSlot) {
                 EventCenter.logEvent(APP_AD_IMPRESSION_CLICK, mapOf(AD_POS_ID to eventName))
                 clicked()
             })
-            EventCenter.logEvent(APP_AD_IMPRESSION, mapOf(AD_POS_ID to eventName))
+            if (AdSlot.ColdStart == slot) {
+                EventCenter.logEvent(APP_AD_IMPRESSION, mapOf(AD_POS_ID to eventName, "ad_source" to source))
+            } else {
+                EventCenter.logEvent(APP_AD_IMPRESSION, mapOf(AD_POS_ID to eventName))
+            }
             preloadIfNeeded()
         }
     }

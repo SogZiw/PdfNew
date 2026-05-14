@@ -50,7 +50,7 @@ class RouteViewModel : ViewModel() {
         return LocalPrefs.hasSeenIntroduce.not() || RemoteLogicConfig.fetchPromotionConfig().dashboardNat
     }
 
-    fun startLoadingLaunch(activity: BaseActivity<*>) {
+    fun startLoadingLaunch(activity: BaseActivity<*>, source: String) {
         startLoadAd(logEvent = true)
         waitLoadingJob?.cancel()
         waitLoadingJob = viewModelScope.launch {
@@ -65,6 +65,7 @@ class RouteViewModel : ViewModel() {
                     AdCenter.appOpen.showFullScreen(
                         activity = activity,
                         eventName = AdSlot.ColdStart.jsonKey,
+                        source = source,
                         closed = { dispatchNextPage() },
                         shown = { AdCenter.backInterstitial.preload() },
                         clicked = { AppLifeManger.markLaunchAdClicked() },
