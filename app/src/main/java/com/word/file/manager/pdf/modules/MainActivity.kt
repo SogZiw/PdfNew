@@ -108,6 +108,7 @@ class MainActivity : StoragePermissionActivity<ActivityMainBinding>() {
         }
         binding.btnAdd.setOnClickListener {
             checkStoragePermission(PdfCreateType)
+            EventCenter.logEvent("home_scan_click")
         }
         if (!handleLaunchAction(intent)) {
             maybeShowMainPrompts()

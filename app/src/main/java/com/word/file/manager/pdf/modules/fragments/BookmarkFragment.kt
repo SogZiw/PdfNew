@@ -13,6 +13,7 @@ import com.word.file.manager.pdf.R
 import com.word.file.manager.pdf.app
 import com.word.file.manager.pdf.base.BaseFragment
 import com.word.file.manager.pdf.base.data.FileTabFilter
+import com.word.file.manager.pdf.base.helper.EventCenter
 import com.word.file.manager.pdf.databinding.FragmentHomeBinding
 import com.word.file.manager.pdf.modules.permissions.hasStorageAccessPermission
 import kotlinx.coroutines.launch
@@ -57,6 +58,7 @@ class BookmarkFragment : BaseFragment<FragmentHomeBinding>() {
         }
         binding.viewPermission.root.isVisible = !hasStorageAccessPermission()
         changeSelector(0)
+        EventCenter.logEvent("history_page_show")
     }
 
     private fun changeSelector(index: Int) {

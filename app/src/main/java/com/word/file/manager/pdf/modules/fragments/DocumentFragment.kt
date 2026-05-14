@@ -68,6 +68,7 @@ class DocumentFragment : BaseFragment<FragmentDocumentBinding>() {
         adapter = DocumentListAdapter(
             onItemClicked = { item ->
                 openItem(item)
+                EventCenter.logEvent("home_all_docs_click")
             },
             onMoreClicked = { item ->
                 showFileActions(item)

@@ -12,6 +12,7 @@ import com.word.file.manager.pdf.base.data.PdfLockType
 import com.word.file.manager.pdf.base.data.PdfMergeType
 import com.word.file.manager.pdf.base.data.PdfSplitType
 import com.word.file.manager.pdf.base.data.PdfUnlockType
+import com.word.file.manager.pdf.base.helper.EventCenter
 import com.word.file.manager.pdf.base.helper.UserBlockHelper
 import com.word.file.manager.pdf.base.helper.ad.center.AdCenter
 import com.word.file.manager.pdf.base.helper.ad.model.NativeAdStyle
@@ -44,6 +45,7 @@ class ToolsFragment : BaseFragment<FragmentToolsBinding>() {
         actionBinding.toolIcon.setImageResource(iconRes)
         actionBinding.toolTitle.setText(titleRes)
         actionBinding.root.setOnClickListener {
+            EventCenter.logEvent("tools_click")
             actionType?.let { (requireActivity() as? MainActivity)?.openDocumentTool(it) }
         }
     }

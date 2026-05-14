@@ -51,6 +51,7 @@ class OfficePreviewActivity : BaseActivity<ActivityOfficePreviewBinding>() {
         dispatchPreview(previewSource, fileItem)
         rememberOpenAction(fileItem)
         AdCenter.backInterstitial.preload()
+        EventCenter.logEvent("file_detail_show")
     }
 
     override fun onUserBack() {
