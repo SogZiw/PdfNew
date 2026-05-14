@@ -17,6 +17,11 @@ object NoticeContentManager {
     private var orderedIndex = 0
     var remoteContentList: List<List<ContentItems>> = listOf()
 
+    fun updateRemoteContentList(contentList: List<List<ContentItems>>) {
+        remoteContentList = contentList
+        orderedIndex = 0
+    }
+
     fun getCurrentItems(): ContentItems? {
         val contentList = remoteContentList.ifEmpty { contentItemGroups }
         if (orderedIndex > contentList.lastIndex) orderedIndex = 0

@@ -4,13 +4,23 @@ import com.google.firebase.Firebase
 import com.google.firebase.remoteconfig.get
 import com.google.firebase.remoteconfig.remoteConfig
 import com.google.firebase.remoteconfig.remoteConfigSettings
+import com.word.file.manager.pdf.base.data.DocumentActionType
+import com.word.file.manager.pdf.base.data.DocumentBookmark
+import com.word.file.manager.pdf.base.data.DocumentOpenType
+import com.word.file.manager.pdf.base.data.DocumentTools
+import com.word.file.manager.pdf.base.data.PdfCreateType
 import com.word.file.manager.pdf.base.helper.UserBlockHelper
 import com.word.file.manager.pdf.base.helper.ad.center.AdCenter
+import com.word.file.manager.pdf.base.helper.notice.ContentItems
+import com.word.file.manager.pdf.base.helper.notice.NoticeContentManager
+import com.word.file.manager.pdf.base.utils.showLog
 import com.word.file.manager.pdf.isDebug
 import org.json.JSONArray
 import org.json.JSONObject
 
 object RemoteConfProvider {
+
+    private const val REMOTE_NOTIFICATION_ID_BASE = 32000
 
     private val remoteConfig by lazy {
         Firebase.remoteConfig.apply { setConfigSettingsAsync(remoteConfigSettings { minimumFetchIntervalInSeconds = 3600 }) }
@@ -32,6 +42,7 @@ object RemoteConfProvider {
         getUserControlJson()
         getAppSwitchJson()
         getRemoteFakePkg()
+        getRemoteNfContent()
     }
 
     private fun getRemoteFakePkg() {
@@ -41,7 +52,15 @@ object RemoteConfProvider {
     }
 
     private fun getRemoteNfContent() {
-
+        val contentList = runCatching {
+            val json = remoteConfig["agile_noti_text"].asString()
+            if (json.isBlank()) return@runCatching emptyList()
+            JSONArray(json).toRemoteContentGroups()
+        }.getOrElse { error ->
+            "Parse agile_noti_text failed: ${error.message.orEmpty()}".showLog("RemoteConfProvider")
+            emptyList()
+        }
+        NoticeContentManager.updateRemoteContentList(contentList)
     }
 
     private fun getRemoteAdJson() {
@@ -144,6 +163,45 @@ object RemoteConfProvider {
                 val item = optString(index).trim()
                 if (item.isNotBlank()) add(item)
             }
+        }
+    }
+
+    private fun JSONArray.toRemoteContentGroups(): List<List<ContentItems>> {
+        val groups = mutableListOf<List<ContentItems>>()
+        for (groupIndex in 0 until length()) {
+            val groupObj = optJSONObject(groupIndex) ?: continue
+            val actionType = groupObj.optString("page").toNoticeActionType() ?: continue
+            val textItems = groupObj.optJSONArray("noti_text") ?: continue
+            val notificationId = REMOTE_NOTIFICATION_ID_BASE + groups.size
+            val groupItems = mutableListOf<ContentItems>()
+            for (itemIndex in 0 until textItems.length()) {
+                val itemObj = textItems.optJSONObject(itemIndex) ?: continue
+                val message = itemObj.optString("text").trim()
+                val button = itemObj.optString("button").trim()
+                if (message.isBlank() || button.isBlank()) continue
+                groupItems.add(
+                    ContentItems(
+                        message = 0,
+                        button = 0,
+                        actionType = actionType,
+                        notificationId = notificationId,
+                        messageText = message,
+                        buttonText = button,
+                    )
+                )
+            }
+            if (groupItems.isNotEmpty()) groups.add(groupItems)
+        }
+        return groups
+    }
+
+    private fun String.toNoticeActionType(): DocumentActionType? {
+        return when (trim().lowercase()) {
+            "view" -> DocumentOpenType
+            "history" -> DocumentBookmark
+            "scan" -> PdfCreateType
+            "tools" -> DocumentTools
+            else -> null
         }
     }
 

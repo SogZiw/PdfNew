@@ -1,5 +1,6 @@
 package com.word.file.manager.pdf.base.helper.notice
 
+import android.content.Context
 import com.word.file.manager.pdf.base.data.DocumentActionType
 
 data class ContentItems(
@@ -7,7 +8,17 @@ data class ContentItems(
     val button: Int,
     val actionType: DocumentActionType,
     val notificationId: Int,
-)
+    val messageText: String = "",
+    val buttonText: String = "",
+) {
+    fun resolveMessage(context: Context): String {
+        return messageText.ifBlank { context.getString(message) }
+    }
+
+    fun resolveButton(context: Context): String {
+        return buttonText.ifBlank { context.getString(button) }
+    }
+}
 
 data class NfConfigItem(
     val first: Int,

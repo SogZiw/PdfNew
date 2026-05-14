@@ -246,3 +246,4 @@ This file captures the working conventions established during recent development
 - Added local notification content resources and de-duplicated semantic button string resources.
 - Added `Context.isPackageInstalled(packageName)` in `AppCommonExt.kt` for safe package-install checks.
 - Split local notification content in `NoticeContentManager` into per-page item groups, with one notification id per group.
+- Parse remote `agile_noti_text` into `NoticeContentManager.remoteContentList`, preserving per-page groups and local fallback on errors.
