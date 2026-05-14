@@ -11,6 +11,8 @@ import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.nativead.NativeAd
 import com.google.android.gms.ads.nativead.NativeAdOptions
 import com.google.android.gms.ads.nativead.NativeAdView
+import com.word.file.manager.pdf.AD_POS_ID
+import com.word.file.manager.pdf.APP_AD_IMPRESSION_CLICK
 import com.word.file.manager.pdf.R
 import com.word.file.manager.pdf.app
 import com.word.file.manager.pdf.base.BaseActivity
@@ -32,7 +34,7 @@ abstract class CachedNativeAd(
     config: AdUnitConfig,
     slot: AdSlot,
 ) : CachedAd(config, slot) {
-    abstract fun render(activity: BaseActivity<*>, container: ViewGroup, style: NativeAdStyle)
+    abstract fun render(activity: BaseActivity<*>, container: ViewGroup, style: NativeAdStyle, eventName: String)
 }
 
 class AdmobNativeCachedAd(
@@ -41,6 +43,7 @@ class AdmobNativeCachedAd(
 ) : CachedNativeAd(config, slot) {
 
     private var loadedAd: NativeAd? = null
+    private var eventName = ""
 
     override fun preload(done: (Boolean) -> Unit) {
         logState("load start")
@@ -59,6 +62,7 @@ class AdmobNativeCachedAd(
             .withAdListener(
                 object : AdListener() {
                     override fun onAdClicked() {
+                        EventCenter.logEvent(APP_AD_IMPRESSION_CLICK, mapOf(AD_POS_ID to eventName))
                         logClick()
                     }
 
@@ -81,7 +85,8 @@ class AdmobNativeCachedAd(
             .loadAd(AdRequest.Builder().build())
     }
 
-    override fun render(activity: BaseActivity<*>, container: ViewGroup, style: NativeAdStyle) {
+    override fun render(activity: BaseActivity<*>, container: ViewGroup, style: NativeAdStyle, eventName: String) {
+        this.eventName = eventName
         val ad = loadedAd ?: return
         val adView = buildNativeCard(activity, ad, style)
         container.isVisible = true

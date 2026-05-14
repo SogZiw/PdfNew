@@ -28,6 +28,7 @@ import com.google.mlkit.vision.documentscanner.GmsDocumentScanningResult
 import com.word.file.manager.pdf.AD_POS_ID
 import com.word.file.manager.pdf.APP_AD_CHANCE
 import com.word.file.manager.pdf.APP_AD_IMPRESSION
+import com.word.file.manager.pdf.APP_AD_IMPRESSION_CLICK
 import com.word.file.manager.pdf.EXTRA_DOCUMENT_ACTION_TYPE
 import com.word.file.manager.pdf.EXTRA_FILE_ITEM
 import com.word.file.manager.pdf.EXTRA_RESULT_TEXT
@@ -331,7 +332,10 @@ class MainActivity : StoragePermissionActivity<ActivityMainBinding>() {
         adView.adUnitId = config.placementId
         adView.setAdSize(AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(this, 360))
         adView.adListener = object : AdListener() {
-            override fun onAdClicked() = Unit
+            override fun onAdClicked() {
+                EventCenter.logEvent(APP_AD_IMPRESSION_CLICK, mapOf(AD_POS_ID to "ad_main_ban"))
+            }
+
             override fun onAdClosed() = Unit
             override fun onAdFailedToLoad(adError: LoadAdError) {
                 curLoadState = LoadState.Idle

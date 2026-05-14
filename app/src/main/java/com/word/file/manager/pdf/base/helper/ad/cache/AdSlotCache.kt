@@ -8,6 +8,7 @@ import com.word.file.manager.pdf.ADMOB
 import com.word.file.manager.pdf.AD_POS_ID
 import com.word.file.manager.pdf.APP_AD_CHANCE
 import com.word.file.manager.pdf.APP_AD_IMPRESSION
+import com.word.file.manager.pdf.APP_AD_IMPRESSION_CLICK
 import com.word.file.manager.pdf.R
 import com.word.file.manager.pdf.base.BaseActivity
 import com.word.file.manager.pdf.base.helper.EventCenter
@@ -91,7 +92,10 @@ class AdSlotCache(private val slot: AdSlot) {
                 delay(850L)
                 dialog.dismiss()
             }
-            cachedAd.show(activity = activity, closed = closed, shown = shown, clicked = clicked)
+            cachedAd.show(activity = activity, closed = closed, shown = shown, clicked = {
+                EventCenter.logEvent(APP_AD_IMPRESSION_CLICK, mapOf(AD_POS_ID to eventName))
+                clicked()
+            })
             EventCenter.logEvent(APP_AD_IMPRESSION, mapOf(AD_POS_ID to eventName))
             preloadIfNeeded()
         }
@@ -114,7 +118,7 @@ class AdSlotCache(private val slot: AdSlot) {
                 activity.lifecycle.addObserver(object : DefaultLifecycleObserver {
                     override fun onDestroy(owner: LifecycleOwner) = cachedAd.release()
                 })
-                cachedAd.render(activity, host, style)
+                cachedAd.render(activity, host, style, eventName)
                 shown()
                 EventCenter.logEvent(APP_AD_IMPRESSION, mapOf(AD_POS_ID to eventName))
                 preloadIfNeeded()

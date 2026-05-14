@@ -13,6 +13,7 @@ const val SHORTCUT_PAGE_UNINSTALL = "quick_exit_guide"
 const val ADMOB = "admob"
 const val APP_AD_CHANCE = "app_ad_chance"
 const val APP_AD_IMPRESSION = "app_ad_impression"
+const val APP_AD_IMPRESSION_CLICK = "app_ad_impression_click"
 const val AD_POS_ID = "ad_pos_id"
 
 lateinit var app: BaseApp
