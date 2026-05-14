@@ -4,12 +4,14 @@ import android.annotation.SuppressLint
 import android.app.Notification
 import android.app.PendingIntent
 import android.content.Intent
+import android.os.Parcelable
 import android.widget.RemoteViews
 import androidx.annotation.LayoutRes
 import androidx.core.app.NotificationChannelCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.word.file.manager.pdf.EXTRA_DOCUMENT_ACTION_TYPE
+import com.word.file.manager.pdf.EXTRA_NOTIFICATION_SCENE
 import com.word.file.manager.pdf.R
 import com.word.file.manager.pdf.app
 import com.word.file.manager.pdf.base.data.DocumentActionType
@@ -67,6 +69,7 @@ object ToolbarHelper {
     private fun openRoute(actionType: DocumentActionType): PendingIntent {
         val intent = Intent(app, RouteActivity::class.java).apply {
             putExtra(EXTRA_DOCUMENT_ACTION_TYPE, actionType)
+            putExtra(EXTRA_NOTIFICATION_SCENE, NotificationScene.TOOLBAR as Parcelable)
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
         }
         return PendingIntent.getActivity(app, Random.Default.nextInt(), intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)

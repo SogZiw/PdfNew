@@ -11,6 +11,8 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import com.word.file.manager.pdf.EXTRA_DOCUMENT_ACTION_TYPE
 import com.word.file.manager.pdf.EXTRA_FROM_SET
+import com.word.file.manager.pdf.EXTRA_NOTIFICATION_SCENE
+import com.word.file.manager.pdf.EXTRA_NOTIFICATION_SURFACE
 import com.word.file.manager.pdf.EXTRA_SHORTCUT_PAGE
 import com.word.file.manager.pdf.SHORTCUT_PAGE_SCAN
 import com.word.file.manager.pdf.SHORTCUT_PAGE_UNINSTALL
@@ -23,8 +25,10 @@ import com.word.file.manager.pdf.base.helper.EventCenter
 import com.word.file.manager.pdf.base.helper.LocalPrefs
 import com.word.file.manager.pdf.base.helper.UserBlockHelper
 import com.word.file.manager.pdf.base.helper.ad.center.AdCenter
-import com.word.file.manager.pdf.base.helper.services.CoreService
+import com.word.file.manager.pdf.base.helper.notice.NoticeSurface
+import com.word.file.manager.pdf.base.helper.notice.NotificationScene
 import com.word.file.manager.pdf.base.helper.remote.RemoteLogicConfig
+import com.word.file.manager.pdf.base.helper.services.CoreService
 import com.word.file.manager.pdf.base.utils.isAtLeastAndroid13
 import com.word.file.manager.pdf.databinding.ActivityRouteBinding
 import com.word.file.manager.pdf.modules.guide.GuideFirstActivity
@@ -38,6 +42,8 @@ import kotlinx.coroutines.launch
 class RouteActivity : BaseActivity<ActivityRouteBinding>() {
 
     private val documentActionType by lazy { intent?.getParcelableExtra<DocumentActionType>(EXTRA_DOCUMENT_ACTION_TYPE) }
+    private val noticeSurface by lazy { intent?.getParcelableExtra<NoticeSurface>(EXTRA_NOTIFICATION_SURFACE) }
+    private val notificationScene by lazy { intent?.getParcelableExtra<NotificationScene>(EXTRA_NOTIFICATION_SCENE) }
     private val shortcutPage by lazy { intent?.getStringExtra(EXTRA_SHORTCUT_PAGE) }
     private val viewModel by viewModels<RouteViewModel>()
     private var isFirstNF = false
@@ -45,6 +51,7 @@ class RouteActivity : BaseActivity<ActivityRouteBinding>() {
         if (hasPostNotificationPermission()) EventCenter.logEvent("notify_permission_success", mapOf("list" to if (isFirstNF) "first" else "second"))
         viewModel.startLoadingLaunch(activity)
     }
+    private val isFirstLoading by lazy { LocalPrefs.isFirstLaunch }
 
     override fun setViewBinding() = ActivityRouteBinding.inflate(layoutInflater)
 
@@ -52,6 +59,33 @@ class RouteActivity : BaseActivity<ActivityRouteBinding>() {
         AdCenter.lastFullAdShowTime = 0L
         observeLaunchState()
         viewModel.beginLaunch(activity)
+        when (noticeSurface) {
+            NoticeSurface.NORMAL -> {
+                EventCenter.logEvent("notification_popup_click", mapOf("list" to notificationScene?.sceneName))
+            }
+
+            NoticeSurface.MEDIA -> {
+                EventCenter.logEvent("notification_media_click", mapOf("list" to notificationScene?.sceneName))
+            }
+
+            NoticeSurface.WINDOW -> {
+                EventCenter.logEvent("notification_win_click", mapOf("list" to notificationScene?.sceneName))
+            }
+
+            else -> {
+                if (NotificationScene.TOOLBAR == notificationScene) {
+                    EventCenter.logEvent("notification_serve_click")
+                }
+            }
+        }
+        if (shortcutPage == SHORTCUT_PAGE_UNINSTALL) EventCenter.logEvent("shortcut_uninstall_click")
+        if (isFirstLoading) {
+            LocalPrefs.isFirstLaunch = false
+            EventCenter.logEvent("Loading_show_first")
+            EventCenter.logEvent("Loading_show")
+        } else {
+            EventCenter.logEvent("Loading_show")
+        }
     }
 
     private fun observeLaunchState() {

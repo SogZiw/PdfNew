@@ -52,6 +52,7 @@ class IntroduceActivity : BaseActivity<ActivityIntroduceBinding>() {
         AdCenter.scanNative.renderNative(
             activity, binding.exContainer, NativeAdStyle.COMMON_MEDIA, eventName = "ad_new_intro_nat",
             allowed = { RemoteLogicConfig.fetchPromotionConfig().initIntroNat && UserBlockHelper.canShowExtra() })
+        EventCenter.logEvent("page_introduce_show")
     }
 
     private fun goMainPage() {

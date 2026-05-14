@@ -83,7 +83,7 @@ object NoticeHelper {
     }
 
     fun getAlarmInterval(): Int {
-       return if (hasPostNotificationPermission()) (alarmConfig?.interval ?: 30) else (mediaAlarmConfig?.interval ?: 30)
+        return if (hasPostNotificationPermission()) (alarmConfig?.interval ?: 30) else (mediaAlarmConfig?.interval ?: 30)
     }
 
     fun openRoute(actionType: DocumentActionType, scene: NotificationScene, surface: NoticeSurface): PendingIntent {
@@ -124,18 +124,20 @@ object NoticeHelper {
                 NotificationScene.TIME -> timeConfig
                 NotificationScene.UNLOCK -> unlockConfig
                 NotificationScene.ALARM -> alarmConfig
+                else -> null
             }
 
             NoticeSurface.MEDIA -> when (scene) {
                 NotificationScene.TIME -> mediaTimeConfig
                 NotificationScene.UNLOCK -> mediaUnlockConfig
                 NotificationScene.ALARM -> mediaAlarmConfig
+                else -> null
             }
 
             NoticeSurface.WINDOW -> when (scene) {
                 NotificationScene.TIME -> windowTimeConfig
                 NotificationScene.UNLOCK -> windowUnlockConfig
-                NotificationScene.ALARM -> null
+                else -> null
             }
         }
     }

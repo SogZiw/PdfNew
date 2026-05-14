@@ -39,6 +39,7 @@ enum class NotificationScene(val sceneName: String) : Parcelable {
     UNLOCK("unlock"),
     TIME("time"),
     ALARM("alarm"),
+    TOOLBAR("toolbar")
 }
 
 @Parcelize

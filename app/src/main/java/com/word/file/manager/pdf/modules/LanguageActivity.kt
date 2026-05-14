@@ -41,12 +41,16 @@ class LanguageActivity : BaseActivity<ActivityLanguageBinding>() {
         binding.toolbar.toolbarTitle.text = getString(R.string.language)
         binding.toolbar.actionBack.isInvisible = fromSet.not()
         setupLanguageList()
-        binding.btnApply.setOnClickListener { applySelectedLanguage() }
+        binding.btnApply.setOnClickListener {
+            applySelectedLanguage()
+            if (fromSet.not()) EventCenter.logEvent("page_language_click")
+        }
         AdCenter.scanInterstitial.preload()
         AdCenter.backInterstitial.preload()
         AdCenter.mainNative.renderNative(
             activity, binding.exContainer, NativeAdStyle.COMMON_MEDIA, eventName = "ad_new_langua_nat",
             allowed = { RemoteLogicConfig.fetchPromotionConfig().initLangNat && UserBlockHelper.canShowExtra() })
+        if (fromSet.not()) EventCenter.logEvent("page_language_show")
     }
 
     private fun setupLanguageList() {

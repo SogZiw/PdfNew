@@ -26,6 +26,7 @@ class ExtraGuideActivity : BaseActivity<ActivityExtraGuideBinding>() {
     private val permissionLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         hasGoSettings = false
         if (hasOverlayPermission()) {
+            EventCenter.logEvent("win_permission_success")
             goNextPage()
         }
     }

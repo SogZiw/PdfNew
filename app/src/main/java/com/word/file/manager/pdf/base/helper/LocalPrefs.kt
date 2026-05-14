@@ -28,6 +28,7 @@ object LocalPrefs {
     var hasReviewedDevice by store.boolean(defaultValue = false)
     var isFirstMistouch by store.boolean(defaultValue = true)
     var nextSetAlarmTime by store.long(defaultValue = 0L)
+    var isFirstLaunch by store.boolean(defaultValue = true)
 
     fun readDefaultLanguageCode(context: Context): String {
         return context.getSharedPreferences(STORE_NAME, MODE_PRIVATE)

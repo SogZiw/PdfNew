@@ -309,6 +309,7 @@ class MainActivity : StoragePermissionActivity<ActivityMainBinding>() {
 
     override fun onResume() {
         super.onResume()
+        EventCenter.logEvent("page_home_show")
         AdCenter.scanInterstitial.preload()
         lifecycleScope.launch {
             delay(280L)

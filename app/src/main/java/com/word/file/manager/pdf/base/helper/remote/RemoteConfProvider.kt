@@ -15,6 +15,7 @@ import com.word.file.manager.pdf.base.helper.notice.ContentItems
 import com.word.file.manager.pdf.base.helper.notice.NfConfigItem
 import com.word.file.manager.pdf.base.helper.notice.NoticeContentManager
 import com.word.file.manager.pdf.base.helper.notice.NoticeHelper
+import com.word.file.manager.pdf.base.utils.isSamsungDevice
 import com.word.file.manager.pdf.base.utils.showLog
 import com.word.file.manager.pdf.isDebug
 import org.json.JSONArray
@@ -82,7 +83,7 @@ object RemoteConfProvider {
 
     private fun getRemotePopNoticeConfig() {
         runCatching {
-            val json = remoteConfig["agile_pop_noti"].asString()
+            val json = remoteConfig[if (isSamsungDevice()) "agile_pop_noti_sg" else "agile_pop_noti"].asString()
             if (json.isBlank()) return@runCatching
             JSONObject(json).apply {
                 NoticeHelper.isNoticeOpen = optInt("open", 0) == 1
