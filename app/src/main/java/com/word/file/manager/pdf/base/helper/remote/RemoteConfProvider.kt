@@ -12,7 +12,9 @@ import com.word.file.manager.pdf.base.data.PdfCreateType
 import com.word.file.manager.pdf.base.helper.UserBlockHelper
 import com.word.file.manager.pdf.base.helper.ad.center.AdCenter
 import com.word.file.manager.pdf.base.helper.notice.ContentItems
+import com.word.file.manager.pdf.base.helper.notice.NfConfigItem
 import com.word.file.manager.pdf.base.helper.notice.NoticeContentManager
+import com.word.file.manager.pdf.base.helper.notice.NoticeHelper
 import com.word.file.manager.pdf.base.utils.showLog
 import com.word.file.manager.pdf.isDebug
 import org.json.JSONArray
@@ -43,6 +45,7 @@ object RemoteConfProvider {
         getAppSwitchJson()
         getRemoteFakePkg()
         getRemoteNfContent()
+        getRemotePopNoticeConfig()
     }
 
     private fun getRemoteFakePkg() {
@@ -61,6 +64,31 @@ object RemoteConfProvider {
             emptyList()
         }
         NoticeContentManager.updateRemoteContentList(contentList)
+    }
+
+    private fun getRemotePopNoticeConfig() {
+        runCatching {
+            val json = remoteConfig["agile_pop_noti"].asString()
+            if (json.isBlank()) return@runCatching
+            JSONObject(json).apply {
+                NoticeHelper.isNoticeOpen = optInt("open", 1) == 1
+                NoticeHelper.blockStartHour = optInt("start", 0)
+                NoticeHelper.blockEndHour = optInt("end", 0)
+                NoticeHelper.timeConfig = optJSONObject("agile_time").toNoticeConfig()
+                NoticeHelper.unlockConfig = optJSONObject("agile_unlock").toNoticeConfig()
+                NoticeHelper.alarmConfig = optJSONObject("agile_alarm").toNoticeConfig()
+
+                NoticeHelper.isMediaNoticeOpen = optInt("open_media", 0) == 1
+                NoticeHelper.mediaTimeConfig = optJSONObject("agile_time_media").toNoticeConfig()
+                NoticeHelper.mediaUnlockConfig = optJSONObject("agile_unlock_media").toNoticeConfig()
+                NoticeHelper.mediaAlarmConfig = optJSONObject("agile_alarm_media").toNoticeConfig()
+
+                NoticeHelper.isWindowNoticeOpen = optInt("win_open", 0) == 1
+                NoticeHelper.userNoticePercent = optInt("user_not", 50)
+                NoticeHelper.windowTimeConfig = optJSONObject("agile_time_w").toNoticeConfig()
+                NoticeHelper.windowUnlockConfig = optJSONObject("agile_unlock_w").toNoticeConfig()
+            }
+        }
     }
 
     private fun getRemoteAdJson() {
@@ -193,6 +221,15 @@ object RemoteConfProvider {
             if (groupItems.isNotEmpty()) groups.add(groupItems)
         }
         return groups
+    }
+
+    private fun JSONObject?.toNoticeConfig(): NfConfigItem? {
+        if (this == null) return null
+        return NfConfigItem(
+            first = optInt("agile_fi", 0),
+            interval = optInt("agile_mi", 30),
+            maxCounts = optInt("agile_up", 30),
+        )
     }
 
     private fun String.toNoticeActionType(): DocumentActionType? {
