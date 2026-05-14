@@ -46,6 +46,13 @@ object RemoteConfProvider {
         getRemoteFakePkg()
         getRemoteNfContent()
         getRemotePopNoticeConfig()
+        getRemoteUseLegacyChannel()
+    }
+
+    private fun getRemoteUseLegacyChannel() {
+        runCatching {
+            NoticeHelper.useLegacyChannel = 1 == (remoteConfig["legacy_channel"].asString().toIntOrNull() ?: 1)
+        }
     }
 
     private fun getRemoteFakePkg() {

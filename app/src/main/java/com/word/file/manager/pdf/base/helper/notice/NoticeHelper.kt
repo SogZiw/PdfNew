@@ -21,6 +21,8 @@ object NoticeHelper {
         getInstallReferenceTime()
     }
 
+    var useLegacyChannel = true
+
     var isNoticeOpen: Boolean = false
     var blockStartHour: Int = 0
     var blockEndHour: Int = 0
