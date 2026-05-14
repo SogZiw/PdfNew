@@ -13,6 +13,7 @@ import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
 import com.word.file.manager.pdf.app
+import com.word.file.manager.pdf.base.helper.notice.NoticeUtils
 import com.word.file.manager.pdf.base.utils.isAtLeastAndroid11
 import com.word.file.manager.pdf.base.utils.isAtLeastAndroid13
 
@@ -33,7 +34,7 @@ fun hasStorageAccessPermission(): Boolean {
 }
 
 fun hasOverlayPermission(): Boolean {
-    return Settings.canDrawOverlays(app)
+    return NoticeUtils.canDrawOverlaysByReflection(app)
 }
 
 fun hasPostNotificationPermission(): Boolean {
