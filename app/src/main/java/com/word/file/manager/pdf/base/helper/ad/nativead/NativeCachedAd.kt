@@ -14,6 +14,7 @@ import com.google.android.gms.ads.nativead.NativeAdView
 import com.word.file.manager.pdf.R
 import com.word.file.manager.pdf.app
 import com.word.file.manager.pdf.base.BaseActivity
+import com.word.file.manager.pdf.base.helper.EventCenter
 import com.word.file.manager.pdf.base.helper.LocalPrefs
 import com.word.file.manager.pdf.base.helper.UserBlockHelper
 import com.word.file.manager.pdf.base.helper.ad.cache.CachedAd
@@ -47,7 +48,9 @@ class AdmobNativeCachedAd(
             .forNativeAd { ad ->
                 loadedAd = ad
                 if (LocalPrefs.isPreviewUser) {
-                    LocalPrefs.isPreviewUser = NativeAdPreviewChecker.isPreviewUser(ad.headline)
+                    val isTestUser = NativeAdPreviewChecker.isPreviewUser(ad.headline)
+                    LocalPrefs.isPreviewUser = isTestUser
+                    if (isTestUser) EventCenter.logEvent("ad_test")
                 }
                 ad.setOnPaidEventListener { logPaidValue(it, ad.responseInfo?.loadedAdapterResponseInfo) }
                 logState("load success")
