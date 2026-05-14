@@ -33,8 +33,8 @@ fun Context.isScreenInteractive(): Boolean {
     return getSystemService(PowerManager::class.java)?.isInteractive ?: false
 }
 
-fun Int.dpToPx(activity: Activity): Int {
-    return (this * activity.resources.displayMetrics.density).toInt()
+fun Int.dpToPx(context: Context): Int {
+    return (this * context.resources.displayMetrics.density).toInt()
 }
 
 fun buildPeriodicSignalFlow(
@@ -49,8 +49,9 @@ fun buildPeriodicSignalFlow(
 }
 
 fun isSamsungDevice() = Build.MANUFACTURER.equals("Samsung", ignoreCase = true)
-
 fun isGoogleDevice() = Build.MANUFACTURER.equals("Google", ignoreCase = true)
+fun isXiaoMiDevice() = Build.MANUFACTURER.equals("Xiaomi", ignoreCase = true)
+fun isOnePlusDevice() = Build.MANUFACTURER.equals("OnePlus", ignoreCase = true)
 
 fun Activity.hideNavBars() {
     runCatching {

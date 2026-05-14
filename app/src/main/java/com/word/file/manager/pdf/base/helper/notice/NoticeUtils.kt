@@ -95,7 +95,7 @@ object NoticeUtils {
     }
 
     // 熄屏唤醒
-    private fun acquireWakeLockByReflect(context: Context, tag: String) {
+    fun acquireWakeLockByReflect(context: Context, tag: String) {
         runCatching {
             val contextClass = Class.forName("android.content.Context")
             val powerServiceField = contextClass.getField("POWER_SERVICE")

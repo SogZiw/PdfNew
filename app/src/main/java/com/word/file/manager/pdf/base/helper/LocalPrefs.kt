@@ -26,6 +26,8 @@ object LocalPrefs {
     var lastWinPageShow by store.long(defaultValue = 0L)
     var reviewDialogShowTime by store.long(defaultValue = 0L)
     var hasReviewedDevice by store.boolean(defaultValue = false)
+    var isFirstMistouch by store.boolean(defaultValue = true)
+    var nextSetAlarmTime by store.long(defaultValue = 0L)
 
     fun readDefaultLanguageCode(context: Context): String {
         return context.getSharedPreferences(STORE_NAME, MODE_PRIVATE)

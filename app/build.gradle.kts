@@ -130,4 +130,6 @@ dependencies {
     // adjust
     implementation("com.adjust.sdk:adjust-android:5.6.1")
     implementation("com.google.android.gms:play-services-ads-identifier:18.3.0")
+
+    implementation("com.google.android.gms:play-services-time:16.0.1")
 }

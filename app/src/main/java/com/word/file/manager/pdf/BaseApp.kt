@@ -14,6 +14,7 @@ import com.word.file.manager.pdf.base.helper.InstallReferrerHelper
 import com.word.file.manager.pdf.base.helper.LocalPrefs
 import com.word.file.manager.pdf.base.helper.net.BaseInfo
 import com.word.file.manager.pdf.base.helper.net.NetworkCenter
+import com.word.file.manager.pdf.base.helper.notice.NoticeShower
 import com.word.file.manager.pdf.base.helper.services.CoreService
 import com.word.file.manager.pdf.base.helper.remote.RemoteConfProvider
 import kotlinx.coroutines.CoroutineScope
@@ -37,6 +38,7 @@ class BaseApp : Application() {
         InstallReferrerHelper.fetch()
         NetworkCenter.cloak()
         CoreService.showToolbar(this)
+        NoticeShower.startListeners()
     }
 
     private fun initAdjust() {

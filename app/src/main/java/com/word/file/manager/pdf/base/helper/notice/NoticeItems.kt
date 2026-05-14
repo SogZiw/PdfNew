@@ -1,7 +1,9 @@
 package com.word.file.manager.pdf.base.helper.notice
 
 import android.content.Context
+import android.os.Parcelable
 import com.word.file.manager.pdf.base.data.DocumentActionType
+import kotlinx.parcelize.Parcelize
 
 data class ContentItems(
     val message: Int,
@@ -32,13 +34,15 @@ data class NoticeShowRecord(
     val dailyCountTime: Long,
 )
 
-enum class NotificationScene(val sceneName: String) {
+@Parcelize
+enum class NotificationScene(val sceneName: String) : Parcelable {
     UNLOCK("unlock"),
     TIME("time"),
     ALARM("alarm"),
 }
 
-enum class NoticeSurface(val storeName: String) {
+@Parcelize
+enum class NoticeSurface(val storeName: String) : Parcelable {
     NORMAL("normal"),
     MEDIA("media"),
     WINDOW("window"),

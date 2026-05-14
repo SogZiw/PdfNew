@@ -249,3 +249,4 @@ This file captures the working conventions established during recent development
 - Parse remote `agile_noti_text` into `NoticeContentManager.remoteContentList`, preserving per-page groups and local fallback on errors.
 - Parse remote `agile_pop_noti` into `NoticeHelper` notification, media-notification, and window-notification config fields.
 - Added `NoticeHelper` state APIs for reading, updating, and checking reminder first-delay, interval, and daily-limit gating.
+- Added `NoticeHelper` wake daily-limit APIs for reading, checking, and updating screen wake counts.

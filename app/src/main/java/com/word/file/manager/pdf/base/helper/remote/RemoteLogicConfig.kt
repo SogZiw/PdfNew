@@ -4,6 +4,8 @@ import com.word.file.manager.pdf.base.helper.UserBlockHelper
 
 object RemoteLogicConfig {
 
+    var isUseServerTime = true
+
     var promotionLogic: PromotionLogic = PromotionLogic.blockedUserDefaults()
         private set
 

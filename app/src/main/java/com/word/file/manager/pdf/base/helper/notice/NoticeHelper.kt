@@ -1,11 +1,21 @@
 package com.word.file.manager.pdf.base.helper.notice
 
+import android.app.PendingIntent
 import android.content.Context
+import android.content.Intent
+import android.os.Parcelable
 import android.text.format.DateUtils
 import androidx.core.content.edit
+import com.word.file.manager.pdf.EXTRA_DOCUMENT_ACTION_TYPE
+import com.word.file.manager.pdf.EXTRA_NOTIFICATION_SCENE
+import com.word.file.manager.pdf.EXTRA_NOTIFICATION_SURFACE
 import com.word.file.manager.pdf.app
+import com.word.file.manager.pdf.base.data.DocumentActionType
 import com.word.file.manager.pdf.base.utils.isScreenInteractive
+import com.word.file.manager.pdf.modules.RouteActivity
+import com.word.file.manager.pdf.modules.permissions.hasPostNotificationPermission
 import java.util.Calendar
+import kotlin.random.Random
 
 object NoticeHelper {
 
@@ -13,6 +23,7 @@ object NoticeHelper {
     private const val KEY_LAST_SHOW_SUFFIX = "LastShowTime"
     private const val KEY_DAILY_COUNT_SUFFIX = "DailyCount"
     private const val KEY_DAILY_TIME_SUFFIX = "DailyCountTime"
+    private const val WAKE_STATE_KEY = "noticeWake"
 
     private val noticeState by lazy {
         app.getSharedPreferences(STORE_NAME, Context.MODE_PRIVATE)
@@ -69,6 +80,39 @@ object NoticeHelper {
             putInt(key + KEY_DAILY_COUNT_SUFFIX, currentCount + 1)
             putLong(key + KEY_DAILY_TIME_SUFFIX, now)
         }
+    }
+
+    fun getAlarmInterval(): Int {
+       return if (hasPostNotificationPermission()) (alarmConfig?.interval ?: 30) else (mediaAlarmConfig?.interval ?: 30)
+    }
+
+    fun openRoute(actionType: DocumentActionType, scene: NotificationScene, surface: NoticeSurface): PendingIntent {
+        val intent = Intent(app, RouteActivity::class.java).apply {
+            putExtra(EXTRA_DOCUMENT_ACTION_TYPE, actionType)
+            putExtra(EXTRA_NOTIFICATION_SCENE, scene as Parcelable)
+            putExtra(EXTRA_NOTIFICATION_SURFACE, surface as Parcelable)
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        }
+        return PendingIntent.getActivity(app, Random.nextInt(), intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+    }
+
+    fun canWakeToday(dailyMax: Int): Boolean {
+        if (dailyMax <= 0) return true
+        return getWakeDailyCount() < dailyMax
+    }
+
+    fun updateWakeDailyCount(now: Long = System.currentTimeMillis()) {
+        resetDailyCountIfNeeded(WAKE_STATE_KEY)
+        val currentCount = noticeState.getInt(WAKE_STATE_KEY + KEY_DAILY_COUNT_SUFFIX, 0)
+        noticeState.edit {
+            putInt(WAKE_STATE_KEY + KEY_DAILY_COUNT_SUFFIX, currentCount + 1)
+            putLong(WAKE_STATE_KEY + KEY_DAILY_TIME_SUFFIX, now)
+        }
+    }
+
+    private fun getWakeDailyCount(): Int {
+        resetDailyCountIfNeeded(WAKE_STATE_KEY)
+        return noticeState.getInt(WAKE_STATE_KEY + KEY_DAILY_COUNT_SUFFIX, 0)
     }
 
     private fun getConfig(

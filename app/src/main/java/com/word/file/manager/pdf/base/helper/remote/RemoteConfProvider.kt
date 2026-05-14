@@ -47,6 +47,13 @@ object RemoteConfProvider {
         getRemoteNfContent()
         getRemotePopNoticeConfig()
         getRemoteUseLegacyChannel()
+        getServerTimeConf()
+    }
+
+    private fun getServerTimeConf() {
+        runCatching {
+            RemoteLogicConfig.isUseServerTime = 1 == (remoteConfig["server_time"].asString().toIntOrNull() ?: 1)
+        }
     }
 
     private fun getRemoteUseLegacyChannel() {
