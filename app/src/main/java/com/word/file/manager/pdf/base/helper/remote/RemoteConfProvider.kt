@@ -71,7 +71,7 @@ object RemoteConfProvider {
             val json = remoteConfig["agile_pop_noti"].asString()
             if (json.isBlank()) return@runCatching
             JSONObject(json).apply {
-                NoticeHelper.isNoticeOpen = optInt("open", 1) == 1
+                NoticeHelper.isNoticeOpen = optInt("open", 0) == 1
                 NoticeHelper.blockStartHour = optInt("start", 0)
                 NoticeHelper.blockEndHour = optInt("end", 0)
                 NoticeHelper.timeConfig = optJSONObject("agile_time").toNoticeConfig()

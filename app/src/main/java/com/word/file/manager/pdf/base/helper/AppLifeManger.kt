@@ -2,14 +2,13 @@ package com.word.file.manager.pdf.base.helper
 
 import android.app.Activity
 import android.app.Application
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.os.PowerManager
 import com.word.file.manager.pdf.app
 import com.word.file.manager.pdf.base.BaseActivity
 import com.word.file.manager.pdf.base.helper.remote.RemoteLogicConfig
 import com.word.file.manager.pdf.base.utils.hideNavBars
+import com.word.file.manager.pdf.base.utils.isScreenInteractive
 import com.word.file.manager.pdf.base.utils.withSavedAppLocale
 import com.word.file.manager.pdf.hasGoSettings
 import com.word.file.manager.pdf.modules.RouteActivity
@@ -91,9 +90,5 @@ object AppLifeManger : Application.ActivityLifecycleCallbacks {
         val clicked = launchAdClicked
         launchAdClicked = false
         return clicked
-    }
-
-    private fun Context.isScreenInteractive(): Boolean {
-        return getSystemService(PowerManager::class.java)?.isInteractive ?: true
     }
 }

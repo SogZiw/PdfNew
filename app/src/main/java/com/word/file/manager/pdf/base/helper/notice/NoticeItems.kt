@@ -26,8 +26,20 @@ data class NfConfigItem(
     val maxCounts: Int,
 )
 
+data class NoticeShowRecord(
+    val lastShowTime: Long,
+    val dailyShowCount: Int,
+    val dailyCountTime: Long,
+)
+
 enum class NotificationScene(val sceneName: String) {
     UNLOCK("unlock"),
     TIME("time"),
     ALARM("alarm"),
+}
+
+enum class NoticeSurface(val storeName: String) {
+    NORMAL("normal"),
+    MEDIA("media"),
+    WINDOW("window"),
 }

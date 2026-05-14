@@ -248,3 +248,4 @@ This file captures the working conventions established during recent development
 - Split local notification content in `NoticeContentManager` into per-page item groups, with one notification id per group.
 - Parse remote `agile_noti_text` into `NoticeContentManager.remoteContentList`, preserving per-page groups and local fallback on errors.
 - Parse remote `agile_pop_noti` into `NoticeHelper` notification, media-notification, and window-notification config fields.
+- Added `NoticeHelper` state APIs for reading, updating, and checking reminder first-delay, interval, and daily-limit gating.

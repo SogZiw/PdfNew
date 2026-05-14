@@ -3,6 +3,7 @@ package com.word.file.manager.pdf.base.utils
 import android.app.Activity
 import android.content.Context
 import android.os.Build
+import android.os.PowerManager
 import android.util.Log
 import android.view.View
 import android.view.WindowInsets
@@ -26,6 +27,10 @@ fun String.showLog(tag: String = DEFAULT_LOG_TAG) {
 
 fun Context.isAppInstalled(pkgName: String): Boolean {
     return runCatching { packageManager.getPackageInfo(pkgName, 0) != null }.getOrNull() ?: false
+}
+
+fun Context.isScreenInteractive(): Boolean {
+    return getSystemService(PowerManager::class.java)?.isInteractive ?: false
 }
 
 fun Int.dpToPx(activity: Activity): Int {
