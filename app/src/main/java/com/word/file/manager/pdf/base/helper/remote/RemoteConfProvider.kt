@@ -79,7 +79,13 @@ object RemoteConfProvider {
 
     private fun getRemoteFakePkg() {
         runCatching {
-            UserBlockHelper.isUseFakeBlock = 1 == (remoteConfig["fake_switch"].asString().toIntOrNull() ?: 1)
+            val json = remoteConfig["fake_config"].asString()
+            if (json.isBlank()) return
+            val obj = JSONObject(json)
+            UserBlockHelper.updateFakePkgMarks(
+                open = obj.optInt("fake_switch", 1) == 1,
+                marks = obj.optJSONArray("fake_list").toJsonList(),
+            )
         }
     }
 

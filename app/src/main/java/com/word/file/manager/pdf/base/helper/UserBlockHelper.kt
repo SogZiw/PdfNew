@@ -33,6 +33,12 @@ object UserBlockHelper {
         blockedReferrerMarks.replaceWith(marks)
     }
 
+    fun updateFakePkgMarks(open: Boolean, marks: List<String>?) {
+        isUseFakeBlock = open
+        if (marks == null) return
+        fakePkgMarks.replaceWith(marks)
+    }
+
     fun canShowExtra(enableTestAd: Boolean = true): Boolean {
         if (isDebug) return true
         if (isAnyFakeInstalled) return false
