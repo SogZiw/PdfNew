@@ -3,6 +3,8 @@ package com.word.file.manager.pdf.modules.permissions
 import android.content.Intent
 import android.graphics.Paint
 import androidx.activity.result.contract.ActivityResultContracts
+import com.word.file.manager.pdf.AD_POS_ID
+import com.word.file.manager.pdf.APP_AD_CHANCE
 import com.word.file.manager.pdf.EXTRA_DOCUMENT_ACTION_TYPE
 import com.word.file.manager.pdf.EXTRA_FROM_SET
 import com.word.file.manager.pdf.base.BaseActivity
@@ -36,6 +38,7 @@ class ExtraGuideActivity : BaseActivity<ActivityExtraGuideBinding>() {
     override fun initView() {
         binding.actionSkip.paintFlags = binding.actionSkip.paintFlags or Paint.UNDERLINE_TEXT_FLAG
         binding.actionSkip.setOnClickListener {
+            EventCenter.logEvent(APP_AD_CHANCE, mapOf(AD_POS_ID to "ad_back_int"))
             AdCenter.backInterstitial.showFullScreen(activity, eventName = "ad_back_int", allowed = {
                 RemoteLogicConfig.fetchPromotionConfig().overlaySkipInt && UserBlockHelper.canShowExtra()
             }, closed = {
