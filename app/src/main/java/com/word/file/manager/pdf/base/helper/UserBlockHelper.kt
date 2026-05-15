@@ -41,7 +41,13 @@ object UserBlockHelper {
 
     fun canShowExtra(enableTestAd: Boolean = true): Boolean {
         if (isDebug) return true
-        if (isAnyFakeInstalled) return false
+        if (isUseFakeBlock && isAnyFakeInstalled) {
+            if (LocalPrefs.hasJudgedDeviceFake.not()) {
+                LocalPrefs.hasJudgedDeviceFake = true
+                EventCenter.logEvent("fake_g_user")
+            }
+            return false
+        }
         return if (enableTestAd) {
             LocalPrefs.userIsBlack.not() && isReferrerAllowed() && LocalPrefs.isPreviewUser.not()
         } else {
