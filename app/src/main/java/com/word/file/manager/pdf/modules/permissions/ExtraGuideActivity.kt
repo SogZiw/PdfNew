@@ -72,6 +72,10 @@ class ExtraGuideActivity : BaseActivity<ActivityExtraGuideBinding>() {
                 finish()
                 return
             }
+            startActivity(Intent(activity, MainActivity::class.java).apply {
+                putExtra(EXTRA_DOCUMENT_ACTION_TYPE, actionType)
+            })
+            finish()
         } else {
             startActivity(Intent(activity, MainActivity::class.java).apply {
                 putExtra(EXTRA_DOCUMENT_ACTION_TYPE, actionType)
