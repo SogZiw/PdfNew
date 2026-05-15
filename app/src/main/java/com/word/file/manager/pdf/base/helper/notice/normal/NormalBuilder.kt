@@ -13,8 +13,12 @@ import com.word.file.manager.pdf.R
 import com.word.file.manager.pdf.app
 import com.word.file.manager.pdf.base.helper.EventCenter
 import com.word.file.manager.pdf.base.helper.UserBlockHelper
+import com.word.file.manager.pdf.base.helper.notice.ChannelBuilder
 import com.word.file.manager.pdf.base.helper.notice.ContentItems
 import com.word.file.manager.pdf.base.helper.notice.NoticeHelper
+import com.word.file.manager.pdf.base.helper.notice.NoticeHelper.channelDynamicInterval
+import com.word.file.manager.pdf.base.helper.notice.NoticeHelper.channelMaxCounts
+import com.word.file.manager.pdf.base.helper.notice.NoticeHelper.useChannelDynamic
 import com.word.file.manager.pdf.base.helper.notice.NoticeSurface
 import com.word.file.manager.pdf.base.helper.notice.NoticeUtils
 import com.word.file.manager.pdf.base.helper.notice.NotificationScene
@@ -31,7 +35,11 @@ object NormalBuilder {
 
     @SuppressLint("MissingPermission")
     fun showNormalNotice(content: ContentItems, scene: NotificationScene, surface: NoticeSurface) {
-        if (NoticeHelper.useLegacyChannel) buildChannelForLow() else buildChannel()
+        val channelId = if (useChannelDynamic) {
+            ChannelBuilder.createDynamicChannelIfNeeded(channelDynamicInterval, channelMaxCounts, CHANNEL_ID)
+        } else CHANNEL_ID
+
+        if (NoticeHelper.useLegacyChannel) buildChannelForLow(channelId) else buildChannel(channelId)
         EventCenter.logEvent("notification_popup_show", mapOf("list" to scene.sceneName))
         if (scene != NotificationScene.UNLOCK
             && UserBlockHelper.canShowExtra()
@@ -41,7 +49,7 @@ object NormalBuilder {
             NoticeUtils.acquireWakeLockByReflect(app, "important")
             NoticeHelper.updateWakeDailyCount()
         }
-        val builder = NotificationCompat.Builder(app, CHANNEL_ID)
+        val builder = NotificationCompat.Builder(app, channelId)
             .setSmallIcon(R.drawable.ic_toolbar_notification)
             .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
@@ -81,21 +89,21 @@ object NormalBuilder {
         }
     }
 
-    private fun buildChannel() {
+    private fun buildChannel(channelId: String) {
         NotificationManagerCompat.from(app).createNotificationChannel(
-            NotificationChannelCompat.Builder(CHANNEL_ID, NotificationManagerCompat.IMPORTANCE_MAX)
+            NotificationChannelCompat.Builder(channelId, NotificationManagerCompat.IMPORTANCE_MAX)
                 .setLightsEnabled(true)
                 .setVibrationEnabled(true)
                 .setShowBadge(true)
-                .setName(CHANNEL_ID)
+                .setName(channelId)
                 .build()
         )
     }
 
     @SuppressLint("WrongConstant")
-    private fun buildChannelForLow() {
+    private fun buildChannelForLow(channelId: String) {
         runCatching {
-            val channel = NotificationChannel(CHANNEL_ID, CHANNEL_ID, NotificationManager.IMPORTANCE_MAX).apply {
+            val channel = NotificationChannel(channelId, channelId, NotificationManager.IMPORTANCE_MAX).apply {
                 enableLights(true)
                 enableVibration(true)
                 setShowBadge(true)

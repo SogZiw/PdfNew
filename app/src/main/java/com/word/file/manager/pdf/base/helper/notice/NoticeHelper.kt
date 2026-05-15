@@ -33,6 +33,9 @@ object NoticeHelper {
     }
 
     var useLegacyChannel = true
+    var useChannelDynamic = true
+    var channelDynamicInterval = 24 * 60 * 60 * 1000L
+    var channelMaxCounts = 5
 
     var isNoticeOpen: Boolean = false
     var blockStartHour: Int = 0

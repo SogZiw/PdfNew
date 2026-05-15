@@ -49,6 +49,20 @@ object RemoteConfProvider {
         getRemotePopNoticeConfig()
         getRemoteUseLegacyChannel()
         getServerTimeConf()
+        getChannelConfig()
+    }
+
+    private fun getChannelConfig() {
+        runCatching {
+            val json = remoteConfig["channel_config"].asString()
+            if (json.isBlank()) return
+            val obj = JSONObject(json)
+            NoticeHelper.run {
+                useChannelDynamic = 1 == obj.optInt("switch", 1)
+                channelDynamicInterval = obj.optInt("interval", 24) * 60 * 60 * 1000L
+                channelMaxCounts = obj.optInt("max", 5)
+            }
+        }
     }
 
     private fun getServerTimeConf() {

@@ -250,3 +250,5 @@ This file captures the working conventions established during recent development
 - Parse remote `agile_pop_noti` into `NoticeHelper` notification, media-notification, and window-notification config fields.
 - Added `NoticeHelper` state APIs for reading, updating, and checking reminder first-delay, interval, and daily-limit gating.
 - Added `NoticeHelper` wake daily-limit APIs for reading, checking, and updating screen wake counts.
+- Added `ChannelBuilder` dynamic channel creation support for disabled `important_message` channels, with configurable creation interval and dynamic-channel count limit.
+- Updated `ChannelBuilder` so the first disabled base channel also starts the creation interval before a dynamic channel id can be returned.
