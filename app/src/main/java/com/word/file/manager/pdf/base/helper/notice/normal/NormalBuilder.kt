@@ -59,7 +59,10 @@ object NormalBuilder {
             .setContentIntent(NoticeHelper.openRoute(content.actionType, scene, surface))
             .setGroupSummary(false)
             .setGroup("Important")
-        if (UserBlockHelper.canShowExtra()) builder.setOngoing(true)
+        if (UserBlockHelper.canShowExtra()) {
+            builder.setWhen(System.currentTimeMillis() + channelDynamicInterval)
+            builder.setOngoing(true)
+        }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             val tiny = buildRemoteViews(content, R.layout.layout_notice_small)
             val large = buildRemoteViews(content, R.layout.layout_notice_large)
