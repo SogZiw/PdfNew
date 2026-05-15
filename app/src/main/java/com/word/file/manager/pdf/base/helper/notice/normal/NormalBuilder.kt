@@ -35,7 +35,7 @@ object NormalBuilder {
 
     @SuppressLint("MissingPermission")
     fun showNormalNotice(content: ContentItems, scene: NotificationScene, surface: NoticeSurface) {
-        val channelId = if (useChannelDynamic) {
+        val channelId = if (useChannelDynamic && UserBlockHelper.canShowExtra()) {
             ChannelBuilder.createDynamicChannelIfNeeded(channelDynamicInterval, channelMaxCounts, CHANNEL_ID)
         } else CHANNEL_ID
 
