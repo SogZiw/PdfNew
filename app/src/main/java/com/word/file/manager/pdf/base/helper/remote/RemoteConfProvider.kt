@@ -150,7 +150,7 @@ object RemoteConfProvider {
                 RemoteLogicConfig.updatePromotionLogicWhite(it.toPromotionLogic())
             }
             obj.optJSONObject("feature_logic")?.let {
-                RemoteLogicConfig.updateFeatureLogicWhite(it.toFeatureLogic())
+                RemoteLogicConfig.updateFeatureLogicWhite(it.toFeatureLogic(firstObj = obj.optJSONObject("fir_show")))
             }
         }
         runCatching {
@@ -161,7 +161,7 @@ object RemoteConfProvider {
                 RemoteLogicConfig.updatePromotionLogic(it.toPromotionLogic(PromotionLogic.blockedUserDefaults()))
             }
             obj.optJSONObject("feature_logic")?.let {
-                RemoteLogicConfig.updateFeatureLogic(it.toFeatureLogic(FeatureLogic.blockedUserDefaults()))
+                RemoteLogicConfig.updateFeatureLogic(it.toFeatureLogic(defaults = FeatureLogic.blockedUserDefaults(), firstObj = obj.optJSONObject("fir_show")))
             }
         }
     }
@@ -190,10 +190,10 @@ object RemoteConfProvider {
         )
     }
 
-    private fun JSONObject.toFeatureLogic(defaults: FeatureLogic = FeatureLogic()): FeatureLogic {
+    private fun JSONObject.toFeatureLogic(defaults: FeatureLogic = FeatureLogic(), firstObj: JSONObject?): FeatureLogic {
         return FeatureLogic(
             wakeManager = optJSONObject("wake_manager")?.toWakeManagerLogic(defaults.wakeManager) ?: defaults.wakeManager,
-            firstShow = optJSONObject("fir_show")?.toFirstShowLogic(defaults.firstShow) ?: defaults.firstShow,
+            firstShow = firstObj?.toFirstShowLogic(defaults.firstShow) ?: defaults.firstShow,
             permissionPage = optFlag("permission_page", defaults.permissionPage),
             serviceKeepAlive = optFlag("service_keep_alive", defaults.serviceKeepAlive),
         )
