@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.core.view.isInvisible
 import androidx.recyclerview.widget.RecyclerView
 import com.word.file.manager.pdf.AD_POS_ID
-import com.word.file.manager.pdf.APP_AD_IMPRESSION
+import com.word.file.manager.pdf.APP_AD_CHANCE
 import com.word.file.manager.pdf.EXTRA_DOCUMENT_ACTION_TYPE
 import com.word.file.manager.pdf.EXTRA_FROM_SET
 import com.word.file.manager.pdf.R
@@ -75,7 +75,7 @@ class LanguageActivity : BaseActivity<ActivityLanguageBinding>() {
             finish()
         } else {
             LocalPrefs.hasSeenIntroduce = true
-            EventCenter.logEvent(APP_AD_IMPRESSION, mapOf(AD_POS_ID to "ad_new_langua_int"))
+            EventCenter.logEvent(APP_AD_CHANCE, mapOf(AD_POS_ID to "ad_new_langua_int"))
             AdCenter.scanInterstitial.showFullScreen(activity, eventName = "ad_new_langua_int", allowed = {
                 RemoteLogicConfig.fetchPromotionConfig().initLangInt && UserBlockHelper.canShowExtra()
             }, closed = {

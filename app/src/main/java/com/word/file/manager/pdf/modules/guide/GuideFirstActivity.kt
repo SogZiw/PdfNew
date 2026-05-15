@@ -2,7 +2,7 @@ package com.word.file.manager.pdf.modules.guide
 
 import android.content.Intent
 import com.word.file.manager.pdf.AD_POS_ID
-import com.word.file.manager.pdf.APP_AD_IMPRESSION
+import com.word.file.manager.pdf.APP_AD_CHANCE
 import com.word.file.manager.pdf.R
 import com.word.file.manager.pdf.base.BaseActivity
 import com.word.file.manager.pdf.base.helper.EventCenter
@@ -24,7 +24,7 @@ class GuideFirstActivity : BaseActivity<ActivityGuideFirstBinding>() {
         binding.guideFirstFeatureExploreButton.setOnClickListener { goMainPage() }
         binding.guideFirstKeepButton.setOnClickListener { goMainPage() }
         binding.guideFirstContinueUninstallButton.setOnClickListener {
-            EventCenter.logEvent(APP_AD_IMPRESSION, mapOf(AD_POS_ID to "ad_uninstall_int"))
+            EventCenter.logEvent(APP_AD_CHANCE, mapOf(AD_POS_ID to "ad_uninstall_int"))
             AdCenter.scanInterstitial.showFullScreen(activity, eventName = "ad_uninstall_int", allowed = {
                 RemoteLogicConfig.fetchPromotionConfig().removeAppInt && UserBlockHelper.canShowExtra()
             }, closed = {

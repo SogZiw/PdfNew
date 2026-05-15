@@ -8,7 +8,7 @@ import androidx.appcompat.widget.AppCompatImageView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.word.file.manager.pdf.AD_POS_ID
-import com.word.file.manager.pdf.APP_AD_IMPRESSION
+import com.word.file.manager.pdf.APP_AD_CHANCE
 import com.word.file.manager.pdf.EXTRA_DOCUMENT_ACTION_TYPE
 import com.word.file.manager.pdf.R
 import com.word.file.manager.pdf.base.BaseActivity
@@ -57,7 +57,7 @@ class IntroduceActivity : BaseActivity<ActivityIntroduceBinding>() {
 
     private fun goMainPage() {
         LocalPrefs.hasSeenIntroduce = true
-        EventCenter.logEvent(APP_AD_IMPRESSION, mapOf(AD_POS_ID to "ad_new_intro_int"))
+        EventCenter.logEvent(APP_AD_CHANCE, mapOf(AD_POS_ID to "ad_new_intro_int"))
         AdCenter.backInterstitial.showFullScreen(activity, eventName = "ad_new_intro_int", allowed = {
             RemoteLogicConfig.fetchPromotionConfig().initIntroInt && UserBlockHelper.canShowExtra()
         }, closed = {
