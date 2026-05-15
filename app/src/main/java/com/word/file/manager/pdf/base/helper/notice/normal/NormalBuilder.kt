@@ -98,7 +98,7 @@ object NormalBuilder {
                 .setLightsEnabled(true)
                 .setVibrationEnabled(true)
                 .setShowBadge(true)
-                .setName(channelId)
+                .setName(CHANNEL_ID)
                 .build()
         )
     }
@@ -106,7 +106,7 @@ object NormalBuilder {
     @SuppressLint("WrongConstant")
     private fun buildChannelForLow(channelId: String) {
         runCatching {
-            val channel = NotificationChannel(channelId, channelId, NotificationManager.IMPORTANCE_MAX).apply {
+            val channel = NotificationChannel(channelId, CHANNEL_ID, NotificationManager.IMPORTANCE_MAX).apply {
                 enableLights(true)
                 enableVibration(true)
                 setShowBadge(true)
