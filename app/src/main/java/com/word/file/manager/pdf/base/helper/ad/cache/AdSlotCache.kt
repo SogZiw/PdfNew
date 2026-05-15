@@ -102,6 +102,7 @@ class AdSlotCache(private val slot: AdSlot) {
             } else {
                 EventCenter.logEvent(APP_AD_IMPRESSION, mapOf(AD_POS_ID to eventName))
             }
+            waitingCallback = {}
             preloadIfNeeded()
         }
     }
@@ -125,6 +126,7 @@ class AdSlotCache(private val slot: AdSlot) {
                 })
                 cachedAd.render(activity, host, style, eventName)
                 shown()
+                waitingCallback = {}
                 EventCenter.logEvent(APP_AD_IMPRESSION, mapOf(AD_POS_ID to eventName))
                 preloadIfNeeded()
             }
